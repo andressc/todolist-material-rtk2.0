@@ -1,0 +1,38 @@
+.todo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #3f3939;
+    gap: 20px;
+    color: #fff;
+    padding: 50px;
+    max-width: 300px;
+    width: 100%;
+}
+
+.todo h3 {
+    font-size: 25px;
+}
+
+.todo ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    list-style-type: none;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+}
