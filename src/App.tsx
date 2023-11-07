@@ -4,7 +4,6 @@ import {v1} from "uuid"
 import {TodoList} from "./components/TodoList/TodoList"
 import {Filter, TasksType, TaskType, TodoType} from "./types"
 import {InputSubmit} from "./components/InputSubmit/InputSubmit"
-import styles from "./components/TodoList/TodoList.module.css"
 
 function App(): JSX.Element {
 
@@ -122,8 +121,8 @@ function App(): JSX.Element {
 
     return (
         <div className="App">
-            <div className={styles.todo}>
-                <div className={styles.title}>
+            <div>
+                <div>
                     <h3>Add new todolist</h3>
                 </div>
                 <InputSubmit onClickCallBack={addTodoList} buttonTitle="+"/>

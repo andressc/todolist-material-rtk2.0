@@ -2,7 +2,6 @@ import React, {DetailedHTMLProps, HTMLAttributes} from "react"
 import {ButtonFilter} from "../ButtonFilter/ButtonFilter"
 import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
-import styles from "./TodoList.module.css"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 
@@ -73,15 +72,15 @@ export const TodoList: React.FC<PropsType> = ({
     }
 
     return (
-        <div {...restProps} className={styles.todo}>
-            <div className={styles.title}>
+        <div {...restProps}>
+            <div>
                 <h3>
                     <EditableSpan text={title} onChangeCallBack={onChangeCallBack}/>
                 </h3>
                 <button onClick={removeTodoListHandler}>X</button>
             </div>
 
-            <div className={styles.buttons}>
+            <div>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={filter}/>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={filter}/>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={filter}/>

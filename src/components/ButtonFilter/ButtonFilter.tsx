@@ -18,7 +18,6 @@ export const ButtonFilter: React.FC<PropsType> = ({
     }
 
     return (
-        <button onClick={onFilterHandler}
-                className={filterState === filter ? "button-active" : ""} {...restProps}>{filter}</button>
+        <button onClick={onFilterHandler} {...restProps}>{filter}</button>
     )
 }

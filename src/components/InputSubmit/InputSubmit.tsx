@@ -1,5 +1,4 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
-import styles from "./InputSubmit.module.css"
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
@@ -30,7 +29,7 @@ export const InputSubmit: React.FC<PropsType> = ({onClickCallBack, buttonTitle})
 
     return (
         <>
-            <div className={styles.textInput}>
+            <div>
                 <input value={inputText} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <button onClick={onClickHandler} disabled={disabledButton}>{buttonTitle}</button>
             </div>

@@ -1,6 +1,5 @@
 import React, {ChangeEvent, DetailedHTMLProps, LiHTMLAttributes} from "react"
 import {TaskType} from "../../types"
-import styles from "./Task.module.css"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 
 interface PropsType extends DetailedHTMLProps<LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
@@ -20,7 +19,7 @@ export const Task: React.FC<PropsType> = ({task, removeTasks, changeStatus, chan
     }
 
     return (
-        <li key={task.id} className={`${styles.task} ${task.isDone ? "is-done" : ""}`} {...restProps}>
+        <li key={task.id} {...restProps}>
             <input type="checkbox" checked={task.isDone} onChange={onChangeHandler}/>
             <EditableSpan text={task.title} onChangeCallBack={onChangeCallBack}/>
             <button onClick={onRemoveHandler}>X</button>
