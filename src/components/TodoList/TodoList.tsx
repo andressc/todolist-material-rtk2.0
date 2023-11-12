@@ -4,6 +4,8 @@ import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
+import {Button, IconButton} from "@mui/material"
+import {AddCircle, Delete} from "@mui/icons-material"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
@@ -76,19 +78,21 @@ export const TodoList: React.FC<PropsType> = ({
             <div>
                 <h3>
                     <EditableSpan text={title} onChangeCallBack={onChangeCallBack}/>
+                    <IconButton aria-label="delete" onClick={removeTodoListHandler}>
+                        <Delete/>
+                    </IconButton>
                 </h3>
-                <button onClick={removeTodoListHandler}>X</button>
             </div>
 
+            <InputSubmit onClickCallBack={onClickCallBack} buttonTitle="+"/>
+            <div>
+                {taskList}
+            </div>
             <div>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={filter}/>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={filter}/>
                 <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={filter}/>
             </div>
-            <InputSubmit onClickCallBack={onClickCallBack} buttonTitle="+"/>
-            <ul>
-                {taskList}
-            </ul>
         </div>
     )
 }

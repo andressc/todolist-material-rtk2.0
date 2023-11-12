@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import {Button, IconButton, TextField} from "@mui/material"
+import {AddCircle} from '@mui/icons-material';
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
@@ -22,18 +24,25 @@ export const InputSubmit: React.FC<PropsType> = ({onClickCallBack, buttonTitle})
         setInputText("")
     }
 
-    const titleText: boolean | JSX.Element = inputText.length > 15 &&
-        <p style={{color: "red"}}>Your title is too long!</p>
+    const titleText: boolean | string = inputText.length > 15 && "Your title is too long!"
 
     const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 15 && true
 
     return (
         <>
             <div>
-                <input value={inputText} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
-                <button onClick={onClickHandler} disabled={disabledButton}>{buttonTitle}</button>
+                <TextField value={inputText}
+                           onChange={onChangeHandler}
+                           onKeyDown={onKeyDownHandler}
+                           label={!titleText ? "Type value" : "Error"}
+                           variant="outlined"
+                           error={!!titleText}
+                           helperText={titleText}
+                />
+                <IconButton aria-label="delete" onClick={onClickHandler}>
+                    <AddCircle/>
+                </IconButton>
             </div>
-            {titleText}
         </>
     )
 }

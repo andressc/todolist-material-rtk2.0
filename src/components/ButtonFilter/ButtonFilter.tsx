@@ -1,5 +1,6 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from "react"
 import {Filter} from "../../types"
+import {Button} from "@mui/material"
 
 interface PropsType extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     filter: Filter
@@ -18,6 +19,6 @@ export const ButtonFilter: React.FC<PropsType> = ({
     }
 
     return (
-        <button onClick={onFilterHandler} {...restProps}>{filter}</button>
+        <Button onClick={onFilterHandler} variant={filterState === filter ? "outlined" : "text"}>{filter}</Button>
     )
 }

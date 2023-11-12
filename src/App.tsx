@@ -4,6 +4,8 @@ import {v1} from "uuid"
 import {TodoList} from "./components/TodoList/TodoList"
 import {Filter, TasksType, TaskType, TodoType} from "./types"
 import {InputSubmit} from "./components/InputSubmit/InputSubmit"
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
+import {Menu} from "@mui/icons-material"
 
 function App(): JSX.Element {
 
@@ -103,31 +105,54 @@ function App(): JSX.Element {
         }
 
         return (
-            <TodoList key={todo.id}
-                      id={todo.id}
-                      tasks={initialTask}
-                      title={todo.title}
-                      changeFilter={changeFilterTodoList}
-                      removeTask={removeTask}
-                      addTask={addTask}
-                      changeStatus={changeStatus}
-                      filter={todo.filter}
-                      removeTodoList={removeTodoList}
-                      changeTitleTodoList={changeTitleTodoList}
-                      changeTitleTask={changeTitleTask}
-            />
+            <Grid item>
+                <Paper elevation={3} style={{padding: "20px"}}>
+                <TodoList key={todo.id}
+                          id={todo.id}
+                          tasks={initialTask}
+                          title={todo.title}
+                          changeFilter={changeFilterTodoList}
+                          removeTask={removeTask}
+                          addTask={addTask}
+                          changeStatus={changeStatus}
+                          filter={todo.filter}
+                          removeTodoList={removeTodoList}
+                          changeTitleTodoList={changeTitleTodoList}
+                          changeTitleTask={changeTitleTask}
+                />
+                </Paper>
+            </Grid>
         )
     })
 
     return (
         <div className="App">
-            <div>
-                <div>
-                    <h3>Add new todolist</h3>
-                </div>
-                <InputSubmit onClickCallBack={addTodoList} buttonTitle="+"/>
-            </div>
-            {todoList}
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{mr: 2}}
+                    >
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        News
+                    </Typography>
+                    <Button color="inherit">Login</Button>
+                </Toolbar>
+            </AppBar>
+
+            <Container fixed>
+                <Grid container style={{padding: "20px"}}>
+                    <InputSubmit onClickCallBack={addTodoList} buttonTitle="+"/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {todoList}
+                </Grid>
+            </Container>
         </div>
     )
 }
