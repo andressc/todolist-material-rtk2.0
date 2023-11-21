@@ -1,9 +1,9 @@
 import React, {useState} from "react"
-import "./App.css"
+import "../src/App.css"
 import {v1} from "uuid"
-import {TodoList} from "./components/TodoList/TodoList"
-import {Filter, TasksType, TaskType, TodoType} from "./types"
-import {InputSubmit} from "./components/InputSubmit/InputSubmit"
+import {TodoList} from "../src/components/TodoList/TodoList"
+import {Filter, TasksType, TaskType, TodoType} from "../src/types"
+import {InputSubmit} from "../src/components/InputSubmit/InputSubmit"
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
 import {Menu} from "@mui/icons-material"
 
@@ -13,16 +13,8 @@ function App(): JSX.Element {
     let todoList2: string = v1()
 
     const [todoData, setTodoData] = useState<TodoType[]>([
-        {
-            id: todoList1,
-            title: "todo 1",
-            filter: "Active",
-        },
-        {
-            id: todoList2,
-            title: "todo 2",
-            filter: "Completed",
-        },
+        {id: todoList1, title: "todo 1", filter: "Active",},
+        {id: todoList2, title: "todo 2", filter: "Completed",},
     ])
 
     const removeTodoList = (todoListId: string): void => {

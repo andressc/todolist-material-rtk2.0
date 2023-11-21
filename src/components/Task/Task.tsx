@@ -1,8 +1,8 @@
-import React, {ChangeEvent, DetailedHTMLProps, LiHTMLAttributes} from "react"
+import React, {ChangeEvent} from "react"
 import {TaskType} from "../../types"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 import DeleteIcon from "@mui/icons-material/Delete"
-import {IconButton} from "@mui/material"
+import IconButton from '@mui/material/IconButton';
 import CheckBox from "@mui/material/Checkbox"
 
 interface PropsType {

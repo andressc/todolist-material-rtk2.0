@@ -1,12 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
-import {Button, IconButton, TextField} from "@mui/material"
-import {AddCircle} from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
+import AddCircle from '@mui/icons-material/AddCircle';
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
-    buttonTitle: string
 }
-export const InputSubmit: React.FC<PropsType> = ({onClickCallBack, buttonTitle}) => {
+export const InputSubmit: React.FC<PropsType> = ({onClickCallBack}) => {
 
     const [inputText, setInputText] = useState<string>("")
 
@@ -39,7 +39,7 @@ export const InputSubmit: React.FC<PropsType> = ({onClickCallBack, buttonTitle})
                            error={!!titleText}
                            helperText={titleText}
                 />
-                <IconButton aria-label="delete" onClick={onClickHandler}>
+                <IconButton aria-label="add" onClick={onClickHandler} disabled={disabledButton}>
                     <AddCircle/>
                 </IconButton>
             </div>

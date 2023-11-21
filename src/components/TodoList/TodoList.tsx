@@ -4,50 +4,60 @@ import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
-import {Button, IconButton} from "@mui/material"
-import {AddCircle, Delete} from "@mui/icons-material"
+import IconButton from '@mui/material/IconButton';
+import Delete from "@mui/icons-material/Delete"
+import {useDispatch, useSelector} from "react-redux"
+import {AppRootState} from "../../store/store"
+import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC} from "../../store/task-reducer"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
-    tasks: TaskType[]
     title: string
     changeFilter: (filter: Filter, todoListId: string) => void
-    removeTask: (taskId: string, todoListId: string) => void
-    addTask: (title: string, todoListId: string) => void
-    changeStatus: (taskId: string, isDone: boolean, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTitleTodoList: (title: string, id: string) => void
-    changeTitleTask: (title: string, taskId: string, todoListId: string) => void
     filter: Filter
 }
 
 export const TodoList: React.FC<PropsType> = ({
                                                   id,
-                                                  tasks,
                                                   title,
                                                   changeFilter,
-                                                  removeTask,
-                                                  addTask,
-                                                  changeStatus,
                                                   filter,
                                                   changeTitleTodoList,
                                                   removeTodoList,
-                                                  changeTitleTask,
                                                   ...restProps
                                               }): JSX.Element => {
 
+    const dispatch = useDispatch()
+    const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id] )
+
     const removeTaskHandler = (taskId: string): void => {
-        removeTask(taskId, id)
+        dispatch(removeTaskAC(id, taskId))
     }
 
     const changeStatusHandler = (taskId: string, isDone: boolean): void => {
-        changeStatus(taskId, isDone, id)
+        dispatch(changeStatusTaskAC(id, taskId, isDone))
     }
 
-    const taskList: JSX.Element[] = tasks.map(task => {
+    const onClickCallBack = (inputText: string): void => {
+        dispatch(addTaskAC(id, inputText.trim()))
+    }
+
+    let initialTask: TaskType[] = tasks
+
+    if (filter === "Active") {
+        initialTask = initialTask.filter(v => !v.isDone)
+    }
+
+    if (filter === "Completed") {
+        initialTask = initialTask.filter(v => v.isDone)
+    }
+
+    const taskList: JSX.Element[] = initialTask.map(task => {
 
         const onChangeCallBack = (title: string, taskId: string) => {
-            changeTitleTask(title, taskId, id)
+            dispatch(changeTitleTaskAC(id, taskId, title))
         }
 
         return (<Task key={task.id}
@@ -65,10 +75,6 @@ export const TodoList: React.FC<PropsType> = ({
         removeTodoList(id)
     }
 
-    const onClickCallBack = (inputText: string): void => {
-        addTask(inputText.trim(), id)
-    }
-
     const onChangeCallBack = (title: string,) => {
         changeTitleTodoList(title, id)
     }
@@ -84,7 +90,7 @@ export const TodoList: React.FC<PropsType> = ({
                 </h3>
             </div>
 
-            <InputSubmit onClickCallBack={onClickCallBack} buttonTitle="+"/>
+            <InputSubmit onClickCallBack={onClickCallBack}/>
             <div>
                 {taskList}
             </div>
