@@ -12,13 +12,12 @@ export const ButtonFilter: React.FC<PropsType> = ({
                                                       filter,
                                                       changeFilter,
                                                       filterState,
-                                                      ...restProps
                                                   }): JSX.Element => {
     const onFilterHandler = (): void => {
         changeFilter(filter)
     }
 
     return (
-        <Button onClick={onFilterHandler} variant={filterState === filter ? "outlined" : "text"} {...restProps}>{filter}</Button>
+        <Button onClick={onFilterHandler} variant={filterState === filter ? "outlined" : "text"}>{filter}</Button>
     )
 }
