@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, HTMLAttributes} from "react"
+import React, {DetailedHTMLProps, HTMLAttributes, useCallback} from "react"
 import {ButtonFilter} from "../ButtonFilter/ButtonFilter"
 import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
@@ -19,7 +19,7 @@ interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HT
     filter: Filter
 }
 
-export const TodoList: React.FC<PropsType> = ({
+export const TodoList: React.FC<PropsType> = React.memo(({
                                                   id,
                                                   title,
                                                   changeFilter,
@@ -29,20 +29,26 @@ export const TodoList: React.FC<PropsType> = ({
                                                   ...restProps
                                               }): JSX.Element => {
 
+    console.log("TodoList is called")
+
     const dispatch = useDispatch()
     const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id] )
 
-    const removeTaskHandler = (taskId: string): void => {
+    const removeTaskHandler = useCallback((taskId: string): void => {
         dispatch(removeTaskAC(id, taskId))
-    }
+    }, [dispatch, id])
 
-    const changeStatusHandler = (taskId: string, isDone: boolean): void => {
+    const changeStatusHandler = useCallback((taskId: string, isDone: boolean): void => {
         dispatch(changeStatusTaskAC(id, taskId, isDone))
-    }
+    }, [dispatch, id])
 
-    const onClickCallBack = (inputText: string): void => {
+    const onClickCallBack = useCallback((inputText: string): void => {
         dispatch(addTaskAC(id, inputText.trim()))
-    }
+    }, [dispatch, id])
+
+    const changeTitleTask = useCallback((title: string, taskId: string) => {
+        dispatch(changeTitleTaskAC(id, taskId, title))
+    }, [dispatch, id])
 
     let initialTask: TaskType[] = tasks
 
@@ -56,28 +62,24 @@ export const TodoList: React.FC<PropsType> = ({
 
     const taskList: JSX.Element[] = initialTask.map(task => {
 
-        const onChangeCallBack = (title: string, taskId: string) => {
-            dispatch(changeTitleTaskAC(id, taskId, title))
-        }
-
         return (<Task key={task.id}
                       task={task} removeTasks={removeTaskHandler}
                       changeStatus={changeStatusHandler}
-                      changeTitleTask={onChangeCallBack}
+                      changeTitleTask={changeTitleTask}
         />)
     })
 
-    const changeFilterHandler = (filter: Filter): void => {
+    const changeFilterHandler = useCallback((filter: Filter): void => {
         changeFilter(filter, id)
-    }
+    }, [changeFilter, id])
 
-    const removeTodoListHandler = (): void => {
+    const removeTodoListHandler = useCallback((): void => {
         removeTodoList(id)
-    }
+    },[removeTodoList, id])
 
-    const onChangeCallBack = (title: string,) => {
+    const onChangeCallBack = useCallback((title: string,) => {
         changeTitleTodoList(title, id)
-    }
+    }, [changeTitleTodoList, id])
 
     return (
         <div {...restProps}>
@@ -101,4 +103,4 @@ export const TodoList: React.FC<PropsType> = ({
             </div>
         </div>
     )
-}
+})

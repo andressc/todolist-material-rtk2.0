@@ -139,7 +139,7 @@ function App(): JSX.Element {
 
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
-                    <InputSubmit onClickCallBack={addTodoList} buttonTitle="+"/>
+                    <InputSubmit onClickCallBack={addTodoList}/>
                 </Grid>
                 <Grid container spacing={3}>
                     {todoList}

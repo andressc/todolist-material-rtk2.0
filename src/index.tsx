@@ -4,7 +4,12 @@ import "./index.css"
 import AppWithRedux from "./AppWithRedux"
 import {Provider} from "react-redux"
 import {store} from "./store/store"
+// @ts-ignore
+/*import { ReactDevTools } from 'react-devtools';
 
+if (process.env.NODE_ENV === 'development') {
+    ReactDevTools.connect();
+}*/
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement

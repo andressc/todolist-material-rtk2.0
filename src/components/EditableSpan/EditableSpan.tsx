@@ -6,7 +6,9 @@ interface PropsType {
     onChangeCallBack: (spanText: string) => void
 }
 
-export const EditableSpan: React.FC<PropsType> = ({text, onChangeCallBack}) => {
+export const EditableSpan: React.FC<PropsType> = React.memo(({text, onChangeCallBack}) => {
+
+    console.log("EditableSpan is called")
 
     const [editableSpan, setEditableSpan] = useState<boolean>(false)
     const [spanText, setSpanText] = useState<string>("")
@@ -28,4 +30,4 @@ export const EditableSpan: React.FC<PropsType> = ({text, onChangeCallBack}) => {
     return editableSpan ?
         <TextField type="text" value={spanText} onBlur={onBlurHandler} onChange={onChangeHandler} autoFocus variant="standard"/> :
         <span onDoubleClick={onDoubleClickHandler}>{text}</span>
-}
+})

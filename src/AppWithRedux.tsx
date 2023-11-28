@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useCallback} from "react"
 import "./App.css"
 
 import {TodoList} from "./components/TodoList/TodoList"
@@ -20,21 +20,21 @@ function AppWithRedux(): JSX.Element {
     const dispatch = useDispatch()
     const todoData = useSelector<AppRootState, TodoType[]>(state => state.todoLists )
 
-    const removeTodoList = (todoListId: string): void => {
+    const removeTodoList = useCallback((todoListId: string): void => {
         dispatch(removeTodoListAC(todoListId))
-    }
+    }, [dispatch])
 
-    const addTodoList = (title: string): void => {
+    const addTodoList = useCallback((title: string): void => {
         dispatch(addTodoListAC(title))
-    }
+    }, [dispatch])
 
-    const changeTitleTodoList = (title: string, todoListId: string): void => {
+    const changeTitleTodoList = useCallback((title: string, todoListId: string): void => {
         dispatch(changeTitleTodoListAC(todoListId, title))
-    }
+    }, [dispatch])
 
-    const changeFilterTodoList = (filter: Filter, todoListId: string): void => {
+    const changeFilterTodoList = useCallback((filter: Filter, todoListId: string): void => {
         dispatch(changeFilterTodoListAC(todoListId, filter))
-    }
+    }, [dispatch])
 
     const todoList: JSX.Element[] = todoData.map(todo => {
         return (

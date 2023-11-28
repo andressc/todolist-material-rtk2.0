@@ -1,12 +1,15 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
-import IconButton from '@mui/material/IconButton';
-import TextField from '@mui/material/TextField';
-import AddCircle from '@mui/icons-material/AddCircle';
+import IconButton from "@mui/material/IconButton"
+import TextField from "@mui/material/TextField"
+import AddCircle from "@mui/icons-material/AddCircle"
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
 }
-export const InputSubmit: React.FC<PropsType> = ({onClickCallBack}) => {
+
+export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) => {
+
+    console.log("InputSubmit is called")
 
     const [inputText, setInputText] = useState<string>("")
 
@@ -40,9 +43,11 @@ export const InputSubmit: React.FC<PropsType> = ({onClickCallBack}) => {
                            helperText={titleText}
                 />
                 <IconButton aria-label="add" onClick={onClickHandler} disabled={disabledButton}>
-                    <AddCircle/>
+                    <AddCircle/>r
                 </IconButton>
             </div>
         </>
     )
-}
+})
+
+
