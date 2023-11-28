@@ -43,7 +43,11 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) =
                            helperText={titleText}
                 />
                 <IconButton aria-label="add" onClick={onClickHandler} disabled={disabledButton}>
-                    <AddCircle/>r
+                    <AddCircle/>
+                    <AddCircle/>
+                    <AddCircle/>
+                    <AddCircle/>
+                    <AddCircle/>
                 </IconButton>
             </div>
         </>
