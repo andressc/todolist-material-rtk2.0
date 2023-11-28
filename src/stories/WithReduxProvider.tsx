@@ -30,20 +30,20 @@ const initialGlobalState: AppRootState = {
                 isDone: true
             },
             {
-                id: "task1",
+                id: "task2",
                 title: "task2",
                 isDone: false
             }
         ],
         "todo2": [
             {
-                id: "task1",
-                title: "task1",
+                id: "task3",
+                title: "task3",
                 isDone: false
             },
             {
-                id: "task1",
-                title: "task2",
+                id: "task4",
+                title: "task4",
                 isDone: false
             }
         ]
