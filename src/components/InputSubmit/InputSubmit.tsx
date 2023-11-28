@@ -27,7 +27,7 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) =
         setInputText("")
     }
 
-    const titleText: boolean | string = inputText.length > 15 && "Your title is too long!"
+    const titleText: boolean | string = inputText.length > 15 && "Your title is too long!!"
 
     const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 15 && true
 
