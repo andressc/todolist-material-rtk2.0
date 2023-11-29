@@ -4,7 +4,13 @@ import "./App.css"
 import {TodoList} from "./components/TodoList/TodoList"
 import {Filter, TodoType} from "./types"
 import {InputSubmit} from "./components/InputSubmit/InputSubmit"
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
+import AppBar from "@mui/material/AppBar"
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import IconButton from "@mui/material/IconButton"
+import Toolbar from "@mui/material/Toolbar"
+import Typography from "@mui/material/Typography"
 import {Menu} from "@mui/icons-material"
 import {
     addTodoListAC,
@@ -39,7 +45,6 @@ function AppWithRedux(): JSX.Element {
     const todoList: JSX.Element[] = todoData.map(todo => {
         return (
             <Grid item key={todo.id}>
-                <Paper elevation={3} style={{padding: "20px"}}>
                 <TodoList
                           id={todo.id}
                           title={todo.title}
@@ -48,7 +53,6 @@ function AppWithRedux(): JSX.Element {
                           removeTodoList={removeTodoList}
                           changeTitleTodoList={changeTitleTodoList}
                 />
-                </Paper>
             </Grid>
         )
     })

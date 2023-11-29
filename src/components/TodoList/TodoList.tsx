@@ -4,11 +4,12 @@ import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import {useDispatch, useSelector} from "react-redux"
 import {AppRootState} from "../../store/store"
 import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC} from "../../store/task-reducer"
+import Paper from "@mui/material/Paper"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
@@ -20,19 +21,19 @@ interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HT
 }
 
 export const TodoList: React.FC<PropsType> = React.memo(({
-                                                  id,
-                                                  title,
-                                                  changeFilter,
-                                                  filter,
-                                                  changeTitleTodoList,
-                                                  removeTodoList,
-                                                  ...restProps
-                                              }): JSX.Element => {
+                                                             id,
+                                                             title,
+                                                             changeFilter,
+                                                             filter,
+                                                             changeTitleTodoList,
+                                                             removeTodoList,
+                                                             ...restProps
+                                                         }): JSX.Element => {
 
     console.log("TodoList is called")
 
     const dispatch = useDispatch()
-    const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id] )
+    const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id])
 
     const removeTaskHandler = useCallback((taskId: string): void => {
         dispatch(removeTaskAC(id, taskId))
@@ -75,32 +76,34 @@ export const TodoList: React.FC<PropsType> = React.memo(({
 
     const removeTodoListHandler = useCallback((): void => {
         removeTodoList(id)
-    },[removeTodoList, id])
+    }, [removeTodoList, id])
 
     const onChangeCallBack = useCallback((title: string,) => {
         changeTitleTodoList(title, id)
     }, [changeTitleTodoList, id])
 
     return (
-        <div {...restProps}>
-            <div>
-                <h3>
-                    <EditableSpan text={title} onChangeCallBack={onChangeCallBack}/>
-                    <IconButton aria-label="delete" onClick={removeTodoListHandler}>
-                        <Delete/>
-                    </IconButton>
-                </h3>
-            </div>
+        <Paper elevation={3} style={{padding: "20px"}}>
+            <div {...restProps}>
+                <div>
+                    <h3>
+                        <EditableSpan text={title} onChangeCallBack={onChangeCallBack}/>
+                        <IconButton aria-label="delete" onClick={removeTodoListHandler}>
+                            <Delete/>
+                        </IconButton>
+                    </h3>
+                </div>
 
-            <InputSubmit onClickCallBack={onClickCallBack}/>
-            <div>
-                {taskList}
+                <InputSubmit onClickCallBack={onClickCallBack}/>
+                <div>
+                    {taskList}
+                </div>
+                <div>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={filter}/>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={filter}/>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={filter}/>
+                </div>
             </div>
-            <div>
-                <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={filter}/>
-                <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={filter}/>
-                <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={filter}/>
-            </div>
-        </div>
+        </Paper>
     )
 })

@@ -10,11 +10,10 @@ const meta: Meta<typeof AppWithRedux> = {
         layout: 'centered',
     },
     tags: ['autodocs'],
+    decorators: [withReduxProvider],
 };
 
 export default meta;
 type Story = StoryObj<typeof AppWithRedux>;
 
-export const BaseExample: Story = {
-    decorators: [withReduxProvider],
-};
+export const BaseExample: Story = {};

@@ -1,9 +1,9 @@
-import React, {ChangeEvent, useCallback} from "react"
+import React, {useCallback} from "react"
 import {TaskType} from "../../types"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
 import DeleteIcon from "@mui/icons-material/Delete"
 import IconButton from "@mui/material/IconButton"
-import CheckBox from "@mui/material/Checkbox"
+import CheckboxMy from "../Checkbox/CheckboxMy"
 
 interface PropsType {
     task: TaskType
@@ -22,15 +22,14 @@ export const Task: React.FC<PropsType> = React.memo(({
     console.log("Task is called")
 
     const onRemoveHandler = useCallback(() => removeTasks(task.id), [removeTasks, task.id])
-    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => changeStatus(task.id, e.currentTarget.checked), [changeStatus, task.id])
 
-    const onChangeCallBack = useCallback((title: string,) => {
-        changeTitleTask(title, task.id)
-    }, [changeTitleTask, task.id])
+    const onChangeHandler = useCallback((isDone: boolean) => changeStatus(task.id, isDone), [changeStatus, task.id])
+
+    const onChangeCallBack = useCallback((title: string,) => changeTitleTask(title, task.id), [changeTitleTask, task.id])
 
     return (
         <div key={task.id}>
-            <CheckBox checked={task.isDone} onChange={onChangeHandler}/>
+            <CheckboxMy isDone={task.isDone} onChangeCheckbox={onChangeHandler}/>
             <EditableSpan text={task.title} onChangeCallBack={onChangeCallBack}/>
             <IconButton aria-label="delete" onClick={onRemoveHandler}>
                 <DeleteIcon/>
