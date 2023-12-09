@@ -8,5 +8,10 @@ const rootReducer = combineReducers({
     tasks: taskReducer
 })
 
+
 export type AppRootState = ReturnType<typeof rootReducer>
 export const store = createStore(rootReducer, composeWithDevTools())
+
+store.subscribe(() => {
+    console.log('state changed')
+})

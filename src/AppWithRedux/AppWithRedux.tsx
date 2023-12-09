@@ -1,9 +1,7 @@
-import React, {useCallback} from "react"
-import "./App.css"
-
-import {TodoList} from "./components/TodoList/TodoList"
-import {Filter, TodoType} from "./types"
-import {InputSubmit} from "./components/InputSubmit/InputSubmit"
+import React from "react"
+import "../App.css"
+import {TodoList} from "../components/TodoList/TodoList"
+import {InputSubmit} from "../components/InputSubmit/InputSubmit"
 import AppBar from "@mui/material/AppBar"
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
@@ -12,35 +10,17 @@ import IconButton from "@mui/material/IconButton"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import {Menu} from "@mui/icons-material"
-import {
-    addTodoListAC,
-    changeFilterTodoListAC,
-    changeTitleTodoListAC,
-    removeTodoListAC,
-} from "./store/todolist-reducer"
-import {useDispatch, useSelector} from "react-redux"
-import {AppRootState} from "./store/store"
+import {useTodoList} from "./hooks/useTodoList"
 
 function AppWithRedux(): JSX.Element {
 
-    const dispatch = useDispatch()
-    const todoData = useSelector<AppRootState, TodoType[]>(state => state.todoLists )
-
-    const removeTodoList = useCallback((todoListId: string): void => {
-        dispatch(removeTodoListAC(todoListId))
-    }, [dispatch])
-
-    const addTodoList = useCallback((title: string): void => {
-        dispatch(addTodoListAC(title))
-    }, [dispatch])
-
-    const changeTitleTodoList = useCallback((title: string, todoListId: string): void => {
-        dispatch(changeTitleTodoListAC(todoListId, title))
-    }, [dispatch])
-
-    const changeFilterTodoList = useCallback((filter: Filter, todoListId: string): void => {
-        dispatch(changeFilterTodoListAC(todoListId, filter))
-    }, [dispatch])
+    const {
+        todoData,
+        removeTodoList,
+        addTodoList,
+        changeTitleTodoList,
+        changeFilterTodoList
+    } = useTodoList()
 
     const todoList: JSX.Element[] = todoData.map(todo => {
         return (
