@@ -1,9 +1,4 @@
-import axios from "axios"
-import {domain} from "./domain"
-
-const settings = {
-    withCredentials: true
-}
+import {instance, ResponseType} from "./domain"
 
 export type TodolistType = {
     id: string
@@ -16,27 +11,20 @@ type CreateType = {
         item: TodolistType
 }
 
-type CudTodolistType<T> = {
-    resultCode: number
-    messages: string[]
-    fieldsErrors: string[]
-    data: T
-}
-
 export const todolistsApi = {
     getTodoLists() {
-        return axios.get<TodolistType[]>(`${domain}/todo-lists`, settings)
+        return instance.get<TodolistType[]>(`todo-lists`)
     },
 
     createTodolist(title: string) {
-        return axios.post<CudTodolistType<CreateType>>(`${domain}/todo-lists`, {title},  settings)
+        return instance.post<ResponseType<CreateType>>(`todo-lists`, {title})
     },
 
     deleteTodolist(id: string) {
-        return axios.delete<CudTodolistType<{}>>(`${domain}/todo-lists/${id}`, settings)
+        return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
 
     updateTodolistTitle(id: string, title: string) {
-        return axios.put<CudTodolistType<{}>>(`${domain}/todo-lists/${id}`, {title}, settings)
+        return instance.put<ResponseType>(`todo-lists/${id}`, {title})
     }
 }
