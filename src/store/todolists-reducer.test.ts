@@ -1,15 +1,15 @@
 import {v1} from "uuid"
-import {Filter, TasksType, TodoType} from "../types"
 import {
     addTodoListAC,
     changeFilterTodoListAC,
-    changeTitleTodoListAC,
-    removeTodoListAC,
+    changeTitleTodoListAC, Filter,
+    removeTodoListAC, TodolistDomainType,
     todolistReducer
 } from "./todolist-reducer"
-import {taskReducer} from "./task-reducer"
+import {taskReducer, TasksType} from "./task-reducer"
+import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
 
-let state: TodoType[]
+let state: TodolistDomainType[]
 let state2: TasksType
 const todoList1: string = v1()
 const todoList2: string = v1()
@@ -25,23 +25,87 @@ beforeEach(() => {
             id: todoList1,
             title: "todo 1",
             filter: "All",
+            addedDate: "",
+            order: 0
         },
         {
             id: todoList2,
             title: "todo 2",
             filter: "All",
+            addedDate: "",
+            order: 0
         }
     ]
 
     state2 = {
         [todoList1]: [
-            {id: v1(), title: "1HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: task2, title: "ReactJS", isDone: false}
+            {
+                id: v1(),
+                title: "1HTML&CSS",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: v1(),
+                title: "JS",
+                status: TaskStatuses.Completed,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: task2,
+                title: "ReactJS",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            }
         ],
         [todoList2]: [
-            {id: task1, title: "book", isDone: false},
-            {id: v1(), title: "milk", isDone: true},
+            {
+                id: task1,
+                title: "book",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList2,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: v1(),
+                title: "milk",
+                status: TaskStatuses.Completed,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList2,
+                order: 0,
+                addedDate: "",
+            },
         ]
     }
 })
@@ -49,7 +113,7 @@ beforeEach(() => {
 test("remove TodoList", () => {
     const action = removeTodoListAC(todoList1)
 
-    const result: TodoType[] = todolistReducer(state, action)
+    const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
 
     expect(result.length).toBe(1)
@@ -61,7 +125,7 @@ test("remove TodoList", () => {
 test("add TodoList", () => {
     const action = addTodoListAC(title)
 
-    const result: TodoType[] = todolistReducer(state, action)
+    const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
 
     expect(result.length).toBe(3)
@@ -80,14 +144,14 @@ test("add TodoList", () => {
 })
 
 test("change Title TodoList", () => {
-    const result: TodoType[] = todolistReducer(state, changeTitleTodoListAC(todoList2, title))
+    const result: TodolistDomainType[] = todolistReducer(state, changeTitleTodoListAC(todoList2, title))
 
     expect(result.length).toBe(2)
     expect(result[1].title).toBe(title)
 })
 
 test("change Filter TodoList", () => {
-    const result: TodoType[] = todolistReducer(state, changeFilterTodoListAC(todoList1, filter))
+    const result: TodolistDomainType[] = todolistReducer(state, changeFilterTodoListAC(todoList1, filter))
 
     expect(result.length).toBe(2)
     expect(result[0].filter).toBe(filter)

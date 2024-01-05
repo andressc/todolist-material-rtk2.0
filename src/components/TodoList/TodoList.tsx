@@ -1,6 +1,5 @@
 import React, {DetailedHTMLProps, HTMLAttributes, useCallback} from "react"
 import {ButtonFilter} from "../ButtonFilter/ButtonFilter"
-import {Filter, TaskType} from "../../types"
 import {Task} from "../Task/Task"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
 import {EditableSpan} from "../EditableSpan/EditableSpan"
@@ -10,6 +9,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {AppRootState} from "../../store/store"
 import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC} from "../../store/task-reducer"
 import Paper from "@mui/material/Paper"
+import {Filter} from "../../store/todolist-reducer"
+import {TaskStatuses, TaskType} from "../../api/tasks-api"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
@@ -39,8 +40,8 @@ export const TodoList: React.FC<PropsType> = React.memo(({
         dispatch(removeTaskAC(id, taskId))
     }, [dispatch, id])
 
-    const changeStatusHandler = useCallback((taskId: string, isDone: boolean): void => {
-        dispatch(changeStatusTaskAC(id, taskId, isDone))
+    const changeStatusHandler = useCallback((taskId: string, status: TaskStatuses): void => {
+        dispatch(changeStatusTaskAC(id, taskId, status))
     }, [dispatch, id])
 
     const onClickCallBack = useCallback((inputText: string): void => {
@@ -54,11 +55,11 @@ export const TodoList: React.FC<PropsType> = React.memo(({
     let initialTask: TaskType[] = tasks
 
     if (filter === "Active") {
-        initialTask = initialTask.filter(v => !v.isDone)
+        initialTask = initialTask.filter(v => v.status === TaskStatuses.New || v.status === TaskStatuses.InProgress)
     }
 
     if (filter === "Completed") {
-        initialTask = initialTask.filter(v => v.isDone)
+        initialTask = initialTask.filter(v => v.status === TaskStatuses.Completed)
     }
 
     const taskList: JSX.Element[] = initialTask.map(task => {

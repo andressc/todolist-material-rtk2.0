@@ -1,18 +1,25 @@
 import React, {ChangeEvent} from "react"
 import CheckBox from "@mui/material/Checkbox"
+import {TaskStatuses} from "../../api/tasks-api"
 
 type PropsType = {
-    isDone: boolean
-    onChangeCheckbox: (isDone: boolean) => void
+    status: TaskStatuses
+    onChangeCheckbox: (taskStatus: TaskStatuses) => void
 }
-const CheckboxMy: React.FC<PropsType> = ({isDone, onChangeCheckbox}) => {
+const CheckboxMy: React.FC<PropsType> = ({status, onChangeCheckbox}) => {
 
     console.log("checkbox called")
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => onChangeCheckbox(e.currentTarget.checked)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.currentTarget.checked) {
+            onChangeCheckbox(TaskStatuses.Completed)
+            return
+        }
+        onChangeCheckbox(TaskStatuses.New)
+    }
 
     return (
-        <CheckBox checked={isDone} onChange={onChangeHandler}/>
+        <CheckBox checked={status === TaskStatuses.Completed} onChange={onChangeHandler}/>
     )
 }
 

@@ -1,6 +1,6 @@
 import {v1} from "uuid"
-import {TasksType} from "../types"
-import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer} from "./task-reducer"
+import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer, TasksType} from "./task-reducer"
+import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
 
 let state: TasksType
 const todoList1: string = v1()
@@ -12,13 +12,73 @@ const title: string = "newTask"
 beforeEach(() => {
     state = {
         [todoList1]: [
-            {id: v1(), title: "1HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: task2, title: "ReactJS", isDone: false}
+            {
+                id: v1(),
+                title: "1HTML&CSS",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: v1(),
+                title: "JS",
+                status: TaskStatuses.Completed,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: task2,
+                title: "ReactJS",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList1,
+                order: 0,
+                addedDate: "",
+            }
         ],
         [todoList2]: [
-            {id: task1, title: "book", isDone: false},
-            {id: v1(), title: "milk", isDone: true},
+            {
+                id: task1,
+                title: "book",
+                status: TaskStatuses.New,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList2,
+                order: 0,
+                addedDate: "",
+            },
+            {
+                id: v1(),
+                title: "milk",
+                status: TaskStatuses.Completed,
+                description: "description",
+                completed: false,
+                priority: TaskPriorities.Low,
+                startDate: "",
+                deadline: "",
+                todoListId: todoList2,
+                order: 0,
+                addedDate: "",
+            },
         ]
     }
 })
@@ -28,7 +88,7 @@ test("add Task", () => {
 
     expect(result[todoList1].length).toBe(4)
     expect(result[todoList1][3].title).toBe("newTask")
-    expect(result[todoList1][3].isDone).toBe(false)
+    expect(result[todoList1][3].status).toBe(TaskStatuses.New)
     expect(result[todoList2].length).toBe(2)
 })
 
@@ -42,9 +102,9 @@ test("remove Task", () => {
 })
 
 test("change Status", () => {
-    const result: TasksType = taskReducer(state, changeStatusTaskAC(todoList1, task2, true))
+    const result: TasksType = taskReducer(state, changeStatusTaskAC(todoList1, task2, TaskStatuses.Completed))
 
-    expect(result[todoList1][2].isDone).toBeTruthy()
+    expect(result[todoList1][2].status).toBe(TaskStatuses.Completed)
     expect(result[todoList2][2]).toBeUndefined()
 })
 

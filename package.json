@@ -35,6 +35,11 @@
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_7e58a91c2bb345a"
   },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(axios)/)"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

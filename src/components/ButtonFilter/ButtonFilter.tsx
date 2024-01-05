@@ -1,6 +1,6 @@
 import React, {ButtonHTMLAttributes, DetailedHTMLProps} from "react"
-import {Filter} from "../../types"
 import Button from '@mui/material/Button';
+import {Filter} from "../../store/todolist-reducer"
 
 interface PropsType extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
     filter: Filter

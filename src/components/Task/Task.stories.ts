@@ -1,6 +1,7 @@
 import {Meta, StoryObj} from "@storybook/react"
 import {Task} from "./Task"
 import '../../index.css';
+import {TaskPriorities, TaskStatuses} from "../../api/tasks-api"
 
 const meta: Meta<typeof Task> = {
     title: 'Components/Task',
@@ -24,7 +25,15 @@ export const Made: Story = {
         task: {
             id: "1",
             title: "task1",
-            isDone: true,
+            status: TaskStatuses.Completed,
+            description: "description",
+            completed: false,
+            priority: TaskPriorities.Low,
+            startDate: "",
+            deadline: "",
+            todoListId: "",
+            order: 0,
+            addedDate: "",
         }
     }
 };
@@ -34,7 +43,15 @@ export const NotMade: Story = {
         task: {
             id: "1",
             title: "task1",
-            isDone: false,
+            status: TaskStatuses.New,
+            description: "description",
+            completed: false,
+            priority: TaskPriorities.Low,
+            startDate: "",
+            deadline: "",
+            todoListId: "",
+            order: 0,
+            addedDate: "",
         }
     },
 };
