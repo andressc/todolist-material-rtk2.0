@@ -18,7 +18,6 @@ export enum TaskPriorities {
 export type TaskType = {
     description: string
     title: string
-    completed: boolean
     status: TaskStatuses
     priority: TaskPriorities
     startDate: string
@@ -42,11 +41,10 @@ type GetType = {
 type UpdateTaskType = {
     title: string
     description: string | null
-    completed: boolean
     status: number
     priority: number
-    startDate?: string
-    deadline?: string
+    startDate: string
+    deadline: string
 }
 
 export const tasksApi = {

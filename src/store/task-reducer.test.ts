@@ -1,8 +1,18 @@
 import {v1} from "uuid"
-import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer, TasksType} from "./task-reducer"
-import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
+import {
+    addTaskAC,
+    changeStatusTaskAC,
+    changeTitleTaskAC,
+    removeTaskAC,
+    setTaskAC,
+    taskReducer,
+    TasksType
+} from "./task-reducer"
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/tasks-api"
+import {TodolistDomainType} from "./todolist-reducer"
 
 let state: TasksType
+let state2: TodolistDomainType[]
 const todoList1: string = v1()
 const todoList2: string = v1()
 const task1: string = v1()
@@ -17,7 +27,6 @@ beforeEach(() => {
                 title: "1HTML&CSS",
                 status: TaskStatuses.New,
                 description: "description",
-                completed: false,
                 priority: TaskPriorities.Low,
                 startDate: "",
                 deadline: "",
@@ -30,7 +39,6 @@ beforeEach(() => {
                 title: "JS",
                 status: TaskStatuses.Completed,
                 description: "description",
-                completed: false,
                 priority: TaskPriorities.Low,
                 startDate: "",
                 deadline: "",
@@ -43,7 +51,6 @@ beforeEach(() => {
                 title: "ReactJS",
                 status: TaskStatuses.New,
                 description: "description",
-                completed: false,
                 priority: TaskPriorities.Low,
                 startDate: "",
                 deadline: "",
@@ -58,7 +65,6 @@ beforeEach(() => {
                 title: "book",
                 status: TaskStatuses.New,
                 description: "description",
-                completed: false,
                 priority: TaskPriorities.Low,
                 startDate: "",
                 deadline: "",
@@ -71,7 +77,6 @@ beforeEach(() => {
                 title: "milk",
                 status: TaskStatuses.Completed,
                 description: "description",
-                completed: false,
                 priority: TaskPriorities.Low,
                 startDate: "",
                 deadline: "",
@@ -81,10 +86,40 @@ beforeEach(() => {
             },
         ]
     }
+
+    state2 = [
+        {
+            id: todoList1,
+            title: "todo 1",
+            filter: "All",
+            addedDate: "",
+            order: 0
+        },
+        {
+            id: todoList2,
+            title: "todo 2",
+            filter: "All",
+            addedDate: "",
+            order: 0
+        }
+    ]
 })
 
 test("add Task", () => {
-    const result: TasksType = taskReducer(state, addTaskAC(todoList1, title))
+    const newTask: TaskType = {
+        id: v1(),
+        title: title,
+        status: TaskStatuses.New,
+        description: "description",
+        priority: TaskPriorities.Low,
+        startDate: "",
+        deadline: "",
+        todoListId: todoList1,
+        order: 0,
+        addedDate: "",
+    }
+
+    const result: TasksType = taskReducer(state, addTaskAC(todoList1, title, newTask))
 
     expect(result[todoList1].length).toBe(4)
     expect(result[todoList1][3].title).toBe("newTask")
@@ -114,6 +149,15 @@ test("change Title Task", () => {
     expect(result[todoList1][2].title).toBe(title)
     expect(result[todoList2][2]).toBeUndefined()
 })
+
+
+test("tasks should be added for todolist", () => {
+    const result: TasksType = taskReducer({[todoList2]: [], [todoList1]: []}, setTaskAC(state[todoList1], todoList1))
+
+    expect(result[todoList1].length).toBe(3)
+    expect(result[todoList2].length).toBe(0)
+})
+
 
 /*test("test WRONG ACTION", () => {
     expect(() => {

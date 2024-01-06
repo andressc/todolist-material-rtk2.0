@@ -8,8 +8,8 @@ import {TaskStatuses, TaskType} from "../../api/tasks-api"
 interface PropsType {
     task: TaskType
     removeTasks: (taskId: string) => void
-    changeStatus: (taskId: string, status: TaskStatuses) => void
-    changeTitleTask: (title: string, taskId: string) => void
+    changeStatus: (task: TaskType, status: TaskStatuses) => void
+    changeTitleTask: (task: TaskType, title: string,) => void
 }
 
 export const Task: React.FC<PropsType> = React.memo(({
@@ -23,9 +23,9 @@ export const Task: React.FC<PropsType> = React.memo(({
 
     const onRemoveHandler = useCallback(() => removeTasks(task.id), [removeTasks, task.id])
 
-    const onChangeHandler = useCallback((status: TaskStatuses) => changeStatus(task.id, status), [changeStatus, task.id])
+    const onChangeHandler = useCallback((status: TaskStatuses) => changeStatus(task, status), [changeStatus, task])
 
-    const onChangeCallBack = useCallback((title: string,) => changeTitleTask(title, task.id), [changeTitleTask, task.id])
+    const onChangeCallBack = useCallback((title: string,) => changeTitleTask(task, title), [changeTitleTask, task.id])
 
 
 

@@ -79,18 +79,22 @@ export const DeleteTask = () => {
 export const UpdateTask = () => {
     const [state, setState] = useState<any>(null)
 
+    const taskId = "b30490bc-12fc-4ff5-8672-87871e5f008e";
+
     const updatedTask = {
         title: "updatedTask",
-        description: null,
-        completed: false,
+        description: "wefwefe",
         status: 0,
         priority: 1,
         startDate: "2023-12-10T20:46:27.46",
         deadline: "2023-12-10T20:46:27.46",
+        id: taskId,
+        todoListId: MainTodolistId,
+        order: 0,
+        addedDate: "2023-12-10T20:46:27.46"
     }
 
     useEffect(() => {
-        const taskId = "b30490bc-12fc-4ff5-8672-87871e5f008e";
         tasksApi.updateTask(MainTodolistId, taskId, updatedTask).then(res => setState(res.data))
     }, [])
 

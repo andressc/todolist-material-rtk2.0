@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, HTMLAttributes, useCallback} from "react"
+import React, {DetailedHTMLProps, HTMLAttributes, useCallback, useEffect} from "react"
 import {ButtonFilter} from "../ButtonFilter/ButtonFilter"
 import {Task} from "../Task/Task"
 import {InputSubmit} from "../InputSubmit/InputSubmit"
@@ -7,10 +7,16 @@ import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import {useDispatch, useSelector} from "react-redux"
 import {AppRootState} from "../../store/store"
-import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC} from "../../store/task-reducer"
+import {
+    addTaskTC,
+    removeTaskTC,
+    updateTaskStatusTC,
+    updateTaskTitleTC,
+} from "../../store/task-reducer"
 import Paper from "@mui/material/Paper"
-import {Filter} from "../../store/todolist-reducer"
+import {fetchTasksTC, Filter} from "../../store/todolist-reducer"
 import {TaskStatuses, TaskType} from "../../api/tasks-api"
+import {Dispatch} from "redux"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
@@ -33,23 +39,27 @@ export const TodoList: React.FC<PropsType> = React.memo(({
 
     console.log("TodoList is called")
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<Dispatch<any>>()
     const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id])
 
+    useEffect(() => {
+        dispatch(fetchTasksTC(id))
+    }, [])
+
     const removeTaskHandler = useCallback((taskId: string): void => {
-        dispatch(removeTaskAC(id, taskId))
+        dispatch(removeTaskTC(id, taskId))
     }, [dispatch, id])
 
-    const changeStatusHandler = useCallback((taskId: string, status: TaskStatuses): void => {
-        dispatch(changeStatusTaskAC(id, taskId, status))
+    const changeStatusHandler = useCallback((task: TaskType, status: TaskStatuses): void => {
+        dispatch(updateTaskStatusTC(id, task, status))
     }, [dispatch, id])
 
     const onClickCallBack = useCallback((inputText: string): void => {
-        dispatch(addTaskAC(id, inputText.trim()))
+        dispatch(addTaskTC(id, inputText.trim()))
     }, [dispatch, id])
 
-    const changeTitleTask = useCallback((title: string, taskId: string) => {
-        dispatch(changeTitleTaskAC(id, taskId, title))
+    const changeTitleTask = useCallback((task: TaskType, title: string) => {
+        dispatch(updateTaskTitleTC(id, task, title))
     }, [dispatch, id])
 
     let initialTask: TaskType[] = tasks

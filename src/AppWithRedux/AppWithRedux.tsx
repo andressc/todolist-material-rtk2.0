@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import "../App.css"
 import {TodoList} from "../components/TodoList/TodoList"
 import {InputSubmit} from "../components/InputSubmit/InputSubmit"
@@ -11,8 +11,17 @@ import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import {Menu} from "@mui/icons-material"
 import {useTodoList} from "./hooks/useTodoList"
+import {fetchTodoListsTC} from "../store/todolist-reducer"
+import {useDispatch} from "react-redux"
+import {Dispatch} from "redux"
 
 function AppWithRedux(): JSX.Element {
+
+    const dispatch = useDispatch<Dispatch<any>>()
+
+    useEffect(() => {
+        dispatch(fetchTodoListsTC())
+    }, [])
 
     const {
         todoData,
