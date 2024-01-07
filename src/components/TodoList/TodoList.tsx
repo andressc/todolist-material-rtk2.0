@@ -9,9 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {AppRootState} from "../../store/store"
 import {
     addTaskTC,
-    removeTaskTC,
-    updateTaskStatusTC,
-    updateTaskTitleTC,
+    removeTaskTC, updateTaskTC,
 } from "../../store/task-reducer"
 import Paper from "@mui/material/Paper"
 import {fetchTasksTC, Filter} from "../../store/todolist-reducer"
@@ -50,16 +48,16 @@ export const TodoList: React.FC<PropsType> = React.memo(({
         dispatch(removeTaskTC(id, taskId))
     }, [dispatch, id])
 
-    const changeStatusHandler = useCallback((task: TaskType, status: TaskStatuses): void => {
-        dispatch(updateTaskStatusTC(id, task, status))
+    const changeStatusHandler = useCallback((taskId: string, status: TaskStatuses): void => {
+        dispatch(updateTaskTC(id, taskId, {status}))
     }, [dispatch, id])
 
     const onClickCallBack = useCallback((inputText: string): void => {
         dispatch(addTaskTC(id, inputText.trim()))
     }, [dispatch, id])
 
-    const changeTitleTask = useCallback((task: TaskType, title: string) => {
-        dispatch(updateTaskTitleTC(id, task, title))
+    const changeTitleTask = useCallback((taskId: string, title: string) => {
+        dispatch(updateTaskTC(id, taskId, {title}))
     }, [dispatch, id])
 
     let initialTask: TaskType[] = tasks

@@ -1,8 +1,6 @@
 import {v1} from "uuid"
 import {
-    addTaskAC,
-    changeStatusTaskAC,
-    changeTitleTaskAC,
+    addTaskAC, changeTaskAC,
     removeTaskAC,
     setTaskAC,
     taskReducer,
@@ -137,14 +135,14 @@ test("remove Task", () => {
 })
 
 test("change Status", () => {
-    const result: TasksType = taskReducer(state, changeStatusTaskAC(todoList1, task2, TaskStatuses.Completed))
+    const result: TasksType = taskReducer(state, changeTaskAC(todoList1, task2, {status: TaskStatuses.Completed}))
 
     expect(result[todoList1][2].status).toBe(TaskStatuses.Completed)
     expect(result[todoList2][2]).toBeUndefined()
 })
 
 test("change Title Task", () => {
-    const result: TasksType = taskReducer(state, changeTitleTaskAC(todoList1, task2, title))
+    const result: TasksType = taskReducer(state, changeTaskAC(todoList1, task2, {title}))
 
     expect(result[todoList1][2].title).toBe(title)
     expect(result[todoList2][2]).toBeUndefined()

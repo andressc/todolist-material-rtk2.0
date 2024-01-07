@@ -38,11 +38,11 @@ type GetType = {
     error: string | null
 }
 
-type UpdateTaskType = {
+export type UpdateTaskType = {
     title: string
-    description: string | null
-    status: number
-    priority: number
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
     startDate: string
     deadline: string
 }
