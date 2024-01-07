@@ -119,9 +119,9 @@ test("remove TodoList", () => {
 
 test("add TodoList", () => {
 
-    const newTodolist = {id: todoList1, title: title, filter: "All", addedDate: "", order: 0} as const
+    const newTodolist = {id: v1(), title: title, filter: "All", addedDate: "", order: 0} as const
 
-    const action = addTodoListAC(title, newTodolist)
+    const action = addTodoListAC(newTodolist)
 
     const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
@@ -137,8 +137,8 @@ test("add TodoList", () => {
     expect(keys.length).toBe(3)
     expect(result2[newKey]).toEqual([])
 
-    expect(result[0].id).toBe(action.todoListId)
-    expect(keys[2]).toBe(action.todoListId)
+    expect(result[0].id).toBe(newTodolist.id)
+    expect(keys[2]).toBe(newTodolist.id)
 })
 
 test("change Title TodoList", () => {

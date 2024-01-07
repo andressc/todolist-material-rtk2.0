@@ -119,7 +119,7 @@ test("add Task", () => {
         addedDate: "",
     }
 
-    const result: TasksType = taskReducer(state, addTaskAC(todoList1, title, newTask))
+    const result: TasksType = taskReducer(state, addTaskAC(newTask))
 
     expect(result[todoList1].length).toBe(4)
     expect(result[todoList1][3].title).toBe("newTask")

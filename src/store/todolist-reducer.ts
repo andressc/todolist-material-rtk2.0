@@ -1,4 +1,3 @@
-import {v1} from "uuid"
 import {todolistsApi, TodolistType} from "../api/todolists-api"
 import {Dispatch} from "redux"
 import {tasksApi} from "../api/tasks-api"
@@ -52,8 +51,8 @@ export const removeTodoListAC = (todoListId: string) =>
     ({type: REMOVE_TODO_LIST, todoListId} as const)
 
 export type AddTodoListType = ReturnType<typeof addTodoListAC>
-export const addTodoListAC = (title: string, newTodoList: TodolistDomainType) =>
-    ({type: ADD_TODO_LIST, todoListId: v1(), title, newTodoList} as const)
+export const addTodoListAC = (newTodoList: TodolistDomainType) =>
+    ({type: ADD_TODO_LIST, newTodoList} as const)
 
 type ChangeTitleTodoListType = ReturnType<typeof changeTitleTodoListAC>
 export const changeTitleTodoListAC = (todoListId: string, title: string) =>
@@ -94,7 +93,7 @@ export const addTodoListTC = (title: string) => {
 
         todolistsApi.createTodolist(title)
             .then(res => {
-                if(res.data.resultCode === 0) dispatch(addTodoListAC(title, {...res.data.data.item, filter: "All"}))
+                if(res.data.resultCode === 0) dispatch(addTodoListAC({...res.data.data.item, filter: "All"}))
             })
     }
 }
