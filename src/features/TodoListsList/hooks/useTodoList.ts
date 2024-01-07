@@ -1,12 +1,12 @@
 import {useDispatch, useSelector} from "react-redux"
-import {AppRootState} from "../../store/store"
+import {AppRootState} from "../../../app/store"
 import {useCallback} from "react"
 import {
     addTodoListTC,
     changeFilterTodoListAC,
     Filter,
     removeTodoListTC, TodolistDomainType, updateTodoListTitleTC
-} from "../../store/todolist-reducer"
+} from "../todolist-reducer"
 import {Dispatch} from "redux"
 
 export const useTodoList = () => {

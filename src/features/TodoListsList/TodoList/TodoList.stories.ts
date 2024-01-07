@@ -1,7 +1,7 @@
 import {Meta, StoryObj} from "@storybook/react"
-import '../../index.css';
+import '../../../index.css';
 import {TodoList} from "./TodoList"
-import {withReduxProvider} from "../../stories/WithReduxProvider"
+import {withReduxProvider} from "../../../stories/WithReduxProvider"
 
 const meta: Meta<typeof TodoList> = {
     title: 'Components/TodoList',

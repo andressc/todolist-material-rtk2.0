@@ -1,11 +1,11 @@
 import {Meta, StoryObj} from "@storybook/react"
 import '../index.css';
-import AppWithRedux from "./AppWithRedux"
+import App from "./App"
 import {withReduxProvider} from "../stories/WithReduxProvider"
 
-const meta: Meta<typeof AppWithRedux> = {
+const meta: Meta<typeof App> = {
     title: 'Components/AppWithRedux',
-    component: AppWithRedux,
+    component: App,
     parameters: {
         layout: 'centered',
     },
@@ -14,6 +14,6 @@ const meta: Meta<typeof AppWithRedux> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof AppWithRedux>;
+type Story = StoryObj<typeof App>;
 
 export const BaseExample: Story = {};

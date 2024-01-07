@@ -1,7 +1,7 @@
 import React, {useReducer} from "react"
 import "../src/App.css"
 import {v1} from "uuid"
-import {TodoList} from "../src/components/TodoList/TodoList"
+import {TodoList} from "../src/features/TodoListsList/TodoList/TodoList"
 import {Filter, TaskType} from "../src/types"
 import {InputSubmit} from "../src/components/InputSubmit/InputSubmit"
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
@@ -12,8 +12,8 @@ import {
     changeTitleTodoListAC,
     removeTodoListAC,
     todolistReducer
-} from "../src/store/todolist-reducer"
-import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer} from "../src/store/task-reducer"
+} from "../src/features/TodoListsList/todolist-reducer"
+import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer} from "../src/features/TodoListsList/task-reducer"
 
 function AppWithReducers(): JSX.Element {
 

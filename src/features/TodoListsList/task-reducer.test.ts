@@ -6,7 +6,7 @@ import {
     taskReducer,
     TasksType
 } from "./task-reducer"
-import {TaskPriorities, TaskStatuses, TaskType} from "../api/tasks-api"
+import {TaskPriorities, TaskStatuses, TaskType} from "../../api/tasks-api"
 import {TodolistDomainType} from "./todolist-reducer"
 
 let state: TasksType

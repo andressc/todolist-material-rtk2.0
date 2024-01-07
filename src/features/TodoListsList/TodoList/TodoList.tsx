@@ -1,19 +1,19 @@
 import React, {DetailedHTMLProps, HTMLAttributes, useCallback, useEffect} from "react"
-import {ButtonFilter} from "../ButtonFilter/ButtonFilter"
-import {Task} from "../Task/Task"
-import {InputSubmit} from "../InputSubmit/InputSubmit"
-import {EditableSpan} from "../EditableSpan/EditableSpan"
+import {ButtonFilter} from "../../../components/ButtonFilter/ButtonFilter"
+import {Task} from "./Task/Task"
+import {InputSubmit} from "../../../components/InputSubmit/InputSubmit"
+import {EditableSpan} from "../../../components/EditableSpan/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import {useDispatch, useSelector} from "react-redux"
-import {AppRootState} from "../../store/store"
+import {AppRootState} from "../../../app/store"
 import {
-    addTaskTC,
+    addTaskTC, fetchTasksTC,
     removeTaskTC, updateTaskTC,
-} from "../../store/task-reducer"
+} from "../task-reducer"
 import Paper from "@mui/material/Paper"
-import {fetchTasksTC, Filter} from "../../store/todolist-reducer"
-import {TaskStatuses, TaskType} from "../../api/tasks-api"
+import {Filter} from "../todolist-reducer"
+import {TaskStatuses, TaskType} from "../../../api/tasks-api"
 import {Dispatch} from "redux"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

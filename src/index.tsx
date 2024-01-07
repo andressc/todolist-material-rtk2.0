@@ -1,33 +1,18 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import "./index.css"
-import AppWithRedux from "./AppWithRedux/AppWithRedux"
+import App from "./app/App"
 import {Provider} from "react-redux"
-import {store} from "./store/store"
-import {getBanknoteList, getSquarePositiveIntegers} from "./store/lesson_8"
-// @ts-ignore
-/*import { ReactDevTools } from 'react-devtools';
-
-if (process.env.NODE_ENV === 'development') {
-    ReactDevTools.connect();
-}*/
+import {store} from "./app/store"
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 )
 
-const newArray = new Array(10000)
-newArray.fill(2)
-console.time("start")
-
-getSquarePositiveIntegers(newArray)
-
-console.timeEnd("start")
-
 root.render(
     // <React.StrictMode>
         <Provider store={store}>
-            <AppWithRedux/>
+            <App/>
         </Provider>
     // </React.StrictMode>
 )

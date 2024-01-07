@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "../src/App.css"
 import {v1} from "uuid"
-import {TodoList} from "../src/components/TodoList/TodoList"
+import {TodoList} from "../src/features/TodoListsList/TodoList/TodoList"
 import {Filter, TasksType, TaskType, TodoType} from "../src/types"
 import {InputSubmit} from "../src/components/InputSubmit/InputSubmit"
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
