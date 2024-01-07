@@ -1,15 +1,14 @@
 import React, {FC, useEffect} from "react"
-import {useDispatch} from "react-redux"
-import {Dispatch} from "redux"
 import {fetchTodoListsTC} from "./todolist-reducer"
 import {useTodoList} from "./hooks/useTodoList"
 import Grid from "@mui/material/Grid"
 import {TodoList} from "./TodoList/TodoList"
 import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
+import {useAppDispatch} from "../../hooks/useAppDispatch"
 
 export const TodoListsList: FC = () => {
 
-    const dispatch = useDispatch<Dispatch<any>>()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(fetchTodoListsTC())

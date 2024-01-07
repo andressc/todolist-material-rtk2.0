@@ -1,7 +1,7 @@
 import {todolistsApi, TodolistType} from "../../api/todolists-api"
-import {Dispatch} from "redux"
+import {AppThunk} from "../../app/store"
 
-type ActionsType =
+export type TodoListsActionsType =
     RemoveTodoListType
     | AddTodoListType
     | ChangeTitleTodoListType
@@ -16,7 +16,7 @@ export type TodolistDomainType = TodolistType & {
     filter: Filter
 }
 
-export const todolistReducer = (state: TodolistDomainType[] = initialState, action: ActionsType): TodolistDomainType[] => {
+export const todolistReducer = (state: TodolistDomainType[] = initialState, action: TodoListsActionsType): TodolistDomainType[] => {
     switch (action.type) {
         case "REMOVE-TODO-LIST":
             return state.filter(todo => todo.id !== action.todoListId)
@@ -58,11 +58,11 @@ export type SetTodoListsType = ReturnType<typeof setTodoListsAC>
 export const setTodoListsAC = (todoLists: TodolistType[]) =>
     ({type: "SET-TODO-LISTS", todoLists} as const)
 
-export const fetchTodoListsTC = () => (dispatch: Dispatch<ActionsType>) => {
+export const fetchTodoListsTC = (): AppThunk => dispatch => {
     todolistsApi.getTodoLists().then(response => dispatch(setTodoListsAC(response.data)))
 }
 
-export const removeTodoListTC = (todoListId: string) => (dispatch: Dispatch<ActionsType>) => {
+export const removeTodoListTC = (todoListId: string): AppThunk => dispatch => {
 
     todolistsApi.deleteTodolist(todoListId)
         .then(res => {
@@ -71,7 +71,7 @@ export const removeTodoListTC = (todoListId: string) => (dispatch: Dispatch<Acti
 }
 
 
-export const addTodoListTC = (title: string) => (dispatch: Dispatch<ActionsType>) => {
+export const addTodoListTC = (title: string): AppThunk => dispatch => {
 
     todolistsApi.createTodolist(title)
         .then(res => {
@@ -80,7 +80,7 @@ export const addTodoListTC = (title: string) => (dispatch: Dispatch<ActionsType>
 }
 
 
-export const updateTodoListTitleTC = (todoListId: string, title: string) => (dispatch: Dispatch<ActionsType>) => {
+export const updateTodoListTitleTC = (todoListId: string, title: string): AppThunk => dispatch => {
 
     todolistsApi.updateTodolistTitle(todoListId, title)
         .then(res => {

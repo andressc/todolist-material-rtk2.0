@@ -5,7 +5,7 @@ import {InputSubmit} from "../../../components/InputSubmit/InputSubmit"
 import {EditableSpan} from "../../../components/EditableSpan/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import {AppRootState} from "../../../app/store"
 import {
     addTaskTC, fetchTasksTC,
@@ -14,7 +14,7 @@ import {
 import Paper from "@mui/material/Paper"
 import {Filter} from "../todolist-reducer"
 import {TaskStatuses, TaskType} from "../../../api/tasks-api"
-import {Dispatch} from "redux"
+import {useAppDispatch} from "../../../hooks/useAppDispatch"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     id: string
@@ -37,7 +37,7 @@ export const TodoList: React.FC<PropsType> = React.memo(({
 
     console.log("TodoList is called")
 
-    const dispatch = useDispatch<Dispatch<any>>()
+    const dispatch = useAppDispatch()
     const tasks = useSelector<AppRootState, TaskType[]>(state => state.tasks[id])
 
     useEffect(() => {
