@@ -4,7 +4,7 @@ import {useTodoList} from "./hooks/useTodoList"
 import Grid from "@mui/material/Grid"
 import {TodoList} from "./TodoList/TodoList"
 import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
-import {useAppDispatch} from "../../hooks/useAppDispatch"
+import {useAppDispatch} from "../../hooks/useAppDispatchSelector"
 
 export const TodoListsList: FC = () => {
 
