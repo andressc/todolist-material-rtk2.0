@@ -6,12 +6,15 @@ import {TodoList} from "./TodoList/TodoList"
 import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
 import {useAppDispatch} from "../../hooks/useAppDispatchSelector"
 
-export const TodoListsList: FC = () => {
+type PropsType = {
+    demo?: boolean
+}
+export const TodoListsList: FC<PropsType> = ({demo = false}) => {
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(fetchTodoListsTC())
+        if(!demo) dispatch(fetchTodoListsTC())
     }, [])
 
     const {
@@ -26,12 +29,11 @@ export const TodoListsList: FC = () => {
         return (
             <Grid item key={todo.id}>
                 <TodoList
-                    id={todo.id}
-                    title={todo.title}
+                    todoList={todo}
                     changeFilter={changeFilterTodoList}
-                    filter={todo.filter}
                     removeTodoList={removeTodoList}
                     changeTitleTodoList={changeTitleTodoList}
+                    demo={demo}
                 />
             </Grid>
         )

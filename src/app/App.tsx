@@ -1,4 +1,4 @@
-import React from "react"
+import React, {FC} from "react"
 import "../App.css"
 import AppBar from "@mui/material/AppBar"
 import Button from "@mui/material/Button"
@@ -8,11 +8,21 @@ import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import {Menu} from "@mui/icons-material"
 import {TodoListsList} from "../features/TodoListsList/TodoListsList"
+import LinearProgress from '@mui/material/LinearProgress';
+import {CustomizedSnackbars} from "../components/ErrorSnackBar/ErrorSnackBar"
+import {useAppSelector} from "../hooks/useAppDispatchSelector"
 
-function App(): JSX.Element {
+type PropsType = {
+    demo?: boolean
+}
+
+const App: FC<PropsType> = ({demo = false}) => {
+
+    const status = useAppSelector(state => state.app.status)
 
     return (
         <div className="App">
+            <CustomizedSnackbars/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -29,10 +39,11 @@ function App(): JSX.Element {
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
 
             <Container fixed>
-                <TodoListsList/>
+                <TodoListsList demo={demo}/>
             </Container>
         </div>
     )

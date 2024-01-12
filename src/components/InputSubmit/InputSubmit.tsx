@@ -5,9 +5,10 @@ import AddCircle from "@mui/icons-material/AddCircle"
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
+    disabled?: boolean
 }
 
-export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) => {
+export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack, disabled = false}) => {
 
     console.log("InputSubmit is called")
 
@@ -21,15 +22,15 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) =
     const onClickHandler = (): void => {
 
         if (!inputText.trim()) return
-        if (inputText.trim().length > 15) return
+        if (inputText.trim().length > 215) return
 
         onClickCallBack(inputText.trim())
         setInputText("")
     }
 
-    const titleText: boolean | string = inputText.length > 15 && "Your title is too long!!"
+    const titleText: boolean | string = inputText.length > 215 && "Your title is too long!!"
 
-    const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 15 && true
+    const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 215 && true
 
     return (
         <>
@@ -41,8 +42,9 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack}) =
                            variant="outlined"
                            error={!!titleText}
                            helperText={titleText}
+                           disabled={disabled}
                 />
-                <IconButton aria-label="add" onClick={onClickHandler} disabled={disabledButton}>
+                <IconButton aria-label="add" onClick={onClickHandler} disabled={!disabled ? disabledButton : disabled}>
                     <AddCircle/>
                 </IconButton>
             </div>

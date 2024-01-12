@@ -1,13 +1,17 @@
 import React from "react"
 import {Provider} from "react-redux"
-import {combineReducers, createStore} from "redux"
+import {applyMiddleware, combineReducers, createStore} from "redux"
 import {todolistReducer} from "../features/TodoListsList/todolist-reducer"
 import {taskReducer} from "../features/TodoListsList/task-reducer"
 import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
+import {appReducer} from "../app/app-reducer"
+import {thunk} from "redux-thunk"
+import {v1} from "uuid"
 
 const rootReducer = combineReducers({
     todoLists: todolistReducer,
-    tasks: taskReducer
+    tasks: taskReducer,
+    app: appReducer,
 })
 
 const initialGlobalState: AppRootState = {
@@ -17,20 +21,22 @@ const initialGlobalState: AppRootState = {
             title: "todo1",
             filter: "All",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "idle"
         },
         {
             id: "todo2",
             title: "todo2",
             filter: "Active",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "loading"
         }
     ],
     tasks: {
-        "todo1": [
+        ["todo1"]: [
             {
-                id: "task1",
+                id: v1(),
                 title: "task1",
                 status: TaskStatuses.Completed,
                 description: "description",
@@ -42,7 +48,7 @@ const initialGlobalState: AppRootState = {
                 addedDate: "",
             },
             {
-                id: "task2",
+                id: v1(),
                 title: "task2",
                 status: TaskStatuses.New,
                 description: "description",
@@ -54,9 +60,9 @@ const initialGlobalState: AppRootState = {
                 addedDate: "",
             }
         ],
-        "todo2": [
+        ["todo2"]: [
             {
-                id: "task3",
+                id: v1(),
                 title: "task3",
                 status: TaskStatuses.New,
                 description: "description",
@@ -68,7 +74,7 @@ const initialGlobalState: AppRootState = {
                 addedDate: "",
             },
             {
-                id: "task4",
+                id: v1(),
                 title: "task4",
                 status: TaskStatuses.New,
                 description: "description",
@@ -80,14 +86,18 @@ const initialGlobalState: AppRootState = {
                 addedDate: "",
             }
         ]
+    },
+    app: {
+        status: "idle",
+        error: null
     }
 }
 
 export type AppRootState = ReturnType<typeof rootReducer>
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState)
+export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState, applyMiddleware(thunk))
 
 export const withReduxProvider = (Story: React.ComponentType) => (
     <Provider store={storyBookStore}>
-        <Story />
+        <Story/>
     </Provider>
-);
+)

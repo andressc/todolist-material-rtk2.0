@@ -23,8 +23,14 @@ type Story = StoryObj<typeof TodoList>;
 
 export const BaseExample: Story = {
     args: {
-        id: "todo1",
-        title: "todoList1",
-        filter: "All"
+        todoList: {
+            id: "todo1",
+            title: "todo1",
+            filter: "All",
+            addedDate: "",
+            order: 0,
+            entityStatus: "idle"
+        },
+        demo: true
     },
 };

@@ -1,6 +1,8 @@
 import {AddTodoListType, RemoveTodoListType, SetTodoListsType} from "./todolist-reducer"
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType} from "../../api/tasks-api"
 import {AppThunk} from "../../app/store"
+import {setStatusAC} from "../../app/app-reducer"
+import {handleServerAppError, handleServerNetworkError} from "../../utils/errorUtils"
 
 export type TasksActionsType =
     AddTaskType
@@ -80,10 +82,17 @@ export const setTaskAC = (tasks: TaskType[], todoListId: string,) =>
 
 
 export const fetchTasksTC = (id: string): AppThunk => dispatch => {
-    tasksApi.getTasks(id).then(response => dispatch(setTaskAC(response.data.items, id)))
+    dispatch(setStatusAC("loading"))
+
+    tasksApi.getTasks(id).then(response => {
+        dispatch(setTaskAC(response.data.items, id))
+        dispatch(setStatusAC("succeeded"))
+    })
 }
 
 export const updateTaskTC = (todoListId: string, taskId: string, model: UpdateDomainTaskType): AppThunk => (dispatch, getState) => {
+
+    dispatch(setStatusAC("loading"))
 
     const state = getState()
     const task = state.tasks[todoListId].find(t => t.id === taskId)
@@ -102,7 +111,16 @@ export const updateTaskTC = (todoListId: string, taskId: string, model: UpdateDo
 
     tasksApi.updateTask(todoListId, taskId, updatedTask)
         .then(res => {
-            if (res.data.resultCode === 0) dispatch(changeTaskAC(todoListId, taskId, model))
+            if (res.data.resultCode === 0) {
+                dispatch(changeTaskAC(todoListId, taskId, model))
+                dispatch(setStatusAC("succeeded"))
+                return
+            }
+
+            handleServerAppError(res.data, dispatch)
+        })
+        .catch(error => {
+            handleServerNetworkError(dispatch, error)
         })
 }
 
@@ -116,11 +134,37 @@ export const removeTaskTC = (todoListId: string, taskId: string): AppThunk => di
 
 export const addTaskTC = (todoListId: string, title: string): AppThunk => async dispatch => {
 
-    /*tasksApi.createTask(todoListId, title)
+    dispatch(setStatusAC("loading"))
+    tasksApi.createTask(todoListId, title)
         .then(res => {
-            if(res.data.resultCode === 0) dispatch(addTaskAC(res.data.data.item))
-        })*/
-    const result = await tasksApi.createTask(todoListId, title)
-    if (result.data.resultCode === 0) dispatch(addTaskAC(result.data.data.item))
+            if (res.data.resultCode === 0) {
+                dispatch(addTaskAC(res.data.data.item))
+                dispatch(setStatusAC("succeeded"))
+                return
+            }
 
+            handleServerAppError(res.data, dispatch)
+        })
+        .catch(error => {
+            handleServerNetworkError(dispatch, error)
+        })
+
+
+    /*dispatch(setStatusAC("loading"))
+
+    const result = await tasksApi.createTask(todoListId, title)
+    if (result.data.resultCode === 0) {
+        dispatch(addTaskAC(result.data.data.item))
+        dispatch(setStatusAC("succeeded"))
+        return
+    }
+
+    if (result.data.messages.length) {
+        dispatch(setErrorAC(result.data.messages[0]))
+        dispatch(setStatusAC("failed"))
+        return
+    }
+
+    dispatch(setErrorAC("some Error"))
+    dispatch(setStatusAC("failed"))*/
 }

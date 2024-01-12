@@ -1,6 +1,6 @@
 import {v1} from "uuid"
 import {
-    addTodoListAC,
+    addTodoListAC, changeEntityStatusAC,
     changeFilterTodoListAC,
     changeTitleTodoListAC, Filter,
     removeTodoListAC, setTodoListsAC, TodolistDomainType,
@@ -8,6 +8,7 @@ import {
 } from "./todolist-reducer"
 import {taskReducer, TasksType} from "./task-reducer"
 import {TaskPriorities, TaskStatuses} from "../../api/tasks-api"
+import {StatusType} from "../../app/app-reducer"
 
 let state: TodolistDomainType[]
 let state2: TasksType
@@ -15,6 +16,7 @@ const todoList1: string = v1()
 const todoList2: string = v1()
 const title: string = "newTodo"
 const filter: Filter = "Active"
+const entityStatus: StatusType = "loading"
 
 const task1: string = v1()
 const task2: string = v1()
@@ -26,14 +28,16 @@ beforeEach(() => {
             title: "todo 1",
             filter: "All",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "idle"
         },
         {
             id: todoList2,
             title: "todo 2",
             filter: "All",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "idle"
         }
     ]
 
@@ -119,7 +123,7 @@ test("remove TodoList", () => {
 
 test("add TodoList", () => {
 
-    const newTodolist = {id: v1(), title: title, filter: "All", addedDate: "", order: 0} as const
+    const newTodolist: TodolistDomainType = {id: v1(), title: title, filter: "All", addedDate: "", order: 0, entityStatus: "idle"} as const
 
     const action = addTodoListAC(newTodolist)
 
@@ -146,6 +150,13 @@ test("change Title TodoList", () => {
 
     expect(result.length).toBe(2)
     expect(result[1].title).toBe(title)
+})
+
+test("change EntityStatus TodoList", () => {
+    const result: TodolistDomainType[] = todolistReducer(state, changeEntityStatusAC(todoList2, entityStatus))
+
+    expect(result.length).toBe(2)
+    expect(result[1].entityStatus).toBe(entityStatus)
 })
 
 test("change Filter TodoList", () => {

@@ -10,61 +10,59 @@ import {
     removeTaskTC, updateTaskTC,
 } from "../task-reducer"
 import Paper from "@mui/material/Paper"
-import {Filter} from "../todolist-reducer"
+import {Filter, TodolistDomainType} from "../todolist-reducer"
 import {TaskStatuses, TaskType} from "../../../api/tasks-api"
 import {useAppDispatch, useAppSelector} from "../../../hooks/useAppDispatchSelector"
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    id: string
-    title: string
+    todoList: TodolistDomainType
     changeFilter: (filter: Filter, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTitleTodoList: (title: string, id: string) => void
-    filter: Filter
+    demo?: boolean
 }
 
 export const TodoList: React.FC<PropsType> = React.memo(({
-                                                             id,
-                                                             title,
+                                                             todoList,
                                                              changeFilter,
-                                                             filter,
                                                              changeTitleTodoList,
                                                              removeTodoList,
+                                                             demo = false,
                                                              ...restProps
                                                          }): JSX.Element => {
 
     console.log("TodoList is called")
 
     const dispatch = useAppDispatch()
-    const tasks = useAppSelector(state => state.tasks[id])
+    const tasks = useAppSelector(state => state.tasks[todoList.id])
 
     useEffect(() => {
-        dispatch(fetchTasksTC(id))
-    }, [])
+        if(!demo) dispatch(fetchTasksTC(todoList.id))
+    }, [demo])
 
     const removeTaskHandler = useCallback((taskId: string): void => {
-        dispatch(removeTaskTC(id, taskId))
-    }, [dispatch, id])
+        dispatch(removeTaskTC(todoList.id, taskId))
+    }, [dispatch, todoList.id])
 
     const changeStatusHandler = useCallback((taskId: string, status: TaskStatuses): void => {
-        dispatch(updateTaskTC(id, taskId, {status}))
-    }, [dispatch, id])
+        dispatch(updateTaskTC(todoList.id, taskId, {status}))
+    }, [dispatch, todoList.id])
 
     const onClickCallBack = useCallback((inputText: string): void => {
-        dispatch(addTaskTC(id, inputText.trim()))
-    }, [dispatch, id])
+        dispatch(addTaskTC(todoList.id, inputText.trim()))
+    }, [dispatch, todoList.id])
 
     const changeTitleTask = useCallback((taskId: string, title: string) => {
-        dispatch(updateTaskTC(id, taskId, {title}))
-    }, [dispatch, id])
+        dispatch(updateTaskTC(todoList.id, taskId, {title}))
+    }, [dispatch, todoList.id])
 
     let initialTask: TaskType[] = tasks
 
-    if (filter === "Active") {
+    if (todoList.filter === "Active") {
         initialTask = initialTask.filter(v => v.status === TaskStatuses.New || v.status === TaskStatuses.InProgress)
     }
 
-    if (filter === "Completed") {
+    if (todoList.filter === "Completed") {
         initialTask = initialTask.filter(v => v.status === TaskStatuses.Completed)
     }
 
@@ -78,37 +76,37 @@ export const TodoList: React.FC<PropsType> = React.memo(({
     })
 
     const changeFilterHandler = useCallback((filter: Filter): void => {
-        changeFilter(filter, id)
-    }, [changeFilter, id])
+        changeFilter(filter, todoList.id)
+    }, [changeFilter, todoList.id])
 
     const removeTodoListHandler = useCallback((): void => {
-        removeTodoList(id)
-    }, [removeTodoList, id])
+        removeTodoList(todoList.id)
+    }, [removeTodoList, todoList.id])
 
     const onChangeCallBack = useCallback((title: string,) => {
-        changeTitleTodoList(title, id)
-    }, [changeTitleTodoList, id])
+        changeTitleTodoList(title, todoList.id)
+    }, [changeTitleTodoList, todoList.id])
 
     return (
         <Paper elevation={3} style={{padding: "20px"}}>
             <div {...restProps}>
                 <div>
                     <h3>
-                        <EditableSpan text={title} onChangeCallBack={onChangeCallBack}/>
-                        <IconButton aria-label="delete" onClick={removeTodoListHandler}>
+                        <EditableSpan text={todoList.title} onChangeCallBack={onChangeCallBack}/>
+                        <IconButton aria-label="delete" onClick={removeTodoListHandler} disabled={todoList.entityStatus === "loading"}>
                             <Delete/>
                         </IconButton>
                     </h3>
                 </div>
 
-                <InputSubmit onClickCallBack={onClickCallBack}/>
+                <InputSubmit onClickCallBack={onClickCallBack} disabled={todoList.entityStatus === "loading"}/>
                 <div>
                     {taskList}
                 </div>
                 <div>
-                    <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={filter}/>
-                    <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={filter}/>
-                    <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={filter}/>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="All" filterState={todoList.filter}/>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="Active" filterState={todoList.filter}/>
+                    <ButtonFilter changeFilter={changeFilterHandler} filter="Completed" filterState={todoList.filter}/>
                 </div>
             </div>
         </Paper>

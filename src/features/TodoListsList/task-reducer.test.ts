@@ -91,14 +91,16 @@ beforeEach(() => {
             title: "todo 1",
             filter: "All",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "idle"
         },
         {
             id: todoList2,
             title: "todo 2",
             filter: "All",
             addedDate: "",
-            order: 0
+            order: 0,
+            entityStatus: "idle"
         }
     ]
 })

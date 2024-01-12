@@ -12,17 +12,22 @@ export const InputSubmitBaseExample: React.FC = (props: any) => {
 
 
 const meta: Meta<typeof InputSubmit> = {
-    title: 'Components/InputSubmit',
+    title: "Components/InputSubmit",
     component: InputSubmit,
     parameters: {
-        layout: 'centered',
+        layout: "centered",
     },
-    tags: ['autodocs'],
-};
+    tags: ["autodocs"],
+}
 
-export default meta;
+export default meta
 type Story = StoryObj<typeof InputSubmit>;
 
 export const BaseExample: Story = {
-    argTypes: { onClickCallBack: { action: 'clicked' } }
-};
+    argTypes: {onClickCallBack: {action: "clicked"}}
+}
+
+export const Disabled: Story = {
+    argTypes: {onClickCallBack: {action: "clicked"}},
+    args: {disabled: true}
+}
