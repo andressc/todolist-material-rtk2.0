@@ -35,7 +35,7 @@ const App: FC<PropsType> = ({demo = false}) => {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        News
+                        Newsfwefew
                     </Typography>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
