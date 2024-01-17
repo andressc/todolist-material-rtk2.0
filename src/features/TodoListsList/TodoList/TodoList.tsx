@@ -38,7 +38,7 @@ export const TodoList: React.FC<PropsType> = React.memo(({
 
     useEffect(() => {
         if(!demo) dispatch(fetchTasksTC(todoList.id))
-    }, [demo])
+    }, [demo, dispatch, todoList.id])
 
     const removeTaskHandler = useCallback((taskId: string): void => {
         dispatch(removeTaskTC(todoList.id, taskId))

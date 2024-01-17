@@ -30,7 +30,7 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack, di
 
     const titleText: boolean | string = inputText.length > 215 && "Your title is too long!!"
 
-    const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 215 && true
+    const disabledButton: boolean = !inputText.trim() || inputText.trim().length > 215 || true
 
     return (
         <>

@@ -1,6 +1,7 @@
 import {todolistsApi, TodolistType} from "../../api/todolists-api"
 import {AppThunk} from "../../app/store"
 import {setStatusAC, StatusType} from "../../app/app-reducer"
+import {handleServerNetworkError} from "../../utils/errorUtils";
 
 export type TodoListsActionsType =
     RemoveTodoListType
@@ -74,6 +75,8 @@ export const fetchTodoListsTC = (): AppThunk => dispatch => {
     todolistsApi.getTodoLists().then(response => {
         dispatch(setTodoListsAC(response.data))
         dispatch(setStatusAC("succeeded"))
+    }).catch((error) => {
+        handleServerNetworkError(dispatch, error)
     })
 }
 

@@ -1,4 +1,4 @@
-import React, {FC} from "react"
+import React, {FC, useCallback, useEffect} from "react"
 import "../App.css"
 import AppBar from "@mui/material/AppBar"
 import Button from "@mui/material/Button"
@@ -10,7 +10,13 @@ import {Menu} from "@mui/icons-material"
 import {TodoListsList} from "../features/TodoListsList/TodoListsList"
 import LinearProgress from '@mui/material/LinearProgress';
 import {CustomizedSnackbars} from "../components/ErrorSnackBar/ErrorSnackBar"
-import {useAppSelector} from "../hooks/useAppDispatchSelector"
+import {useAppDispatch, useAppSelector} from "../hooks/useAppDispatchSelector"
+import {Route, Routes} from "react-router-dom";
+import {Login} from "../features/Login/Login";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import {initializeAppTC} from "./app-reducer";
+import {logoutTC} from "../features/Login/auth-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -19,6 +25,24 @@ type PropsType = {
 const App: FC<PropsType> = ({demo = false}) => {
 
     const status = useAppSelector(state => state.app.status)
+    const dispatch = useAppDispatch()
+    const isInitialized = useAppSelector(state => state.app.isInitialized)
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [dispatch])
+
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [dispatch])
+
+    if (!isInitialized) {
+        return (
+            <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh'}}>
+                <CircularProgress size={150}/>
+            </Box>)
+    }
 
     return (
         <div className="App">
@@ -35,15 +59,19 @@ const App: FC<PropsType> = ({demo = false}) => {
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Newsfwefew
+                        News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isAuth && <Button color="inherit" onClick={logoutHandler}>Log out</Button>}
                 </Toolbar>
-                {status === 'loading' && <LinearProgress />}
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
 
             <Container fixed>
-                <TodoListsList demo={demo}/>
+                <Routes>
+                    <Route path='/' element={<TodoListsList demo={demo}/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    <Route path='*' element={<h1>404: PAGE NOT FOUND</h1>}/>
+                </Routes>
             </Container>
         </div>
     )

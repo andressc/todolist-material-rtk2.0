@@ -5,7 +5,8 @@ let state: InitialStateType
 beforeEach(() => {
     state = {
         status: "idle",
-        error: null
+        error: null,
+        isInitialized: true
     }
 
 })
@@ -17,6 +18,7 @@ describe("appReducer", () => {
         const expectedState: InitialStateType = {
             status: "loading",
             error: null,
+            isInitialized: true
         }
         expect(newState).toEqual(expectedState)
     })
@@ -27,6 +29,7 @@ describe("appReducer", () => {
         const expectedState: InitialStateType = {
             status: "idle",
             error: "Some error message",
+            isInitialized: true
         }
         expect(newState).toEqual(expectedState)
     })

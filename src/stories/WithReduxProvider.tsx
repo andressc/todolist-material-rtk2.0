@@ -7,12 +7,7 @@ import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
 import {appReducer} from "../app/app-reducer"
 import {thunk} from "redux-thunk"
 import {v1} from "uuid"
-
-const rootReducer = combineReducers({
-    todoLists: todolistReducer,
-    tasks: taskReducer,
-    app: appReducer,
-})
+import {AppRootState, rootReducer} from "../app/store";
 
 const initialGlobalState: AppRootState = {
     todoLists: [
@@ -89,11 +84,14 @@ const initialGlobalState: AppRootState = {
     },
     app: {
         status: "idle",
-        error: null
+        error: null,
+        isInitialized: true
+    },
+    auth: {
+        isAuth: false
     }
 }
 
-export type AppRootState = ReturnType<typeof rootReducer>
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootState, applyMiddleware(thunk))
 
 export const withReduxProvider = (Story: React.ComponentType) => (

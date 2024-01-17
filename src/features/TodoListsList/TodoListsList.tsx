@@ -4,7 +4,8 @@ import {useTodoList} from "./hooks/useTodoList"
 import Grid from "@mui/material/Grid"
 import {TodoList} from "./TodoList/TodoList"
 import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
-import {useAppDispatch} from "../../hooks/useAppDispatchSelector"
+import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatchSelector"
+import {useNavigate} from "react-router-dom";
 
 type PropsType = {
     demo?: boolean
@@ -12,10 +13,18 @@ type PropsType = {
 export const TodoListsList: FC<PropsType> = ({demo = false}) => {
 
     const dispatch = useAppDispatch()
+    const isAuth = useAppSelector(state => state.auth.isAuth)
+    let navigate = useNavigate();
 
     useEffect(() => {
-        if(!demo) dispatch(fetchTodoListsTC())
-    }, [])
+        if (!isAuth){
+            return navigate("/login");
+        }
+    },[isAuth, navigate]);
+
+    useEffect(() => {
+        if(!demo && isAuth) dispatch(fetchTodoListsTC())
+    }, [demo, isAuth, dispatch])
 
     const {
         todoData,
