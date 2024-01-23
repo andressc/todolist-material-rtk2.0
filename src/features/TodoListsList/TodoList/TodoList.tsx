@@ -1,4 +1,4 @@
-import React, {DetailedHTMLProps, HTMLAttributes, useCallback, useEffect} from "react"
+import React, {DetailedHTMLProps, HTMLAttributes, useCallback} from "react"
 import {ButtonFilter} from "../../../components/ButtonFilter/ButtonFilter"
 import {Task} from "./Task/Task"
 import {InputSubmit} from "../../../components/InputSubmit/InputSubmit"
@@ -6,7 +6,7 @@ import {EditableSpan} from "../../../components/EditableSpan/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import Delete from "@mui/icons-material/Delete"
 import {
-    addTaskTC, fetchTasksTC,
+    addTaskTC,
     removeTaskTC, updateTaskTC,
 } from "../task-reducer"
 import Paper from "@mui/material/Paper"
@@ -36,9 +36,9 @@ export const TodoList: React.FC<PropsType> = React.memo(({
     const dispatch = useAppDispatch()
     const tasks = useAppSelector(state => state.tasks[todoList.id])
 
-    useEffect(() => {
+    /*useEffect(() => {
         if(!demo) dispatch(fetchTasksTC(todoList.id))
-    }, [demo, dispatch, todoList.id])
+    }, [demo, dispatch, todoList.id])*/
 
     const removeTaskHandler = useCallback((taskId: string): void => {
         dispatch(removeTaskTC(todoList.id, taskId))
@@ -93,7 +93,8 @@ export const TodoList: React.FC<PropsType> = React.memo(({
                 <div>
                     <h3>
                         <EditableSpan text={todoList.title} onChangeCallBack={onChangeCallBack}/>
-                        <IconButton aria-label="delete" onClick={removeTodoListHandler} disabled={todoList.entityStatus === "loading"}>
+                        <IconButton aria-label="delete" onClick={removeTodoListHandler}
+                                    disabled={todoList.entityStatus === "loading"}>
                             <Delete/>
                         </IconButton>
                     </h3>

@@ -2,6 +2,7 @@ import {AppThunk} from "../../app/store"
 import {authApi, RequestAuthType} from "../../api/auth-api";
 import {setStatusAC} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/errorUtils";
+import {clearTodoListsAC} from "../TodoListsList/todolist-reducer";
 
 export type LoginActionsType = LoginType
 
@@ -53,6 +54,7 @@ export const logoutTC = (): AppThunk => dispatch => {
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(login(false))
+                dispatch(clearTodoListsAC())
                 dispatch(setStatusAC("succeeded"))
                 return
             }

@@ -1,4 +1,4 @@
-import {AddTodoListType, RemoveTodoListType, SetTodoListsType} from "./todolist-reducer"
+import {AddTodoListType, ClearTodoListsType, RemoveTodoListType, SetTodoListsType} from "./todolist-reducer"
 import {TaskPriorities, tasksApi, TaskStatuses, TaskType} from "../../api/tasks-api"
 import {AppThunk} from "../../app/store"
 import {setStatusAC} from "../../app/app-reducer"
@@ -12,6 +12,7 @@ export type TasksActionsType =
     | RemoveTodoListType
     | SetTodoListsType
     | SetTaskType
+    | ClearTodoListsType
 
 const initialState: TasksType = {}
 
@@ -58,6 +59,9 @@ export const taskReducer = (state: TasksType = initialState, action: TasksAction
         case "REMOVE-TODO-LIST": //mutation!!!
             delete state[action.todoListId]
             return {...state}
+
+        case "CLEAR-TODO-LISTS":
+            return {}
 
         default:
             return state
