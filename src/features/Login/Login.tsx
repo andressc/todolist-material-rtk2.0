@@ -10,21 +10,12 @@ import Button from '@mui/material/Button';
 import {useFormik} from "formik";
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatchSelector";
 import {loginTC} from "./auth-reducer";
-import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 export const Login = () => {
 
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    let navigate = useNavigate();
-
-
-    useEffect(() => {
-        if (isAuth){
-            return navigate("/");
-        }
-    },[isAuth, navigate]);
-
 
     const formik = useFormik({
         validate: (values) => {
@@ -43,6 +34,10 @@ export const Login = () => {
             //alert(JSON.stringify(values, null, 2));
         },
     });
+
+    if (isAuth) {
+        return <Navigate to="/"/>;
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

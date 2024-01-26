@@ -66,7 +66,7 @@ export const TodoList: React.FC<PropsType> = React.memo(({
         initialTask = initialTask.filter(v => v.status === TaskStatuses.Completed)
     }
 
-    const taskList: JSX.Element[] = initialTask.map(task => {
+    const taskList: JSX.Element[] = initialTask && initialTask.map(task => {
 
         return (<Task key={task.id}
                       task={task} removeTasks={removeTaskHandler}

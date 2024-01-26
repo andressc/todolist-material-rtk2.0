@@ -1,42 +1,36 @@
-import {AppThunk} from "../../app/store"
 import {authApi, RequestAuthType} from "../../api/auth-api";
 import {setStatusAC} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/errorUtils";
 import {clearTodoListsAC} from "../TodoListsList/todolist-reducer";
+import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
 
-export type LoginActionsType = LoginType
 
-const initialState: AuthType = {
+const initialState = {
     isAuth: false
 }
 
-export type AuthType = {
-    isAuth: boolean
-}
-
-export const authReducer = (state: AuthType = initialState, action: LoginActionsType): AuthType => {
-    switch (action.type) {
-        case "LOGIN":
-            return {...state, isAuth: action.isAuth}
-
-        default:
-            return state
+const slice = createSlice({
+    name: "auth",
+    initialState: initialState,
+    reducers: {
+        login(state, action: PayloadAction<{ isAuth: boolean }>) {
+            state.isAuth = action.payload.isAuth
+        }
     }
-}
+})
 
-type LoginType = ReturnType<typeof login>
-export const login = (isAuth: boolean) =>
-    ({type: "LOGIN", isAuth} as const)
+export const authReducer = slice.reducer
+export const {login} = slice.actions
 
 
-export const loginTC = (data: RequestAuthType): AppThunk => dispatch => {
+export const loginTC = (data: RequestAuthType) => (dispatch: Dispatch) => {
 
-    dispatch(setStatusAC("loading"))
+    dispatch(setStatusAC({ status: "loading"}))
     authApi.login(data)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(login(true))
-                dispatch(setStatusAC("succeeded"))
+                dispatch(login({isAuth: true}))
+                dispatch(setStatusAC({ status: "succeeded"}))
                 return
             }
 
@@ -47,15 +41,15 @@ export const loginTC = (data: RequestAuthType): AppThunk => dispatch => {
         })
 }
 
-export const logoutTC = (): AppThunk => dispatch => {
+export const logoutTC = () => (dispatch: Dispatch) => {
 
-    dispatch(setStatusAC("loading"))
+    dispatch(setStatusAC({ status: "loading"}))
     authApi.logout()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(login(false))
+                dispatch(login({isAuth: false}))
                 dispatch(clearTodoListsAC())
-                dispatch(setStatusAC("succeeded"))
+                dispatch(setStatusAC({ status: "succeeded"}))
                 return
             }
 

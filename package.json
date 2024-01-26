@@ -80,6 +80,7 @@
     "prop-types": "^15.8.1",
     "react-devtools": "^4.28.5",
     "storybook": "^7.5.3",
+    "storybook-addon-react-router-v6": "^2.0.10",
     "webpack": "^5.89.0"
   },
   "readme": "ERROR: No README data found!",

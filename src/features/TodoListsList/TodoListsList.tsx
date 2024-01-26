@@ -5,7 +5,8 @@ import Grid from "@mui/material/Grid"
 import {TodoList} from "./TodoList/TodoList"
 import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
 import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatchSelector"
-import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {login} from "../Login/auth-reducer";
 
 type PropsType = {
     demo?: boolean
@@ -14,13 +15,6 @@ export const TodoListsList: FC<PropsType> = ({demo = false}) => {
 
     const dispatch = useAppDispatch()
     const isAuth = useAppSelector(state => state.auth.isAuth)
-    let navigate = useNavigate();
-
-    useEffect(() => {
-        if (!isAuth){
-            return navigate("/login");
-        }
-    },[isAuth, navigate]);
 
     useEffect(() => {
         if(!demo && isAuth) dispatch(fetchTodoListsTC())
@@ -33,6 +27,10 @@ export const TodoListsList: FC<PropsType> = ({demo = false}) => {
         changeTitleTodoList,
         changeFilterTodoList
     } = useTodoList()
+
+    if (!isAuth) {
+        return <Navigate to="/login"/>;
+    }
 
     const todoList: JSX.Element[] = todoData.map(todo => {
         return (

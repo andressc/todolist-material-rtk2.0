@@ -13,7 +13,7 @@ beforeEach(() => {
 
 describe("appReducer", () => {
     it("should handle APP/SET-STATUS action", () => {
-        const action = setStatusAC("loading")
+        const action = setStatusAC({status: "loading"})
         const newState = appReducer(state, action)
         const expectedState: InitialStateType = {
             status: "loading",
@@ -24,7 +24,7 @@ describe("appReducer", () => {
     })
 
     it("should handle APP/SET-ERROR action", () => {
-        const action = setErrorAC("Some error message")
+        const action = setErrorAC({error: "Some error message"})
         const newState = appReducer(state, action)
         const expectedState: InitialStateType = {
             status: "idle",

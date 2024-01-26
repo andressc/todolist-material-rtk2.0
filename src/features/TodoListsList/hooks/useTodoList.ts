@@ -24,7 +24,7 @@ export const useTodoList = () => {
     }, [dispatch])
 
     const changeFilterTodoList = useCallback((filter: Filter, todoListId: string): void => {
-        dispatch(changeFilterTodoListAC(todoListId, filter))
+        dispatch<any>(changeFilterTodoListAC({todoListId: todoListId, filter}))
     }, [dispatch])
 
     return {

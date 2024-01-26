@@ -119,7 +119,7 @@ test("add Task", () => {
         addedDate: "",
     }
 
-    const result: TasksType = taskReducer(state, addTaskAC(newTask))
+    const result: TasksType = taskReducer(state, addTaskAC({ newTask: newTask}))
 
     expect(result[todoList1].length).toBe(4)
     expect(result[todoList1][3].title).toBe("newTask")
@@ -128,7 +128,7 @@ test("add Task", () => {
 })
 
 test("remove Task", () => {
-    const result: TasksType = taskReducer(state, removeTaskAC(todoList2, task1))
+    const result: TasksType = taskReducer(state, removeTaskAC({todoListId: todoList2, taskId: task1}))
 
     expect(result[todoList2].length).toBe(1)
     expect(result[todoList2][0].title).toBe("milk")
@@ -137,14 +137,18 @@ test("remove Task", () => {
 })
 
 test("change Status", () => {
-    const result: TasksType = taskReducer(state, changeTaskAC(todoList1, task2, {status: TaskStatuses.Completed}))
+    const result: TasksType = taskReducer(state, changeTaskAC({
+        todoListId: todoList1,
+        taskId: task2,
+        model: {status: TaskStatuses.Completed}
+    }))
 
     expect(result[todoList1][2].status).toBe(TaskStatuses.Completed)
     expect(result[todoList2][2]).toBeUndefined()
 })
 
 test("change Title Task", () => {
-    const result: TasksType = taskReducer(state, changeTaskAC(todoList1, task2, {title}))
+    const result: TasksType = taskReducer(state, changeTaskAC({todoListId: todoList1, taskId: task2, model: {title}}))
 
     expect(result[todoList1][2].title).toBe(title)
     expect(result[todoList2][2]).toBeUndefined()
@@ -152,7 +156,10 @@ test("change Title Task", () => {
 
 
 test("tasks should be added for todolist", () => {
-    const result: TasksType = taskReducer({[todoList2]: [], [todoList1]: []}, setTaskAC(state[todoList1], todoList1))
+    const result: TasksType = taskReducer({[todoList2]: [], [todoList1]: []}, setTaskAC({
+        tasks: state[todoList1],
+        todoListId: todoList1
+    }))
 
     expect(result[todoList1].length).toBe(3)
     expect(result[todoList2].length).toBe(0)
