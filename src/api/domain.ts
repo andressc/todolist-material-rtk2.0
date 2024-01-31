@@ -5,9 +5,11 @@ export const instance = axios.create( {
     withCredentials: true
 })
 
+export type FieldError = {field: string, error: string}
+
 export type ResponseType<T = {}> = {
     resultCode: number
     messages: string[]
-    fieldsErrors: string[]
+    fieldsErrors: FieldError[]
     data: T
 }
