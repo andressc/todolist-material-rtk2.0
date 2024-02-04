@@ -1,10 +1,10 @@
 import { authApi, RequestAuthType } from 'api/auth-api'
 import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { clearTodoListsAC } from '../TodoListsList/todolist-reducer'
 import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { FieldError } from 'api/domain'
 import { userActions } from 'app/appSlice'
+import { todoListActions } from 'features/TodoListsList/todolistSlice'
 
 export const loginTC = createAsyncThunk<
     { isAuth: boolean },
@@ -55,7 +55,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
         .then((response) => {
             if (response.data.resultCode === 0) {
                 dispatch(authActions.login({ isAuth: false }))
-                dispatch(clearTodoListsAC())
+                dispatch(todoListActions.clearTodoLists())
                 dispatch(userActions.setStatusAC({ status: 'succeeded' }))
                 return
             }

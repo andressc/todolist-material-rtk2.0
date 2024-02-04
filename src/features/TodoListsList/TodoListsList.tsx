@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react'
-import { fetchTodoListsTC } from './todolist-reducer'
+import { fetchTodoListsTC } from 'features/TodoListsList/todolistSlice'
 import { useTodoList } from './hooks/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from './TodoList/TodoList'

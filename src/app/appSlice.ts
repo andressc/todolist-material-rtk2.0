@@ -5,18 +5,12 @@ import { authActions } from 'features/Login/authSlice'
 
 export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-const initialState = {
-    status: 'idle' as StatusType,
-    error: null as null | string,
-    isInitialized: false,
-}
-
-export type InitialStateType = typeof initialState
+export type InitialStateType = ReturnType<typeof slice.getInitialState>
 
 const slice = createSlice({
     name: 'app',
     initialState: {
-        status: 'idle',
+        status: 'idle' as StatusType,
         error: null as null | string,
         isInitialized: false,
     },
@@ -31,11 +25,16 @@ const slice = createSlice({
             state.isInitialized = action.payload.isInitialized
         },
     },
+    selectors: {
+        selectAppStatus: (sliceState) => {
+            return sliceState.status
+        },
+    },
 })
 
 export const appReducer = slice.reducer
-
 export const userActions = slice.actions
+export const { selectAppStatus } = slice.selectors
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authApi

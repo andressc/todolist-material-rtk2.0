@@ -1,12 +1,12 @@
 import { useCallback } from 'react'
 import {
     addTodoListTC,
-    changeFilterTodoListAC,
     Filter,
     removeTodoListTC,
+    todoListActions,
     updateTodoListTitleTC,
-} from '../todolist-reducer'
-import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatchSelector'
+} from 'features/TodoListsList/todolistSlice'
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
 
 export const useTodoList = () => {
     const dispatch = useAppDispatch()
@@ -35,7 +35,7 @@ export const useTodoList = () => {
 
     const changeFilterTodoList = useCallback(
         (filter: Filter, todoListId: string): void => {
-            dispatch<any>(changeFilterTodoListAC({ todoListId: todoListId, filter }))
+            dispatch(todoListActions.changeFilterTodoList({ todoListId: todoListId, filter }))
         },
         [dispatch],
     )

@@ -1,13 +1,8 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { applyMiddleware, combineReducers, createStore } from 'redux'
-import { todolistReducer } from '../features/TodoListsList/todolist-reducer'
-import { taskReducer } from '../features/TodoListsList/task-reducer'
-import { TaskPriorities, TaskStatuses } from '../api/tasks-api'
-import { appReducer } from 'app/appSlice'
-import { thunk } from 'redux-thunk'
+import { TaskPriorities, TaskStatuses } from 'api/tasks-api'
 import { v1 } from 'uuid'
-import { AppRootState, middlewares, rootReducer } from '../app/store'
+import { AppRootState, reducers } from 'app/store'
 import { configureStore } from '@reduxjs/toolkit'
 
 const initialGlobalState: AppRootState = {
@@ -94,8 +89,7 @@ const initialGlobalState: AppRootState = {
 }
 
 export const storyBookStore = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend<any>(middlewares),
+    reducer: reducers,
     preloadedState: initialGlobalState,
 })
 

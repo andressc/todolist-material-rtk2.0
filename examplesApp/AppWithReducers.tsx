@@ -12,14 +12,14 @@ import {
     changeTitleTodoListAC,
     removeTodoListAC,
     todolistReducer,
-} from '../src/features/TodoListsList/todolist-reducer'
+} from 'src/features/TodoListsList/todolistSlice'
 import {
     addTaskAC,
     changeStatusTaskAC,
     changeTitleTaskAC,
     removeTaskAC,
     taskReducer,
-} from '../src/features/TodoListsList/task-reducer'
+} from 'src/features/TodoListsList/taskSlice'
 
 function AppWithReducers(): JSX.Element {
     let todoList1: string = v1()

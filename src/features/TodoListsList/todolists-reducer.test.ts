@@ -1,17 +1,7 @@
 import { v1 } from 'uuid'
-import {
-    addTodoListAC,
-    changeEntityStatusAC,
-    changeFilterTodoListAC,
-    changeTitleTodoListAC,
-    Filter,
-    removeTodoListAC,
-    setTodoListsAC,
-    TodolistDomainType,
-    todolistReducer,
-} from './todolist-reducer'
-import { taskReducer, TasksType } from './task-reducer'
-import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
+import { Filter, todoListActions, TodolistDomainType, todolistReducer } from 'features/TodoListsList/todolistSlice'
+import { TasksType } from 'features/TodoListsList/taskSlice'
+import { TaskPriorities, TaskStatuses } from 'api/tasks-api'
 import { StatusType } from 'app/appSlice'
 
 let state: TodolistDomainType[]
@@ -114,7 +104,7 @@ beforeEach(() => {
 })
 
 test('remove TodoList', () => {
-    const action = removeTodoListAC({ todoListId: todoList1 })
+    const action = todoListActions.removeTodoList({ todoListId: todoList1 })
 
     /*const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
@@ -135,7 +125,7 @@ test('add TodoList', () => {
         entityStatus: 'idle',
     } as const
 
-    const action = addTodoListAC({ newTodoList: newTodolist })
+    const action = todoListActions.addTodoList({ newTodoList: newTodolist })
 
     /*const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
@@ -156,7 +146,10 @@ test('add TodoList', () => {
 })
 
 test('change Title TodoList', () => {
-    const result: TodolistDomainType[] = todolistReducer(state, changeTitleTodoListAC({ todoListId: todoList2, title }))
+    const result: TodolistDomainType[] = todolistReducer(
+        state,
+        todoListActions.changeTitleTodoList({ todoListId: todoList2, title }),
+    )
 
     expect(result.length).toBe(2)
     expect(result[1].title).toBe(title)
@@ -165,7 +158,7 @@ test('change Title TodoList', () => {
 test('change EntityStatus TodoList', () => {
     const result: TodolistDomainType[] = todolistReducer(
         state,
-        changeEntityStatusAC({ todoListId: todoList2, entityStatus }),
+        todoListActions.changeEntityStatus({ todoListId: todoList2, entityStatus }),
     )
 
     expect(result.length).toBe(2)
@@ -175,7 +168,7 @@ test('change EntityStatus TodoList', () => {
 test('change Filter TodoList', () => {
     const result: TodolistDomainType[] = todolistReducer(
         state,
-        changeFilterTodoListAC({ todoListId: todoList1, filter }),
+        todoListActions.changeFilterTodoList({ todoListId: todoList1, filter }),
     )
 
     expect(result.length).toBe(2)
@@ -183,7 +176,7 @@ test('change Filter TodoList', () => {
 })
 
 test('set TodoLists', () => {
-    const result: TodolistDomainType[] = todolistReducer([], setTodoListsAC({ todoLists: state }))
+    const result: TodolistDomainType[] = todolistReducer([], todoListActions.setTodoLists({ todoLists: state }))
 
     expect(result.length).toBe(2)
     expect(result[0].filter).toBe('All')

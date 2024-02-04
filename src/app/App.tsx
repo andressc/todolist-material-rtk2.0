@@ -7,23 +7,25 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { Menu } from '@mui/icons-material'
-import { TodoListsList } from '../features/TodoListsList/TodoListsList'
+import { TodoListsList } from 'features/TodoListsList/TodoListsList'
 import LinearProgress from '@mui/material/LinearProgress'
-import { CustomizedSnackbars } from '../components/ErrorSnackBar/ErrorSnackBar'
-import { useAppDispatch, useAppSelector } from '../hooks/useAppDispatchSelector'
+import { CustomizedSnackbars } from 'components/ErrorSnackBar/ErrorSnackBar'
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
 import { Route, Routes } from 'react-router-dom'
-import { Login } from '../features/Login/Login'
+import { Login } from 'features/Login/Login'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
-import { initializeAppTC } from 'app/appSlice'
+import { initializeAppTC, selectAppStatus } from 'app/appSlice'
 import { logoutTC } from 'features/Login/authSlice'
+import { useSelector } from 'react-redux'
 
 type PropsType = {
     demo?: boolean
 }
 
 const App: FC<PropsType> = ({ demo = false }) => {
-    const status = useAppSelector((state) => state.app.status)
+    const status = useSelector(selectAppStatus)
+    //const status = useAppSelector((state) => state.app.status)
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector((state) => state.app.isInitialized)
     const isAuth = useAppSelector((state) => state.auth.isAuth)
