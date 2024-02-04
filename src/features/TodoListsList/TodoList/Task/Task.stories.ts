@@ -1,7 +1,7 @@
-import {Meta, StoryObj} from "@storybook/react"
-import {Task} from "./Task"
-import '../../../../index.css';
-import {TaskPriorities, TaskStatuses} from "../../../../api/tasks-api"
+import { Meta, StoryObj } from '@storybook/react'
+import { Task } from './Task'
+import '../../../../index.css'
+import { TaskPriorities, TaskStatuses } from '../../../../api/tasks-api'
 
 const meta: Meta<typeof Task> = {
     title: 'Components/Task',
@@ -15,41 +15,41 @@ const meta: Meta<typeof Task> = {
         changeStatus: { action: 'click on change status task' },
         changeTitleTask: { action: 'click on change title task' },
     },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Task>;
+export default meta
+type Story = StoryObj<typeof Task>
 
 export const Made: Story = {
     args: {
         task: {
-            id: "1",
-            title: "task1",
+            id: '1',
+            title: 'task1',
             status: TaskStatuses.Completed,
-            description: "description",
+            description: 'description',
             priority: TaskPriorities.Low,
-            startDate: "",
-            deadline: "",
-            todoListId: "",
+            startDate: '',
+            deadline: '',
+            todoListId: '',
             order: 0,
-            addedDate: "",
-        }
-    }
-};
+            addedDate: '',
+        },
+    },
+}
 
 export const NotMade: Story = {
     args: {
         task: {
-            id: "1",
-            title: "task1",
+            id: '1',
+            title: 'task1',
             status: TaskStatuses.New,
-            description: "description",
+            description: 'description',
             priority: TaskPriorities.Low,
-            startDate: "",
-            deadline: "",
-            todoListId: "",
+            startDate: '',
+            deadline: '',
+            todoListId: '',
             order: 0,
-            addedDate: "",
-        }
+            addedDate: '',
+        },
     },
-};
+}

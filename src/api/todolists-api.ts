@@ -1,4 +1,4 @@
-import {instance, ResponseType} from "./domain"
+import { instance, ResponseType } from './domain'
 
 export type TodolistType = {
     id: string
@@ -8,7 +8,7 @@ export type TodolistType = {
 }
 
 type CreateType = {
-        item: TodolistType
+    item: TodolistType
 }
 
 export const todolistsApi = {
@@ -17,7 +17,7 @@ export const todolistsApi = {
     },
 
     createTodolist(title: string) {
-        return instance.post<ResponseType<CreateType>>(`todo-lists`, {title})
+        return instance.post<ResponseType<CreateType>>(`todo-lists`, { title })
     },
 
     deleteTodolist(id: string) {
@@ -25,6 +25,6 @@ export const todolistsApi = {
     },
 
     updateTodolistTitle(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, {title})
-    }
+        return instance.put<ResponseType>(`todo-lists/${id}`, { title })
+    },
 }

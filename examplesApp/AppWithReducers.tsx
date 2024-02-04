@@ -1,48 +1,53 @@
-import React, {useReducer} from "react"
-import "../src/App.css"
-import {v1} from "uuid"
-import {TodoList} from "../src/features/TodoListsList/TodoList/TodoList"
-import {Filter, TaskType} from "../src/types"
-import {InputSubmit} from "../src/components/InputSubmit/InputSubmit"
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material"
-import {Menu} from "@mui/icons-material"
+import React, { useReducer } from 'react'
+import '../src/App.css'
+import { v1 } from 'uuid'
+import { TodoList } from '../src/features/TodoListsList/TodoList/TodoList'
+import { Filter, TaskType } from '../src/types'
+import { InputSubmit } from '../src/components/InputSubmit/InputSubmit'
+import { AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography } from '@mui/material'
+import { Menu } from '@mui/icons-material'
 import {
     addTodoListAC,
     changeFilterTodoListAC,
     changeTitleTodoListAC,
     removeTodoListAC,
-    todolistReducer
-} from "../src/features/TodoListsList/todolist-reducer"
-import {addTaskAC, changeStatusTaskAC, changeTitleTaskAC, removeTaskAC, taskReducer} from "../src/features/TodoListsList/task-reducer"
+    todolistReducer,
+} from '../src/features/TodoListsList/todolist-reducer'
+import {
+    addTaskAC,
+    changeStatusTaskAC,
+    changeTitleTaskAC,
+    removeTaskAC,
+    taskReducer,
+} from '../src/features/TodoListsList/task-reducer'
 
 function AppWithReducers(): JSX.Element {
-
     let todoList1: string = v1()
     let todoList2: string = v1()
 
     const [todoData, dispatchToTodoListsReducer] = useReducer(todolistReducer, [
         {
             id: todoList1,
-            title: "todo 1",
-            filter: "Active",
+            title: 'todo 1',
+            filter: 'Active',
         },
         {
             id: todoList2,
-            title: "todo 2",
-            filter: "Completed",
+            title: 'todo 2',
+            filter: 'Completed',
         },
     ])
 
     let [tasks, dispatchToTasksReducer] = useReducer(taskReducer, {
         [todoList1]: [
-            {id: v1(), title: "1HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true},
-            {id: v1(), title: "ReactJS", isDone: false}
+            { id: v1(), title: '1HTML&CSS', isDone: true },
+            { id: v1(), title: 'JS', isDone: true },
+            { id: v1(), title: 'ReactJS', isDone: false },
         ],
         [todoList2]: [
-            {id: v1(), title: "book", isDone: false},
-            {id: v1(), title: "milk", isDone: true},
-        ]
+            { id: v1(), title: 'book', isDone: false },
+            { id: v1(), title: 'milk', isDone: true },
+        ],
     })
 
     const removeTodoList = (todoListId: string): void => {
@@ -81,34 +86,33 @@ function AppWithReducers(): JSX.Element {
         dispatchToTasksReducer(changeTitleTaskAC(todoListId, taskId, title))
     }
 
-    const todoList: JSX.Element[] = todoData.map(todo => {
-
+    const todoList: JSX.Element[] = todoData.map((todo) => {
         let initialTask: TaskType[] = tasks[todo.id]
 
-        if (todo.filter === "Active") {
-            initialTask = initialTask.filter(v => !v.isDone)
+        if (todo.filter === 'Active') {
+            initialTask = initialTask.filter((v) => !v.isDone)
         }
 
-        if (todo.filter === "Completed") {
-            initialTask = initialTask.filter(v => v.isDone)
+        if (todo.filter === 'Completed') {
+            initialTask = initialTask.filter((v) => v.isDone)
         }
 
         return (
             <Grid item key={todo.id}>
-                <Paper elevation={3} style={{padding: "20px"}}>
-                <TodoList
-                          id={todo.id}
-                          tasks={initialTask}
-                          title={todo.title}
-                          changeFilter={changeFilterTodoList}
-                          removeTask={removeTask}
-                          addTask={addTask}
-                          changeStatus={changeStatus}
-                          filter={todo.filter}
-                          removeTodoList={removeTodoList}
-                          changeTitleTodoList={changeTitleTodoList}
-                          changeTitleTask={changeTitleTask}
-                />
+                <Paper elevation={3} style={{ padding: '20px' }}>
+                    <TodoList
+                        id={todo.id}
+                        tasks={initialTask}
+                        title={todo.title}
+                        changeFilter={changeFilterTodoList}
+                        removeTask={removeTask}
+                        addTask={addTask}
+                        changeStatus={changeStatus}
+                        filter={todo.filter}
+                        removeTodoList={removeTodoList}
+                        changeTitleTodoList={changeTitleTodoList}
+                        changeTitleTask={changeTitleTask}
+                    />
                 </Paper>
             </Grid>
         )
@@ -118,16 +122,10 @@ function AppWithReducers(): JSX.Element {
         <div className="App">
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{mr: 2}}
-                    >
-                        <Menu/>
+                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                        <Menu />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         News
                     </Typography>
                     <Button color="inherit">Login</Button>
@@ -135,8 +133,8 @@ function AppWithReducers(): JSX.Element {
             </AppBar>
 
             <Container fixed>
-                <Grid container style={{padding: "20px"}}>
-                    <InputSubmit onClickCallBack={addTodoList} buttonTitle="+"/>
+                <Grid container style={{ padding: '20px' }}>
+                    <InputSubmit onClickCallBack={addTodoList} buttonTitle="+" />
                 </Grid>
                 <Grid container spacing={3}>
                     {todoList}

@@ -1,22 +1,25 @@
-import {authApi} from "../api/auth-api";
-import {login} from "../features/Login/auth-reducer";
-import {createSlice, Dispatch, PayloadAction} from "@reduxjs/toolkit";
-import {handleServerAppError, handleServerNetworkError} from "../utils/errorUtils";
+import { authApi } from 'api/auth-api'
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { authActions } from 'features/Login/authSlice'
 
-export type StatusType = "idle" | "loading" | "succeeded" | "failed"
-
+export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: "idle",
+    status: 'idle' as StatusType,
     error: null as null | string,
-    isInitialized: false
+    isInitialized: false,
 }
 
 export type InitialStateType = typeof initialState
 
 const slice = createSlice({
-    name: "app",
-    initialState: initialState,
+    name: 'app',
+    initialState: {
+        status: 'idle',
+        error: null as null | string,
+        isInitialized: false,
+    },
     reducers: {
         setStatusAC(state, action: PayloadAction<{ status: StatusType }>) {
             state.status = action.payload.status
@@ -26,29 +29,28 @@ const slice = createSlice({
         },
         initializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
             state.isInitialized = action.payload.isInitialized
-        }
-    }
+        },
+    },
 })
 
 export const appReducer = slice.reducer
 
-export const {setStatusAC, setErrorAC, initializedAC} = slice.actions
-
+export const userActions = slice.actions
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-
-    authApi.getMe()
-        .then(res => {
+    authApi
+        .getMe()
+        .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(initializedAC({isInitialized: true}))
-                dispatch<any>(login({isAuth: true}))
+                dispatch(userActions.initializedAC({ isInitialized: true }))
+                dispatch<any>(authActions.login({ isAuth: true }))
                 return
             }
 
-            dispatch(initializedAC({isInitialized: true}))
+            dispatch(userActions.initializedAC({ isInitialized: true }))
             handleServerAppError(res.data, dispatch)
         })
-        .catch(error => {
+        .catch((error) => {
             handleServerNetworkError(dispatch, error)
         })
 }

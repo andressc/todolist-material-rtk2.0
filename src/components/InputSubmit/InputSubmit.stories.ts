@@ -1,5 +1,5 @@
-import {Meta, StoryObj} from "@storybook/react"
-import {InputSubmit} from "./InputSubmit"
+import { Meta, StoryObj } from '@storybook/react'
+import { InputSubmit } from './InputSubmit'
 
 /*export default {
     title: "InputSubmit",
@@ -10,24 +10,23 @@ export const InputSubmitBaseExample: React.FC = (props: any) => {
     return (<InputSubmit onClickCallBack={(title: string) => {alert(title)}}/>)
 }*/
 
-
 const meta: Meta<typeof InputSubmit> = {
-    title: "Components/InputSubmit",
+    title: 'Components/InputSubmit',
     component: InputSubmit,
     parameters: {
-        layout: "centered",
+        layout: 'centered',
     },
-    tags: ["autodocs"],
+    tags: ['autodocs'],
 }
 
 export default meta
-type Story = StoryObj<typeof InputSubmit>;
+type Story = StoryObj<typeof InputSubmit>
 
 export const BaseExample: Story = {
-    argTypes: {onClickCallBack: {action: "clicked"}}
+    argTypes: { onClickCallBack: { action: 'clicked' } },
 }
 
 export const Disabled: Story = {
-    argTypes: {onClickCallBack: {action: "clicked"}},
-    args: {disabled: true}
+    argTypes: { onClickCallBack: { action: 'clicked' } },
+    args: { disabled: true },
 }

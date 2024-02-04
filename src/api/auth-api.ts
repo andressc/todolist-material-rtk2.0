@@ -1,8 +1,8 @@
-import {instance, ResponseType} from "./domain"
+import { instance, ResponseType } from './domain'
 
 export type ResponseAuthType = {
-    id: number,
-    email: string,
+    id: number
+    email: string
     login: string
 }
 
@@ -11,7 +11,6 @@ export type RequestAuthType = {
     password: string
     rememberMe: boolean
     captcha?: string
-
 }
 
 export const authApi = {

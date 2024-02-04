@@ -1,107 +1,106 @@
-import React from "react"
-import {Provider} from "react-redux"
-import {applyMiddleware, combineReducers, createStore} from "redux"
-import {todolistReducer} from "../features/TodoListsList/todolist-reducer"
-import {taskReducer} from "../features/TodoListsList/task-reducer"
-import {TaskPriorities, TaskStatuses} from "../api/tasks-api"
-import {appReducer} from "../app/app-reducer"
-import {thunk} from "redux-thunk"
-import {v1} from "uuid"
-import {AppRootState, middlewares, rootReducer} from "../app/store";
-import {configureStore} from "@reduxjs/toolkit";
+import React from 'react'
+import { Provider } from 'react-redux'
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { todolistReducer } from '../features/TodoListsList/todolist-reducer'
+import { taskReducer } from '../features/TodoListsList/task-reducer'
+import { TaskPriorities, TaskStatuses } from '../api/tasks-api'
+import { appReducer } from 'app/appSlice'
+import { thunk } from 'redux-thunk'
+import { v1 } from 'uuid'
+import { AppRootState, middlewares, rootReducer } from '../app/store'
+import { configureStore } from '@reduxjs/toolkit'
 
 const initialGlobalState: AppRootState = {
     todoLists: [
         {
-            id: "todo1",
-            title: "todo1",
-            filter: "All",
-            addedDate: "",
+            id: 'todo1',
+            title: 'todo1',
+            filter: 'All',
+            addedDate: '',
             order: 0,
-            entityStatus: "idle"
+            entityStatus: 'idle',
         },
         {
-            id: "todo2",
-            title: "todo2",
-            filter: "Active",
-            addedDate: "",
+            id: 'todo2',
+            title: 'todo2',
+            filter: 'Active',
+            addedDate: '',
             order: 0,
-            entityStatus: "loading"
-        }
+            entityStatus: 'loading',
+        },
     ],
     tasks: {
-        ["todo1"]: [
+        ['todo1']: [
             {
                 id: v1(),
-                title: "task1",
+                title: 'task1',
                 status: TaskStatuses.Completed,
-                description: "description",
+                description: 'description',
                 priority: TaskPriorities.Low,
-                startDate: "",
-                deadline: "",
-                todoListId: "todo1",
+                startDate: '',
+                deadline: '',
+                todoListId: 'todo1',
                 order: 0,
-                addedDate: "",
+                addedDate: '',
             },
             {
                 id: v1(),
-                title: "task2",
+                title: 'task2',
                 status: TaskStatuses.New,
-                description: "description",
+                description: 'description',
                 priority: TaskPriorities.Low,
-                startDate: "",
-                deadline: "",
-                todoListId: "todo1",
+                startDate: '',
+                deadline: '',
+                todoListId: 'todo1',
                 order: 0,
-                addedDate: "",
-            }
+                addedDate: '',
+            },
         ],
-        ["todo2"]: [
+        ['todo2']: [
             {
                 id: v1(),
-                title: "task3",
+                title: 'task3',
                 status: TaskStatuses.New,
-                description: "description",
+                description: 'description',
                 priority: TaskPriorities.Low,
-                startDate: "",
-                deadline: "",
-                todoListId: "todo2",
+                startDate: '',
+                deadline: '',
+                todoListId: 'todo2',
                 order: 0,
-                addedDate: "",
+                addedDate: '',
             },
             {
                 id: v1(),
-                title: "task4",
+                title: 'task4',
                 status: TaskStatuses.New,
-                description: "description",
+                description: 'description',
                 priority: TaskPriorities.Low,
-                startDate: "",
-                deadline: "",
-                todoListId: "todo2",
+                startDate: '',
+                deadline: '',
+                todoListId: 'todo2',
                 order: 0,
-                addedDate: "",
-            }
-        ]
+                addedDate: '',
+            },
+        ],
     },
     app: {
-        status: "idle",
+        status: 'idle',
         error: null,
-        isInitialized: false
+        isInitialized: false,
     },
     auth: {
-        isAuth: false
-    }
+        isAuth: false,
+    },
 }
 
 export const storyBookStore = configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().prepend<any>(middlewares),
-    preloadedState: initialGlobalState
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend<any>(middlewares),
+    preloadedState: initialGlobalState,
 })
 
 export const withReduxProvider = (Story: React.ComponentType) => (
     <Provider store={storyBookStore}>
-        <Story/>
+        <Story />
     </Provider>
 )

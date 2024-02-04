@@ -1,14 +1,13 @@
-import React, {ChangeEvent} from "react"
-import CheckBox from "@mui/material/Checkbox"
-import {TaskStatuses} from "../../api/tasks-api"
+import React, { ChangeEvent } from 'react'
+import CheckBox from '@mui/material/Checkbox'
+import { TaskStatuses } from '../../api/tasks-api'
 
 type PropsType = {
     status: TaskStatuses
     onChangeCheckbox: (taskStatus: TaskStatuses) => void
 }
-const CheckboxMy: React.FC<PropsType> = ({status, onChangeCheckbox}) => {
-
-    console.log("checkbox called")
+const CheckboxMy: React.FC<PropsType> = ({ status, onChangeCheckbox }) => {
+    console.log('checkbox called')
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget.checked) {
@@ -18,9 +17,7 @@ const CheckboxMy: React.FC<PropsType> = ({status, onChangeCheckbox}) => {
         onChangeCheckbox(TaskStatuses.New)
     }
 
-    return (
-        <CheckBox checked={status === TaskStatuses.Completed} onChange={onChangeHandler}/>
-    )
+    return <CheckBox checked={status === TaskStatuses.Completed} onChange={onChangeHandler} />
 }
 
 export default CheckboxMy

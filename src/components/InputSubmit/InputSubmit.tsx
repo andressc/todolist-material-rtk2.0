@@ -1,34 +1,32 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react"
-import IconButton from "@mui/material/IconButton"
-import TextField from "@mui/material/TextField"
-import AddCircle from "@mui/icons-material/AddCircle"
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import AddCircle from '@mui/icons-material/AddCircle'
 
 type PropsType = {
     onClickCallBack: (inputText: string) => void
     disabled?: boolean
 }
 
-export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack, disabled = false}) => {
+export const InputSubmit: React.FC<PropsType> = React.memo(({ onClickCallBack, disabled = false }) => {
+    console.log('InputSubmit is called')
 
-    console.log("InputSubmit is called")
-
-    const [inputText, setInputText] = useState<string>("")
+    const [inputText, setInputText] = useState<string>('')
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => setInputText(e.currentTarget.value)
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>): void => {
-        if (e.key === "Enter") onClickHandler()
+        if (e.key === 'Enter') onClickHandler()
     }
 
     const onClickHandler = (): void => {
-
         if (!inputText.trim()) return
         if (inputText.trim().length > 215) return
 
         onClickCallBack(inputText.trim())
-        setInputText("")
+        setInputText('')
     }
 
-    const titleText: boolean | string = inputText.length > 215 && "Your title is too long!!"
+    const titleText: boolean | string = inputText.length > 215 && 'Your title is too long!!'
 
     let disabledButton: boolean = !inputText.trim()
     //disabledButton = inputText.trim().length > 215
@@ -36,21 +34,20 @@ export const InputSubmit: React.FC<PropsType> = React.memo(({onClickCallBack, di
     return (
         <>
             <div>
-                <TextField value={inputText}
-                           onChange={onChangeHandler}
-                           onKeyDown={onKeyDownHandler}
-                           label={!titleText ? "Type value" : "Error"}
-                           variant="outlined"
-                           error={!!titleText}
-                           helperText={titleText}
-                           disabled={disabled}
+                <TextField
+                    value={inputText}
+                    onChange={onChangeHandler}
+                    onKeyDown={onKeyDownHandler}
+                    label={!titleText ? 'Type value' : 'Error'}
+                    variant="outlined"
+                    error={!!titleText}
+                    helperText={titleText}
+                    disabled={disabled}
                 />
                 <IconButton aria-label="add" onClick={onClickHandler} disabled={!disabled ? disabledButton : disabled}>
-                    <AddCircle/>
+                    <AddCircle />
                 </IconButton>
             </div>
         </>
     )
 })
-
-

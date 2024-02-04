@@ -1,38 +1,30 @@
-import React, {FC, useEffect} from "react"
-import {fetchTodoListsTC} from "./todolist-reducer"
-import {useTodoList} from "./hooks/useTodoList"
-import Grid from "@mui/material/Grid"
-import {TodoList} from "./TodoList/TodoList"
-import {InputSubmit} from "../../components/InputSubmit/InputSubmit"
-import {useAppDispatch, useAppSelector} from "../../hooks/useAppDispatchSelector"
-import {Navigate} from "react-router-dom";
-import {login} from "../Login/auth-reducer";
+import React, { FC, useEffect } from 'react'
+import { fetchTodoListsTC } from './todolist-reducer'
+import { useTodoList } from './hooks/useTodoList'
+import Grid from '@mui/material/Grid'
+import { TodoList } from './TodoList/TodoList'
+import { InputSubmit } from 'components/InputSubmit/InputSubmit'
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
+import { Navigate } from 'react-router-dom'
 
 type PropsType = {
     demo?: boolean
 }
-export const TodoListsList: FC<PropsType> = ({demo = false}) => {
-
+export const TodoListsList: FC<PropsType> = ({ demo = false }) => {
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector(state => state.auth.isAuth)
+    const isAuth = useAppSelector((state) => state.auth.isAuth)
 
     useEffect(() => {
-        if(!demo && isAuth) dispatch(fetchTodoListsTC())
+        if (!demo && isAuth) dispatch(fetchTodoListsTC())
     }, [demo, isAuth, dispatch])
 
-    const {
-        todoData,
-        removeTodoList,
-        addTodoList,
-        changeTitleTodoList,
-        changeFilterTodoList
-    } = useTodoList()
+    const { todoData, removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()
 
     if (!isAuth) {
-        return <Navigate to="/login"/>;
+        return <Navigate to="/login" />
     }
 
-    const todoList: JSX.Element[] = todoData.map(todo => {
+    const todoList: JSX.Element[] = todoData.map((todo) => {
         return (
             <Grid item key={todo.id}>
                 <TodoList
@@ -46,9 +38,10 @@ export const TodoListsList: FC<PropsType> = ({demo = false}) => {
         )
     })
 
-    return (<>
-            <Grid container style={{padding: "20px"}}>
-                <InputSubmit onClickCallBack={addTodoList}/>
+    return (
+        <>
+            <Grid container style={{ padding: '20px' }}>
+                <InputSubmit onClickCallBack={addTodoList} />
             </Grid>
             <Grid container spacing={3}>
                 {todoList}

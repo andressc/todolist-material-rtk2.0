@@ -1,7 +1,7 @@
-import {Meta, StoryObj} from "@storybook/react"
-import '../../../index.css';
-import {TodoList} from "./TodoList"
-import {withReduxProvider} from "../../../stories/WithReduxProvider"
+import { Meta, StoryObj } from '@storybook/react'
+import '../../../index.css'
+import { TodoList } from './TodoList'
+import { withReduxProvider } from '../../../stories/WithReduxProvider'
 
 const meta: Meta<typeof TodoList> = {
     title: 'Components/TodoList',
@@ -16,21 +16,21 @@ const meta: Meta<typeof TodoList> = {
         changeTitleTodoList: { action: 'changeTitleTodoList' },
     },
     decorators: [withReduxProvider],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof TodoList>;
+export default meta
+type Story = StoryObj<typeof TodoList>
 
 export const BaseExample: Story = {
     args: {
         todoList: {
-            id: "todo1",
-            title: "todo1",
-            filter: "All",
-            addedDate: "",
+            id: 'todo1',
+            title: 'todo1',
+            filter: 'All',
+            addedDate: '',
             order: 0,
-            entityStatus: "idle"
+            entityStatus: 'idle',
         },
-        demo: true
+        demo: true,
     },
-};
+}

@@ -1,10 +1,10 @@
-import {instance, ResponseType} from "./domain"
+import { instance, ResponseType } from './domain'
 
 export enum TaskStatuses {
     New,
     InProgress,
     Completed,
-    Draft
+    Draft,
 }
 
 export enum TaskPriorities {
@@ -12,7 +12,7 @@ export enum TaskPriorities {
     Middle,
     Hi,
     Urgently,
-    Later
+    Later,
 }
 
 export type TaskType = {
@@ -53,7 +53,7 @@ export const tasksApi = {
     },
 
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<CreateType>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<ResponseType<CreateType>>(`todo-lists/${todolistId}/tasks`, { title })
     },
 
     deleteTask(todolistId: string, taskId: string) {
@@ -62,5 +62,5 @@ export const tasksApi = {
 
     updateTask(todolistId: string, taskId: string, task: UpdateTaskType) {
         return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, task)
-    }
+    },
 }
