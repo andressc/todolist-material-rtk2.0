@@ -5,8 +5,6 @@ import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs
 import { userActions } from '../../app/appSlice'
 import { todoListActions } from './todolistSlice'
 
-const initialState: TasksType = {}
-
 export type TasksType = {
     [key: string]: TaskType[]
 }
@@ -56,7 +54,7 @@ export const removeTaskTC = createAsyncThunk(
 
 const slice = createSlice({
     name: 'tasks',
-    initialState: initialState,
+    initialState: {} as TasksType,
     reducers: {
         addTask(state, action: PayloadAction<{ newTask: TaskType }>) {
             const tasks = state[action.payload.newTask.todoListId]
@@ -107,7 +105,8 @@ const slice = createSlice({
             })
     },
     selectors: {
-        selectTasksById: (sliceState) => (todoListId: string) => sliceState[todoListId],
+        selectTasks: (sliceState) => sliceState,
+        selectTasksById: (sliceState, todoListId) => sliceState[todoListId],
     },
 })
 

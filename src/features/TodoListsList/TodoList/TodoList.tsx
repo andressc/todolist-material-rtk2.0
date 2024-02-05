@@ -5,7 +5,7 @@ import { InputSubmit } from '../../../components/InputSubmit/InputSubmit'
 import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
-import { addTaskTC, removeTaskTC, updateTaskTC } from '../taskSlice'
+import { addTaskTC, removeTaskTC, taskSelectors, updateTaskTC } from '../taskSlice'
 import Paper from '@mui/material/Paper'
 import { Filter, TodolistDomainType } from '../todolistSlice'
 import { TaskStatuses, TaskType } from '../../../api/tasks-api'
@@ -21,14 +21,9 @@ interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HT
 
 export const TodoList: React.FC<PropsType> = React.memo(
     ({ todoList, changeFilter, changeTitleTodoList, removeTodoList, demo = false, ...restProps }): ReactElement => {
-        console.log('TodoList is called')
-
         const dispatch = useAppDispatch()
-        const tasks = useAppSelector((state) => state.tasks[todoList.id])
-
-        /*useEffect(() => {
-        if(!demo) dispatch(fetchTasksTC(todoList.id))
-    }, [demo, dispatch, todoList.id])*/
+        //const tasks = useAppSelector((state) => state.tasks[todoList.id])
+        const tasks = useAppSelector((state) => taskSelectors.selectTasksById(state, todoList.id))
 
         const removeTaskHandler = useCallback(
             (taskId: string): void => {

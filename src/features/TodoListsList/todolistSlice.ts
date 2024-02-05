@@ -4,8 +4,6 @@ import { fetchTasksTC } from './taskSlice'
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { StatusType, userActions } from '../../app/appSlice'
 
-const initialState: TodolistDomainType[] = []
-
 export type Filter = 'All' | 'Active' | 'Completed'
 
 export type TodolistDomainType = TodolistType & {
@@ -14,7 +12,7 @@ export type TodolistDomainType = TodolistType & {
 }
 
 const slice = createSlice({
-    name: 'todolists',
+    name: 'todoLists',
     initialState: {
         todos: [] as TodolistDomainType[],
     },
@@ -73,10 +71,7 @@ const slice = createSlice({
         },
     },
     selectors: {
-        selectTodoLists: (sliceState) => {
-            console.log('Selector result:', sliceState)
-            return sliceState.todos
-        },
+        selectTodoLists: (sliceState) => sliceState.todos,
     },
 })
 

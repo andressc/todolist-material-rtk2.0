@@ -4,7 +4,6 @@ import {
     Filter,
     removeTodoListTC,
     todoListActions,
-    TodolistDomainType,
     todoListSelectors,
     updateTodoListTitleTC,
 } from '../todolistSlice'
@@ -14,9 +13,7 @@ import { useSelector } from 'react-redux'
 export const useTodoList = () => {
     const dispatch = useAppDispatch()
 
-    //debugger
-    //const todoData = useSelector(todoListSelectors.selectTodoLists)
-    //const todoData: TodolistDomainType[] = []
+    const todoData = useSelector(todoListSelectors.selectTodoLists)
 
     const removeTodoList = useCallback(
         (todoListId: string): void => {
@@ -47,7 +44,7 @@ export const useTodoList = () => {
     )
 
     return {
-        //todoData,
+        todoData,
         removeTodoList,
         addTodoList,
         changeTitleTodoList,
