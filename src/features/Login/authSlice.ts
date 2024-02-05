@@ -3,7 +3,7 @@ import { handleServerAppError, handleServerNetworkError } from '../../utils/erro
 import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { FieldError } from '../../api/domain'
-import { userActions } from '../../app/appSlice'
+import { appActions } from '../../app/appSlice'
 import { todoListActions } from '../TodoListsList/todolistSlice'
 
 export const loginTC = createAsyncThunk<
@@ -11,13 +11,13 @@ export const loginTC = createAsyncThunk<
     RequestAuthType,
     { rejectValue: { errors: string[]; fieldsErrors?: FieldError[] } }
 >('auth/login', async (param, thunkAPI) => {
-    thunkAPI.dispatch(userActions.setStatusAC({ status: 'loading' }))
+    thunkAPI.dispatch(appActions.setStatus({ status: 'loading' }))
 
     try {
         const result = await authApi.login(param)
 
         if (result.data.resultCode === 0) {
-            thunkAPI.dispatch(userActions.setStatusAC({ status: 'succeeded' }))
+            thunkAPI.dispatch(appActions.setStatus({ status: 'succeeded' }))
             return { isAuth: true }
         }
 
@@ -53,14 +53,14 @@ export const authActions = slice.actions
 export const authSelectors = slice.selectors
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-    dispatch(userActions.setStatusAC({ status: 'loading' }))
+    dispatch(appActions.setStatus({ status: 'loading' }))
     authApi
         .logout()
         .then((response) => {
             if (response.data.resultCode === 0) {
                 dispatch(authActions.login({ isAuth: false }))
                 dispatch(todoListActions.clearTodoLists())
-                dispatch(userActions.setStatusAC({ status: 'succeeded' }))
+                dispatch(appActions.setStatus({ status: 'succeeded' }))
                 return
             }
 

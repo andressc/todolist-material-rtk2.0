@@ -1,19 +1,19 @@
 import { ResponseType } from '../api/domain'
 import { Dispatch } from '@reduxjs/toolkit'
-import { userActions } from '../app/appSlice'
+import { appActions } from '../app/appSlice'
 
 export const handleServerAppError = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
     if (data.messages.length) {
-        dispatch(userActions.setErrorAC({ error: data.messages[0] }))
-        dispatch(userActions.setStatusAC({ status: 'failed' }))
+        dispatch(appActions.setError({ error: data.messages[0] }))
+        dispatch(appActions.setStatus({ status: 'failed' }))
         return
     }
 
-    dispatch(userActions.setErrorAC({ error: 'some Error' }))
-    dispatch(userActions.setStatusAC({ status: 'failed' }))
+    dispatch(appActions.setError({ error: 'some Error' }))
+    dispatch(appActions.setStatus({ status: 'failed' }))
 }
 
 export const handleServerNetworkError = (dispatch: Dispatch, error: { message: string }) => {
-    dispatch(userActions.setErrorAC({ error: error.message ? error.message : 'Some error' }))
-    dispatch(userActions.setStatusAC({ status: 'failed' }))
+    dispatch(appActions.setError({ error: error.message ? error.message : 'Some error' }))
+    dispatch(appActions.setStatus({ status: 'failed' }))
 }

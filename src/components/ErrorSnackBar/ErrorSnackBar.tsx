@@ -2,7 +2,7 @@ import * as React from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import { useAppDispatch } from '../../hooks/useAppDispatchSelector'
-import { appSelectors, userActions } from '../../app/appSlice'
+import { appSelectors, appActions } from '../../app/appSlice'
 import { useSelector } from 'react-redux'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
@@ -22,7 +22,7 @@ export function CustomizedSnackbars() {
             return
         }
 
-        dispatch<any>(userActions.setErrorAC({ error: null }))
+        dispatch<any>(appActions.setError({ error: null }))
     }
 
     return (

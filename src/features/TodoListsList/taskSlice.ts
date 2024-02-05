@@ -2,7 +2,7 @@ import { TaskPriorities, tasksApi, TaskStatuses, TaskType } from '../../api/task
 import { AppRootState } from '../../app/store'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
-import { userActions } from '../../app/appSlice'
+import { appActions } from '../../app/appSlice'
 import { todoListActions } from './todolistSlice'
 
 export type TasksType = {
@@ -19,12 +19,12 @@ type UpdateDomainTaskType = {
 }
 
 export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (id: string, thunkAPI) => {
-    thunkAPI.dispatch(userActions.setStatusAC({ status: 'loading' }))
+    thunkAPI.dispatch(appActions.setStatus({ status: 'loading' }))
 
     //try {
     const result = await tasksApi.getTasks(id)
 
-    thunkAPI.dispatch(userActions.setStatusAC({ status: 'succeeded' }))
+    thunkAPI.dispatch(appActions.setStatus({ status: 'succeeded' }))
     return { tasks: result.data.items, todoListId: id }
     /*} catch (e) {
             return thunkAPI.rejectWithValue(e)
@@ -117,7 +117,7 @@ export const taskSelectors = slice.selectors
 export const updateTaskTC =
     (todoListId: string, taskId: string, model: UpdateDomainTaskType) =>
     (dispatch: Dispatch, getState: () => AppRootState) => {
-        dispatch(userActions.setStatusAC({ status: 'loading' }))
+        dispatch(appActions.setStatus({ status: 'loading' }))
 
         const state = getState()
         const task = state.tasks[todoListId].find((t) => t.id === taskId)
@@ -139,7 +139,7 @@ export const updateTaskTC =
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(taskActions.changeTask({ todoListId, taskId, model }))
-                    dispatch(userActions.setStatusAC({ status: 'succeeded' }))
+                    dispatch(appActions.setStatus({ status: 'succeeded' }))
                     return
                 }
 
@@ -151,13 +151,13 @@ export const updateTaskTC =
     }
 
 export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
-    dispatch(userActions.setStatusAC({ status: 'loading' }))
+    dispatch(appActions.setStatus({ status: 'loading' }))
     tasksApi
         .createTask(todoListId, title)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(taskActions.addTask({ newTask: res.data.data.item }))
-                dispatch(userActions.setStatusAC({ status: 'succeeded' }))
+                dispatch(appActions.setStatus({ status: 'succeeded' }))
                 return
             }
 

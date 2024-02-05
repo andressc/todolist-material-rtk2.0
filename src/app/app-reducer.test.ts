@@ -1,4 +1,4 @@
-import { appReducer, InitialStateType, userActions } from './appSlice'
+import { appReducer, InitialStateType, appActions } from './appSlice'
 
 let state: InitialStateType
 
@@ -12,7 +12,7 @@ beforeEach(() => {
 
 describe('appReducer', () => {
     it('should handle APP/SET-STATUS action', () => {
-        const action = userActions.setStatusAC({ status: 'loading' })
+        const action = appActions.setStatus({ status: 'loading' })
         const newState = appReducer(state, action)
         const expectedState: InitialStateType = {
             status: 'loading',
@@ -23,7 +23,7 @@ describe('appReducer', () => {
     })
 
     it('should handle APP/SET-ERROR action', () => {
-        const action = userActions.setErrorAC({ error: 'Some error message' })
+        const action = appActions.setError({ error: 'Some error message' })
         const newState = appReducer(state, action)
         const expectedState: InitialStateType = {
             status: 'idle',

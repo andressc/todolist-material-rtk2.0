@@ -15,13 +15,13 @@ const slice = createSlice({
         isInitialized: false,
     },
     reducers: {
-        setStatusAC(state, action: PayloadAction<{ status: StatusType }>) {
+        setStatus(state, action: PayloadAction<{ status: StatusType }>) {
             state.status = action.payload.status
         },
-        setErrorAC(state, action: PayloadAction<{ error: string | null }>) {
+        setError(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error
         },
-        initializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
+        setIsInitialized(state, action: PayloadAction<{ isInitialized: boolean }>) {
             state.isInitialized = action.payload.isInitialized
         },
     },
@@ -33,7 +33,7 @@ const slice = createSlice({
 })
 
 export const appReducer = slice.reducer
-export const userActions = slice.actions
+export const appActions = slice.actions
 export const appSelectors = slice.selectors
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
@@ -41,12 +41,12 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         .getMe()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                dispatch(userActions.initializedAC({ isInitialized: true }))
+                dispatch(appActions.setIsInitialized({ isInitialized: true }))
                 dispatch(authActions.login({ isAuth: true }))
                 return
             }
 
-            dispatch(userActions.initializedAC({ isInitialized: true }))
+            dispatch(appActions.setIsInitialized({ isInitialized: true }))
             handleServerAppError(res.data, dispatch)
         })
         .catch((error) => {
