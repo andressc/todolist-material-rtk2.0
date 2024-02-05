@@ -15,14 +15,16 @@ export type TodolistDomainType = TodolistType & {
 
 const slice = createSlice({
     name: 'todolists',
-    initialState: initialState,
+    initialState: {
+        todos: [] as TodolistDomainType[],
+    },
     reducers: {
         removeTodoList(state, action: PayloadAction<{ todoListId: string }>) {
-            const index = state.findIndex((tl) => tl.id === action.payload.todoListId)
-            if (index > -1) state.splice(index, 1)
+            const index = state.todos.findIndex((tl) => tl.id === action.payload.todoListId)
+            if (index > -1) state.todos.splice(index, 1)
         },
         addTodoList(state, action: PayloadAction<{ newTodoList: TodolistDomainType }>) {
-            state.unshift(action.payload.newTodoList)
+            state.todos.unshift(action.payload.newTodoList)
         },
         changeTitleTodoList(
             state,
@@ -31,8 +33,8 @@ const slice = createSlice({
                 title: string
             }>,
         ) {
-            const index = state.findIndex((tl) => tl.id === action.payload.todoListId)
-            if (index > -1) state[index].title = action.payload.title
+            const index = state.todos.findIndex((tl) => tl.id === action.payload.todoListId)
+            if (index > -1) state.todos[index].title = action.payload.title
         },
         changeFilterTodoList(
             state,
@@ -44,17 +46,17 @@ const slice = createSlice({
             /*const index = state.findIndex((tl) => tl.id === action.payload.todoListId)
             if (index > -1) state[index].filter = action.payload.filter*/
 
-            const todoList = state.find((tl) => tl.id === action.payload.todoListId)
+            const todoList = state.todos.find((tl) => tl.id === action.payload.todoListId)
             if (todoList) {
                 todoList.filter = action.payload.filter
             }
         },
         setTodoLists(state, action: PayloadAction<{ todoLists: TodolistType[] }>) {
-            //return action.payload.todoLists.map((tl) => ({ ...tl, filter: 'All', entityStatus: 'idle' }))
+            return { todos: action.payload.todoLists.map((tl) => ({ ...tl, filter: 'All', entityStatus: 'idle' })) }
 
-            action.payload.todoLists.forEach((tl) => {
-                state.push({ ...tl, filter: 'All', entityStatus: 'idle' })
-            })
+            /*action.payload.todoLists.forEach((tl) => {
+                state.todos.push({ ...tl, filter: 'All', entityStatus: 'idle' })
+            })*/
         },
         changeEntityStatus(
             state,
@@ -63,15 +65,18 @@ const slice = createSlice({
                 entityStatus: StatusType
             }>,
         ) {
-            const index = state.findIndex((tl) => tl.id === action.payload.todoListId)
-            if (index > -1) state[index].entityStatus = action.payload.entityStatus
+            const index = state.todos.findIndex((tl) => tl.id === action.payload.todoListId)
+            if (index > -1) state.todos[index].entityStatus = action.payload.entityStatus
         },
-        clearTodoLists() {
-            return []
+        clearTodoLists(state) {
+            state.todos = []
         },
     },
     selectors: {
-        selectTodoLists: (sliceState) => sliceState,
+        selectTodoLists: (sliceState) => {
+            console.log('Selector result:', sliceState)
+            return sliceState.todos
+        },
     },
 })
 

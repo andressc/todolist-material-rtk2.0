@@ -6,24 +6,26 @@ import { AppRootState, reducers } from 'app/store'
 import { configureStore } from '@reduxjs/toolkit'
 
 const initialGlobalState: AppRootState = {
-    todoLists: [
-        {
-            id: 'todo1',
-            title: 'todo1',
-            filter: 'All',
-            addedDate: '',
-            order: 0,
-            entityStatus: 'idle',
-        },
-        {
-            id: 'todo2',
-            title: 'todo2',
-            filter: 'Active',
-            addedDate: '',
-            order: 0,
-            entityStatus: 'loading',
-        },
-    ],
+    todoLists: {
+        todos: [
+            {
+                id: 'todo1',
+                title: 'todo1',
+                filter: 'All',
+                addedDate: '',
+                order: 0,
+                entityStatus: 'idle',
+            },
+            {
+                id: 'todo2',
+                title: 'todo2',
+                filter: 'Active',
+                addedDate: '',
+                order: 0,
+                entityStatus: 'loading',
+            },
+        ],
+    },
     tasks: {
         ['todo1']: [
             {

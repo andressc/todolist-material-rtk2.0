@@ -19,8 +19,3 @@ export const store = configureStore({
     reducer: reducers,
     //middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend<any>(middlewares),
 })
-
-/*
-store.subscribe(() => {
-    console.log("state changed")
-})*/

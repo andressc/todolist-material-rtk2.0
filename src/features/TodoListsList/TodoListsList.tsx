@@ -1,5 +1,5 @@
 import React, { FC, useEffect, ReactElement } from 'react'
-import { fetchTodoListsTC } from 'features/TodoListsList/todolistSlice'
+import { fetchTodoListsTC, todoListSelectors } from 'features/TodoListsList/todolistSlice'
 import { useTodoList } from './hooks/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from './TodoList/TodoList'
@@ -8,6 +8,7 @@ import { useAppDispatch } from 'hooks/useAppDispatchSelector'
 import { Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { authSelectors } from 'features/Login/authSlice'
+import { AppRootState } from 'app/store'
 
 type PropsType = {
     demo?: boolean
@@ -15,12 +16,15 @@ type PropsType = {
 export const TodoListsList: FC<PropsType> = ({ demo = false }) => {
     const dispatch = useAppDispatch()
     const isAuth = useSelector(authSelectors.selectIsAuth)
+    // (state: AppRootStateType) => state.todolists
+    const todoData = useSelector((state: AppRootState) => state.todoLists.todos)
+    //const todoData = useSelector(todoListSelectors.selectTodoLists)
 
     useEffect(() => {
         if (!demo && isAuth) dispatch(fetchTodoListsTC())
     }, [demo, isAuth, dispatch])
 
-    const { todoData, removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()
+    const { removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()
 
     if (!isAuth) {
         return <Navigate to="/login" />
