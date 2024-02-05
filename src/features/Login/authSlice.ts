@@ -1,10 +1,10 @@
-import { authApi, RequestAuthType } from 'api/auth-api'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { authApi, RequestAuthType } from '../../api/auth-api'
+import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
-import { FieldError } from 'api/domain'
-import { userActions } from 'app/appSlice'
-import { todoListActions } from 'features/TodoListsList/todolistSlice'
+import { FieldError } from '../../api/domain'
+import { userActions } from '../../app/appSlice'
+import { todoListActions } from '../TodoListsList/todolistSlice'
 
 export const loginTC = createAsyncThunk<
     { isAuth: boolean },

@@ -1,9 +1,9 @@
-import { TaskPriorities, tasksApi, TaskStatuses, TaskType } from 'api/tasks-api'
-import { AppRootState } from 'app/store'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
+import { TaskPriorities, tasksApi, TaskStatuses, TaskType } from '../../api/tasks-api'
+import { AppRootState } from '../../app/store'
+import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
-import { userActions } from 'app/appSlice'
-import { todoListActions } from 'features/TodoListsList/todolistSlice'
+import { userActions } from '../../app/appSlice'
+import { todoListActions } from './todolistSlice'
 
 const initialState: TasksType = {}
 

@@ -1,14 +1,14 @@
 import React, { FC, useEffect, ReactElement } from 'react'
-import { fetchTodoListsTC, todoListSelectors } from 'features/TodoListsList/todolistSlice'
+import { fetchTodoListsTC, todoListSelectors } from './todolistSlice'
 import { useTodoList } from './hooks/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from './TodoList/TodoList'
-import { InputSubmit } from 'components/InputSubmit/InputSubmit'
-import { useAppDispatch } from 'hooks/useAppDispatchSelector'
+import { InputSubmit } from '../../components/InputSubmit/InputSubmit'
+import { useAppDispatch } from '../../hooks/useAppDispatchSelector'
 import { Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { authSelectors } from 'features/Login/authSlice'
-import { AppRootState } from 'app/store'
+import { authSelectors } from '../Login/authSlice'
+import { AppRootState } from '../../app/store'
 
 type PropsType = {
     demo?: boolean

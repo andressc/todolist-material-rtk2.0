@@ -1,8 +1,8 @@
-import { todolistsApi, TodolistType } from 'api/todolists-api'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { fetchTasksTC } from 'features/TodoListsList/taskSlice'
+import { todolistsApi, TodolistType } from '../../api/todolists-api'
+import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
+import { fetchTasksTC } from './taskSlice'
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
-import { StatusType, userActions } from 'app/appSlice'
+import { StatusType, userActions } from '../../app/appSlice'
 
 const initialState: TodolistDomainType[] = []
 

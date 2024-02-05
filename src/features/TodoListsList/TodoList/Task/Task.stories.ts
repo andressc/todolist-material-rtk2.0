@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import { Task } from './Task'
 import '../../../../index.css'
-import { TaskPriorities, TaskStatuses } from 'api/tasks-api'
+import { TaskPriorities, TaskStatuses } from '../../../../api/tasks-api'
 
 const meta: Meta<typeof Task> = {
     title: 'Components/Task',

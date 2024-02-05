@@ -1,7 +1,7 @@
-import { authApi } from 'api/auth-api'
+import { authApi } from '../api/auth-api'
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
-import { handleServerAppError, handleServerNetworkError } from 'utils/errorUtils'
-import { authActions } from 'features/Login/authSlice'
+import { handleServerAppError, handleServerNetworkError } from '../utils/errorUtils'
+import { authActions } from '../features/Login/authSlice'
 
 export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 

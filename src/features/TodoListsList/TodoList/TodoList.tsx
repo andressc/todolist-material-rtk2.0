@@ -1,15 +1,15 @@
 import React, { DetailedHTMLProps, HTMLAttributes, useCallback, ReactElement } from 'react'
-import { ButtonFilter } from 'components/ButtonFilter/ButtonFilter'
+import { ButtonFilter } from '../../../components/ButtonFilter/ButtonFilter'
 import { Task } from './Task/Task'
-import { InputSubmit } from 'components/InputSubmit/InputSubmit'
-import { EditableSpan } from 'components/EditableSpan/EditableSpan'
+import { InputSubmit } from '../../../components/InputSubmit/InputSubmit'
+import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
-import { addTaskTC, removeTaskTC, updateTaskTC } from 'features/TodoListsList/taskSlice'
+import { addTaskTC, removeTaskTC, updateTaskTC } from '../taskSlice'
 import Paper from '@mui/material/Paper'
-import { Filter, TodolistDomainType } from 'features/TodoListsList/todolistSlice'
-import { TaskStatuses, TaskType } from 'api/tasks-api'
-import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
+import { Filter, TodolistDomainType } from '../todolistSlice'
+import { TaskStatuses, TaskType } from '../../../api/tasks-api'
+import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatchSelector'
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     todoList: TodolistDomainType

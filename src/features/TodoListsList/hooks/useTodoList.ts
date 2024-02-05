@@ -7,8 +7,8 @@ import {
     TodolistDomainType,
     todoListSelectors,
     updateTodoListTitleTC,
-} from 'features/TodoListsList/todolistSlice'
-import { useAppDispatch } from 'hooks/useAppDispatchSelector'
+} from '../todolistSlice'
+import { useAppDispatch } from '../../../hooks/useAppDispatchSelector'
 import { useSelector } from 'react-redux'
 
 export const useTodoList = () => {

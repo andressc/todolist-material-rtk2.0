@@ -1,66 +1,92 @@
 {
-  "name": "it-incubator-todolist-ts",
-  "jest": {
-    "moduleNameMapper": {
-      "axios": "axios/dist/node/axios.cjs"
-    }
-  },
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@babel/runtime": "^7.23.7",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.2",
-    "@mui/material": "^5.15.2",
-    "@reduxjs/toolkit": "^2.0.1",
-    "@testing-library/jest-dom": "^6.1.6",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.6",
-    "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18",
-    "@types/uuid": "^9.0.7",
-    "axios": "^1.6.3",
-    "formik": "^2.4.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.0.4",
-    "react-router-dom": "^6.21.1",
-    "react-scripts": "5.0.1",
-    "redux-thunk": "^3.1.0",
-    "typescript": "^5.3.3",
-    "uuid": "^9.0.1",
-    "@storybook/react": "^7.6.12",
-    "@storybook/testing-library": "^0.2.2",
-    "storybook-addon-react-router-v6": "^2.0.10"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "prettier": "^3.1.1"
-  }
+    "name": "1-lesson",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.14.16",
+        "@mui/material": "^5.14.17",
+        "@redux-devtools/extension": "^3.2.6",
+        "@reduxjs/toolkit": "^2.1.0",
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^13.5.0",
+        "@types/jest": "29.5.11",
+        "@types/node": "20.10.6",
+        "@types/react": "18.2.46",
+        "@types/react-dom": "^18.0.7",
+        "@types/uuid": "^9.0.6",
+        "axios": "^1.6.2",
+        "formik": "^2.4.5",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-redux": "9.0.4",
+        "react-router-dom": "^6.21.2",
+        "react-scripts": "5.0.1",
+        "redux": "^4.2.1",
+        "redux-thunk": "^3.1.0",
+        "typescript": "^5.3.3",
+        "uuid": "^9.0.1",
+        "web-vitals": "^2.1.4"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "storybook": "storybook dev -p 9009",
+        "build-storybook": "storybook build",
+        "chromatic": "npx chromatic --project-token=chpt_7e58a91c2bb345a",
+        "prettier": "prettier --config .prettierrc --write ."
+    },
+    "jest": {
+        "transformIgnorePatterns": [
+            "/node_modules/(?!(axios)/)"
+        ]
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest",
+            "plugin:storybook/recommended"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@storybook/addon-essentials": "^7.5.3",
+        "@storybook/addon-interactions": "^7.5.3",
+        "@storybook/addon-links": "^7.5.3",
+        "@storybook/addon-onboarding": "^1.0.8",
+        "@storybook/blocks": "^7.5.3",
+        "@storybook/preset-create-react-app": "^7.5.3",
+        "@storybook/react": "^7.5.3",
+        "@storybook/react-webpack5": "^7.5.3",
+        "@storybook/testing-library": "^0.2.2",
+        "@types/react-redux": "^7.1.30",
+        "@typescript-eslint/eslint-plugin": "^6.20.0",
+        "@typescript-eslint/parser": "^6.20.0",
+        "babel-plugin-named-exports-order": "^0.0.2",
+        "chromatic": "^9.1.0",
+        "eslint-plugin-storybook": "^0.6.15",
+        "prettier": "3.2.5",
+        "prop-types": "^15.8.1",
+        "react-devtools": "^4.28.5",
+        "storybook": "^7.5.3",
+        "storybook-addon-react-router-v6": "^2.0.10",
+        "webpack": "^5.89.0"
+    },
+    "readme": "ERROR: No README data found!",
+    "_id": "1-lesson@0.1.0"
 }

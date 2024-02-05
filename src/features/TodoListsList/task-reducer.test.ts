@@ -1,7 +1,7 @@
 import { v1 } from 'uuid'
-import { fetchTasksTC, removeTaskTC, taskActions, tasksReducer, TasksType } from 'features/TodoListsList/taskSlice'
-import { TaskPriorities, TaskStatuses, TaskType } from 'api/tasks-api'
-import { TodolistDomainType } from 'features/TodoListsList/todolistSlice'
+import { fetchTasksTC, removeTaskTC, taskActions, tasksReducer, TasksType } from './taskSlice'
+import { TaskPriorities, TaskStatuses, TaskType } from '../../api/tasks-api'
+import { TodolistDomainType } from './todolistSlice'
 
 let state: TasksType
 let state2: TodolistDomainType[]

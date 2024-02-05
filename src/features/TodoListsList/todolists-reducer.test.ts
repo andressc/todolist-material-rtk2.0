@@ -1,8 +1,8 @@
 import { v1 } from 'uuid'
-import { Filter, todoListActions, TodolistDomainType, todolistReducer } from 'features/TodoListsList/todolistSlice'
-import { TasksType } from 'features/TodoListsList/taskSlice'
-import { TaskPriorities, TaskStatuses } from 'api/tasks-api'
-import { StatusType } from 'app/appSlice'
+import { Filter, todoListActions, TodolistDomainType, todolistReducer } from './todolistSlice'
+import { TasksType } from './taskSlice'
+import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
+import { StatusType } from '../../app/appSlice'
 
 let state: { todos: TodolistDomainType[] }
 let state2: TasksType
