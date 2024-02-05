@@ -1,15 +1,15 @@
-import React, { DetailedHTMLProps, HTMLAttributes, useCallback } from 'react'
-import { ButtonFilter } from '../../../components/ButtonFilter/ButtonFilter'
+import React, { DetailedHTMLProps, HTMLAttributes, useCallback, ReactElement } from 'react'
+import { ButtonFilter } from 'components/ButtonFilter/ButtonFilter'
 import { Task } from './Task/Task'
-import { InputSubmit } from '../../../components/InputSubmit/InputSubmit'
-import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
+import { InputSubmit } from 'components/InputSubmit/InputSubmit'
+import { EditableSpan } from 'components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
 import { addTaskTC, removeTaskTC, updateTaskTC } from 'features/TodoListsList/taskSlice'
 import Paper from '@mui/material/Paper'
 import { Filter, TodolistDomainType } from 'features/TodoListsList/todolistSlice'
-import { TaskStatuses, TaskType } from '../../../api/tasks-api'
-import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatchSelector'
+import { TaskStatuses, TaskType } from 'api/tasks-api'
+import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
 
 interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
     todoList: TodolistDomainType
@@ -20,7 +20,7 @@ interface PropsType extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HT
 }
 
 export const TodoList: React.FC<PropsType> = React.memo(
-    ({ todoList, changeFilter, changeTitleTodoList, removeTodoList, demo = false, ...restProps }): JSX.Element => {
+    ({ todoList, changeFilter, changeTitleTodoList, removeTodoList, demo = false, ...restProps }): ReactElement => {
         console.log('TodoList is called')
 
         const dispatch = useAppDispatch()
@@ -70,7 +70,7 @@ export const TodoList: React.FC<PropsType> = React.memo(
             initialTask = initialTask.filter((v) => v.status === TaskStatuses.Completed)
         }
 
-        const taskList: JSX.Element[] =
+        const taskList: ReactElement[] =
             initialTask &&
             initialTask.map((task) => {
                 return (

@@ -35,9 +35,9 @@ export const fetchTasksTC = createAsyncThunk('tasks/fetchTasks', async (id: stri
 
 export const removeTaskTC = createAsyncThunk(
     'tasks/removeTask',
-    async (param: { todoListId: string; taskId: string }, thunkAPI) => {
+    async (param: { todoListId: string; taskId: string }) => {
         //try {
-        const result = await tasksApi.deleteTask(param.todoListId, param.taskId)
+        await tasksApi.deleteTask(param.todoListId, param.taskId)
 
         //if (result.data.resultCode === 0) return ({todoListId: param.todoListId, taskId: param.taskId})
 
@@ -88,7 +88,7 @@ const slice = createSlice({
             .addCase(todoListActions.removeTodoList, (state, action) => {
                 delete state[action.payload.todoListId]
             })
-            .addCase(todoListActions.clearTodoLists, (state, action) => {
+            .addCase(todoListActions.clearTodoLists, () => {
                 return {}
             })
             .addCase(todoListActions.addTodoList, (state, action) => {
@@ -106,10 +106,14 @@ const slice = createSlice({
                 if (index > -1) tasks.splice(index, 1)
             })
     },
+    selectors: {
+        selectTasksById: (sliceState) => (todoListId: string) => sliceState[todoListId],
+    },
 })
 
 export const tasksReducer = slice.reducer
 export const taskActions = slice.actions
+export const taskSelectors = slice.selectors
 
 export const updateTaskTC =
     (todoListId: string, taskId: string, model: UpdateDomainTaskType) =>
@@ -147,7 +151,7 @@ export const updateTaskTC =
             })
     }
 
-export const addTaskTC = (todoListId: string, title: string) => async (dispatch: Dispatch) => {
+export const addTaskTC = (todoListId: string, title: string) => (dispatch: Dispatch) => {
     dispatch(userActions.setStatusAC({ status: 'loading' }))
     tasksApi
         .createTask(todoListId, title)
@@ -163,4 +167,5 @@ export const addTaskTC = (todoListId: string, title: string) => async (dispatch:
         .catch((error) => {
             handleServerNetworkError(dispatch, error)
         })
+        .finally()
 }

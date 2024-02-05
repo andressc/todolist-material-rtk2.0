@@ -43,10 +43,14 @@ const slice = createSlice({
             state.isAuth = action.payload.isAuth
         })
     },
+    selectors: {
+        selectIsAuth: (sliceState) => sliceState.isAuth,
+    },
 })
 
 export const authReducer = slice.reducer
 export const authActions = slice.actions
+export const authSelectors = slice.selectors
 
 export const logoutTC = () => (dispatch: Dispatch) => {
     dispatch(userActions.setStatusAC({ status: 'loading' }))

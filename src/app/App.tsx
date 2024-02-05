@@ -10,13 +10,13 @@ import { Menu } from '@mui/icons-material'
 import { TodoListsList } from 'features/TodoListsList/TodoListsList'
 import LinearProgress from '@mui/material/LinearProgress'
 import { CustomizedSnackbars } from 'components/ErrorSnackBar/ErrorSnackBar'
-import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
+import { useAppDispatch } from 'hooks/useAppDispatchSelector'
 import { Route, Routes } from 'react-router-dom'
 import { Login } from 'features/Login/Login'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
-import { initializeAppTC, selectAppStatus } from 'app/appSlice'
-import { logoutTC } from 'features/Login/authSlice'
+import { appSelectors, initializeAppTC } from 'app/appSlice'
+import { authSelectors, logoutTC } from 'features/Login/authSlice'
 import { useSelector } from 'react-redux'
 
 type PropsType = {
@@ -24,11 +24,11 @@ type PropsType = {
 }
 
 const App: FC<PropsType> = ({ demo = false }) => {
-    const status = useSelector(selectAppStatus)
-    //const status = useAppSelector((state) => state.app.status)
+    const status = useSelector(appSelectors.selectStatus)
+    const isInitialized = useSelector(appSelectors.selectIsInitialized)
+    const isAuth = useSelector(authSelectors.selectIsAuth)
+
     const dispatch = useAppDispatch()
-    const isInitialized = useAppSelector((state) => state.app.isInitialized)
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
 
     useEffect(() => {
         dispatch(initializeAppTC())

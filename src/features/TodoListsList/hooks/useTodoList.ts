@@ -4,13 +4,15 @@ import {
     Filter,
     removeTodoListTC,
     todoListActions,
+    todoListSelectors,
     updateTodoListTitleTC,
 } from 'features/TodoListsList/todolistSlice'
-import { useAppDispatch, useAppSelector } from 'hooks/useAppDispatchSelector'
+import { useAppDispatch } from 'hooks/useAppDispatchSelector'
+import { useSelector } from 'react-redux'
 
 export const useTodoList = () => {
     const dispatch = useAppDispatch()
-    const todoData = useAppSelector((state) => state.todoLists)
+    const todoData = useSelector(todoListSelectors.selectTodoLists)
 
     const removeTodoList = useCallback(
         (todoListId: string): void => {

@@ -8,13 +8,14 @@ import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { useFormik } from 'formik'
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatchSelector'
-import { loginTC } from 'features/Login/authSlice'
+import { useAppDispatch } from 'hooks/useAppDispatchSelector'
+import { authSelectors, loginTC } from 'features/Login/authSlice'
 import { Navigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export const Login = () => {
     const dispatch = useAppDispatch()
-    const isAuth = useAppSelector((state) => state.auth.isAuth)
+    const isAuth = useSelector(authSelectors.selectIsAuth)
 
     const formik = useFormik({
         validate: (values) => {

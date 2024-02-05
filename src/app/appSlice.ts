@@ -26,15 +26,15 @@ const slice = createSlice({
         },
     },
     selectors: {
-        selectAppStatus: (sliceState) => {
-            return sliceState.status
-        },
+        selectStatus: (sliceState) => sliceState.status,
+        selectError: (sliceState) => sliceState.error,
+        selectIsInitialized: (sliceState) => sliceState.isInitialized,
     },
 })
 
 export const appReducer = slice.reducer
 export const userActions = slice.actions
-export const { selectAppStatus } = slice.selectors
+export const appSelectors = slice.selectors
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authApi
@@ -42,7 +42,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(userActions.initializedAC({ isInitialized: true }))
-                dispatch<any>(authActions.login({ isAuth: true }))
+                dispatch(authActions.login({ isAuth: true }))
                 return
             }
 

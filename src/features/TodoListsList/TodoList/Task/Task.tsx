@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, ReactElement } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import CheckboxMy from 'components/Checkbox/CheckboxMy'
@@ -13,7 +13,7 @@ interface PropsType {
 }
 
 export const Task: React.FC<PropsType> = React.memo(
-    ({ task, removeTasks, changeStatus, changeTitleTask }): JSX.Element => {
+    ({ task, removeTasks, changeStatus, changeTitleTask }): ReactElement => {
         console.log('Task is called')
 
         const onRemoveHandler = useCallback(() => removeTasks(task.id), [removeTasks, task.id])

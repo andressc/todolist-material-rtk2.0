@@ -66,14 +66,18 @@ const slice = createSlice({
             const index = state.findIndex((tl) => tl.id === action.payload.todoListId)
             if (index > -1) state[index].entityStatus = action.payload.entityStatus
         },
-        clearTodoLists(state, action: PayloadAction) {
+        clearTodoLists() {
             return []
         },
+    },
+    selectors: {
+        selectTodoLists: (sliceState) => sliceState,
     },
 })
 
 export const todolistReducer = slice.reducer
 export const todoListActions = slice.actions
+export const todoListSelectors = slice.selectors
 
 export const fetchTodoListsTC = () => (dispatch: Dispatch) => {
     dispatch(userActions.setStatusAC({ status: 'loading' }))
