@@ -1,5 +1,5 @@
 import React, { FC, useEffect, ReactElement } from 'react'
-import { fetchTodoListsTC } from './todolistSlice'
+import { fetchTodoLists } from './todolistSlice'
 import { useTodoList } from './hooks/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from './TodoList/TodoList'
@@ -17,7 +17,7 @@ export const TodoListsList: FC<PropsType> = ({ demo = false }) => {
     const isAuth = useSelector(authSelectors.selectIsAuth)
 
     useEffect(() => {
-        if (!demo && isAuth) dispatch(fetchTodoListsTC())
+        if (!demo && isAuth) dispatch(fetchTodoLists())
     }, [demo, isAuth, dispatch])
 
     const { todoData, removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()

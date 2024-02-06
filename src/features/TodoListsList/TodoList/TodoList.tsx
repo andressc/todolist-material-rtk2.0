@@ -5,7 +5,7 @@ import { InputSubmit } from '../../../components/InputSubmit/InputSubmit'
 import { EditableSpan } from '../../../components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
-import { addTaskTC, removeTaskTC, taskSelectors, updateTaskTC } from '../taskSlice'
+import { addTask, removeTask, taskSelectors, updateTask } from '../taskSlice'
 import Paper from '@mui/material/Paper'
 import { Filter, TodolistDomainType } from '../todolistSlice'
 import { TaskStatuses, TaskType } from '../../../api/tasks-api'
@@ -27,28 +27,28 @@ export const TodoList: React.FC<PropsType> = React.memo(
 
         const removeTaskHandler = useCallback(
             (taskId: string): void => {
-                dispatch(removeTaskTC({ todoListId: todoList.id, taskId }))
+                dispatch(removeTask({ todoListId: todoList.id, taskId }))
             },
             [dispatch, todoList.id],
         )
 
         const changeStatusHandler = useCallback(
             (taskId: string, status: TaskStatuses): void => {
-                dispatch(updateTaskTC(todoList.id, taskId, { status }))
+                dispatch(updateTask({ todoListId: todoList.id, taskId, model: { status } }))
             },
             [dispatch, todoList.id],
         )
 
         const onClickCallBack = useCallback(
             (inputText: string): void => {
-                dispatch(addTaskTC(todoList.id, inputText.trim()))
+                dispatch(addTask({ todoListId: todoList.id, title: inputText.trim() }))
             },
             [dispatch, todoList.id],
         )
 
         const changeTitleTask = useCallback(
             (taskId: string, title: string) => {
-                dispatch(updateTaskTC(todoList.id, taskId, { title }))
+                dispatch(updateTask({ todoListId: todoList.id, taskId, model: { title } }))
             },
             [dispatch, todoList.id],
         )

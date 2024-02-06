@@ -6,8 +6,8 @@ import { FieldError } from '../../api/domain'
 import { appActions } from '../../app/appSlice'
 import { todoListActions } from '../TodoListsList/todolistSlice'
 
-export const loginTC = createAsyncThunk<
-    { isAuth: boolean },
+export const login = createAsyncThunk<
+    undefined,
     RequestAuthType,
     { rejectValue: { errors: string[]; fieldsErrors?: FieldError[] } }
 >('auth/login', async (param, thunkAPI) => {
@@ -18,7 +18,7 @@ export const loginTC = createAsyncThunk<
 
         if (result.data.resultCode === 0) {
             thunkAPI.dispatch(appActions.setStatus({ status: 'succeeded' }))
-            return { isAuth: true }
+            return
         }
 
         handleServerAppError(result.data, thunkAPI.dispatch)
@@ -27,6 +27,27 @@ export const loginTC = createAsyncThunk<
         const error: AxiosError = e as AxiosError
         handleServerNetworkError(thunkAPI.dispatch, error)
         return thunkAPI.rejectWithValue({ errors: [error.message], fieldsErrors: undefined })
+    }
+})
+
+export const logout = createAsyncThunk('auth/logout', async (param, thunkAPI) => {
+    thunkAPI.dispatch(appActions.setStatus({ status: 'loading' }))
+
+    try {
+        const result = await authApi.logout()
+
+        if (result.data.resultCode === 0) {
+            thunkAPI.dispatch(todoListActions.clearTodoLists())
+            thunkAPI.dispatch(appActions.setStatus({ status: 'succeeded' }))
+            return
+        }
+
+        handleServerAppError(result.data, thunkAPI.dispatch)
+        return thunkAPI.rejectWithValue(null)
+    } catch (e) {
+        const error: AxiosError = e as AxiosError
+        handleServerNetworkError(thunkAPI.dispatch, error)
+        return thunkAPI.rejectWithValue(null)
     }
 })
 
@@ -39,9 +60,13 @@ const slice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(loginTC.fulfilled, (state, action) => {
-            state.isAuth = action.payload.isAuth
-        })
+        builder
+            .addCase(login.fulfilled, (state) => {
+                state.isAuth = true
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.isAuth = false
+            })
     },
     selectors: {
         selectIsAuth: (sliceState) => sliceState.isAuth,
@@ -51,22 +76,3 @@ const slice = createSlice({
 export const authReducer = slice.reducer
 export const authActions = slice.actions
 export const authSelectors = slice.selectors
-
-export const logoutTC = () => (dispatch: Dispatch) => {
-    dispatch(appActions.setStatus({ status: 'loading' }))
-    authApi
-        .logout()
-        .then((response) => {
-            if (response.data.resultCode === 0) {
-                dispatch(authActions.login({ isAuth: false }))
-                dispatch(todoListActions.clearTodoLists())
-                dispatch(appActions.setStatus({ status: 'succeeded' }))
-                return
-            }
-
-            handleServerAppError(response.data, dispatch)
-        })
-        .catch((error) => {
-            handleServerNetworkError(dispatch, error)
-        })
-}

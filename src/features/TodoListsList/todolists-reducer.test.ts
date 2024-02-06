@@ -1,5 +1,14 @@
 import { v1 } from 'uuid'
-import { Filter, todoListActions, TodolistDomainType, todolistReducer } from './todolistSlice'
+import {
+    addTodoList,
+    fetchTodoLists,
+    Filter,
+    removeTodoList,
+    todoListActions,
+    TodolistDomainType,
+    todolistReducer,
+    updateTodoListTitle,
+} from './todolistSlice'
 import { TasksType } from './taskSlice'
 import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
 import { StatusType } from '../../app/appSlice'
@@ -106,7 +115,7 @@ beforeEach(() => {
 })
 
 test('remove TodoList', () => {
-    const action = todoListActions.removeTodoList({ todoListId: todoList1 })
+    const action = removeTodoList.fulfilled({ todoListId: todoList1 }, '', todoList1)
 
     /*const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
@@ -127,7 +136,7 @@ test('add TodoList', () => {
         entityStatus: 'idle',
     } as const
 
-    const action = todoListActions.addTodoList({ newTodoList: newTodolist })
+    const action = addTodoList.fulfilled({ newTodoList: newTodolist }, '', newTodolist.title)
 
     /*const result: TodolistDomainType[] = todolistReducer(state, action)
     const result2: TasksType = taskReducer(state2, action)
@@ -150,7 +159,7 @@ test('add TodoList', () => {
 test('change Title TodoList', () => {
     const result: { todos: TodolistDomainType[] } = todolistReducer(
         state,
-        todoListActions.changeTitleTodoList({ todoListId: todoList2, title }),
+        updateTodoListTitle.fulfilled({ todoListId: todoList2, title }, '', { todoListId: todoList2, title }),
     )
 
     expect(result.todos.length).toBe(2)
@@ -180,7 +189,7 @@ test('change Filter TodoList', () => {
 test('set TodoLists', () => {
     const result: { todos: TodolistDomainType[] } = todolistReducer(
         { todos: [] },
-        todoListActions.setTodoLists({ todoLists: state.todos }),
+        fetchTodoLists.fulfilled({ todoLists: state.todos }, ''),
     )
 
     expect(result.todos.length).toBe(2)

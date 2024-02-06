@@ -1,11 +1,30 @@
 import { authApi } from '../api/auth-api'
-import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { handleServerAppError, handleServerNetworkError } from '../utils/errorUtils'
 import { authActions } from '../features/Login/authSlice'
+import { AxiosError } from 'axios'
 
 export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialStateType = ReturnType<typeof slice.getInitialState>
+
+export const initializeApp = createAsyncThunk('app/initializeApp', async (param, thunkAPI) => {
+    try {
+        const result = await authApi.getMe()
+
+        if (result.data.resultCode === 0) {
+            thunkAPI.dispatch(authActions.login({ isAuth: true }))
+            return
+        }
+
+        handleServerAppError(result.data, thunkAPI.dispatch)
+        //return thunkAPI.rejectWithValue(null)
+    } catch (e) {
+        const error: AxiosError = e as AxiosError
+        handleServerNetworkError(thunkAPI.dispatch, error)
+        //return thunkAPI.rejectWithValue(null)
+    }
+})
 
 const slice = createSlice({
     name: 'app',
@@ -21,9 +40,11 @@ const slice = createSlice({
         setError(state, action: PayloadAction<{ error: string | null }>) {
             state.error = action.payload.error
         },
-        setIsInitialized(state, action: PayloadAction<{ isInitialized: boolean }>) {
-            state.isInitialized = action.payload.isInitialized
-        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(initializeApp.fulfilled, (state) => {
+            state.isInitialized = true
+        })
     },
     selectors: {
         selectStatus: (sliceState) => sliceState.status,
@@ -35,21 +56,3 @@ const slice = createSlice({
 export const appReducer = slice.reducer
 export const appActions = slice.actions
 export const appSelectors = slice.selectors
-
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    authApi
-        .getMe()
-        .then((res) => {
-            if (res.data.resultCode === 0) {
-                dispatch(appActions.setIsInitialized({ isInitialized: true }))
-                dispatch(authActions.login({ isAuth: true }))
-                return
-            }
-
-            dispatch(appActions.setIsInitialized({ isInitialized: true }))
-            handleServerAppError(res.data, dispatch)
-        })
-        .catch((error) => {
-            handleServerNetworkError(dispatch, error)
-        })
-}

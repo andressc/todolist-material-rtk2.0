@@ -15,8 +15,8 @@ import { Route, Routes } from 'react-router-dom'
 import { Login } from '../features/Login/Login'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
-import { appSelectors, initializeAppTC } from './appSlice'
-import { authSelectors, logoutTC } from '../features/Login/authSlice'
+import { appSelectors, initializeApp } from './appSlice'
+import { authSelectors, logout } from '../features/Login/authSlice'
 import { useSelector } from 'react-redux'
 
 type PropsType = {
@@ -31,11 +31,11 @@ const App: FC<PropsType> = ({ demo = false }) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(initializeAppTC())
+        dispatch(initializeApp())
     }, [dispatch])
 
     const logoutHandler = useCallback(() => {
-        dispatch(logoutTC())
+        dispatch(logout())
     }, [dispatch])
 
     if (!isInitialized) {
