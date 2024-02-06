@@ -9,7 +9,7 @@ import {
     todolistReducer,
     updateTodoListTitle,
 } from './todolistSlice'
-import { TasksType } from './taskSlice'
+import { tasksReducer, TasksType } from './taskSlice'
 import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
 import { StatusType } from '../../app/appSlice'
 
@@ -117,13 +117,13 @@ beforeEach(() => {
 test('remove TodoList', () => {
     const action = removeTodoList.fulfilled({ todoListId: todoList1 }, '', todoList1)
 
-    /*const result: TodolistDomainType[] = todolistReducer(state, action)
-    const result2: TasksType = taskReducer(state2, action)
+    const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
+    const result2: TasksType = tasksReducer(state2, action)
 
-    expect(result.length).toBe(1)
-    expect(result[0].id).toBe(todoList2)
+    expect(result.todos.length).toBe(1)
+    expect(result.todos[0].id).toBe(todoList2)
 
-    expect(result2[todoList1]).toBeUndefined()*/
+    expect(result2[todoList1]).toBeUndefined()
 })
 
 test('add TodoList', () => {
@@ -138,22 +138,22 @@ test('add TodoList', () => {
 
     const action = addTodoList.fulfilled({ newTodoList: newTodolist }, '', newTodolist.title)
 
-    /*const result: TodolistDomainType[] = todolistReducer(state, action)
-    const result2: TasksType = taskReducer(state2, action)
+    const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
+    const result2: TasksType = tasksReducer(state2, action)
 
-    expect(result.length).toBe(3)
-    expect(result[0].title).toBe(title)
-    expect(result[0].filter).toBe("All")
+    expect(result.todos.length).toBe(3)
+    expect(result.todos[0].title).toBe(title)
+    expect(result.todos[0].filter).toBe('All')
 
     const keys = Object.keys(result2)
-    const newKey = keys.find(k => k != todoList1 && k != todoList2)
-    if (!newKey) throw Error("new key should be added")
+    const newKey = keys.find((k) => k != todoList1 && k != todoList2)
+    if (!newKey) throw Error('new key should be added')
 
     expect(keys.length).toBe(3)
     expect(result2[newKey]).toEqual([])
 
-    expect(result[0].id).toBe(newTodolist.id)
-    expect(keys[2]).toBe(newTodolist.id)*/
+    expect(result.todos[0].id).toBe(newTodolist.id)
+    expect(keys[2]).toBe(newTodolist.id)
 })
 
 test('change Title TodoList', () => {
@@ -198,18 +198,11 @@ test('set TodoLists', () => {
     expect(result.todos[3]).toBeUndefined()
 })
 
-/*test("set TodoLists and tasks", () => {
-
-    const endState = taskReducer({}, setTodoListsAC({todoLists: state}))
+test('set TodoLists and tasks', () => {
+    const endState = tasksReducer({}, fetchTodoLists.fulfilled({ todoLists: state.todos }, ''))
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(2)
     expect(endState[todoList1]).toBeDefined()
     expect(endState[todoList2]).toBeDefined()
-})*/
-
-/*test("test WRONG ACTION", () => {
-    expect(() => {
-        todolistReducer(state, {type: "WRONG ACTION"})
-    }).toThrow()
-})*/
+})
