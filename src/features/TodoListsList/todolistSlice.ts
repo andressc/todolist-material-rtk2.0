@@ -1,7 +1,7 @@
 import { todolistsApi, TodolistType } from '../../api/todolists-api'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { fetchTasks } from './taskSlice'
-import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { StatusType, appActions } from '../../app/appSlice'
 import { AxiosError } from 'axios'
 

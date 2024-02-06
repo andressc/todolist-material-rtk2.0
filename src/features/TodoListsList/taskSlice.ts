@@ -3,7 +3,6 @@ import { handleServerAppError, handleServerNetworkError } from '../../utils/erro
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { appActions } from '../../app/appSlice'
 import { addTodoList, fetchTodoLists, removeTodoList, todoListActions } from './todolistSlice'
-import { authApi } from '../../api/auth-api'
 import { AxiosError } from 'axios'
 import { AppRootState } from '../../app/store'
 

@@ -1,6 +1,6 @@
 import { authApi, RequestAuthType } from '../../api/auth-api'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
-import { createAsyncThunk, createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 import { FieldError } from '../../api/domain'
 import { appActions } from '../../app/appSlice'
