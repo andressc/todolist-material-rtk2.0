@@ -8,7 +8,7 @@ export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialStateType = ReturnType<typeof slice.getInitialState>
 
-/*export const initializeApp = createAsyncThunk('app/initializeApp', async (param, thunkAPI) => {
+/*3export const initializeApp = createAsyncThunk('app/initializeApp', async (param, thunkAPI) => {
     try {
         const result = await authApi.getMe()
 
