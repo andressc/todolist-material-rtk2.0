@@ -1,4 +1,4 @@
-import { authApi, AuthRequest } from '../../api/auth-api'
+import { authApi, LoginRequest } from '../../api/auth-api'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
@@ -10,7 +10,7 @@ const createAppSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
 })
 
-type ErrorThunkType = { errors: string[]; fieldsErrors: undefined | FieldError[] }
+type RejectedThunk = { errors: string[]; fieldsErrors: undefined | FieldError[] }
 
 const slice = createAppSlice({
     name: 'auth',
@@ -22,7 +22,7 @@ const slice = createAppSlice({
             setIsAuth: creators.reducer((state, action: PayloadAction<{ isAuth: boolean }>) => {
                 state.isAuth = action.payload.isAuth
             }),
-            login: creators.asyncThunk<undefined, AuthRequest, { rejectValue: ErrorThunkType }>(
+            login: creators.asyncThunk<undefined, LoginRequest, { rejectValue: RejectedThunk }>(
                 async (param, { dispatch, rejectWithValue }) => {
                     dispatch(appActions.setStatus({ status: 'loading' }))
 

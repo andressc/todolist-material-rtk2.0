@@ -1,12 +1,12 @@
-import { instance, ResponseType } from './domain'
+import { instance, ApiResponse } from './domain'
 
-export type ResponseAuthType = {
+export type AuthResponse = {
     id: number
     email: string
     login: string
 }
 
-export type AuthRequest = {
+export type LoginRequest = {
     email: string
     password: string
     rememberMe: boolean
@@ -15,14 +15,14 @@ export type AuthRequest = {
 
 export const authApi = {
     getMe() {
-        return instance.get<ResponseType<ResponseAuthType>>(`auth/me`)
+        return instance.get<ApiResponse<AuthResponse>>(`auth/me`)
     },
 
-    login(data: AuthRequest) {
-        return instance.post<ResponseType<{ userId?: number }>>(`auth/login`, data)
+    login(data: LoginRequest) {
+        return instance.post<ApiResponse<{ userId?: number }>>(`auth/login`, data)
     },
 
     logout() {
-        return instance.delete<ResponseType>(`auth/login`)
+        return instance.delete<ApiResponse>(`auth/login`)
     },
 }

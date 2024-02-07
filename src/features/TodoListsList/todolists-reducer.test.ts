@@ -1,16 +1,16 @@
 import { v1 } from 'uuid'
-import { Filter, todoListActions, TodolistDomainType, todolistReducer } from './todolistSlice'
-import { tasksReducer, TasksType } from './taskSlice'
+import { Filter, todoListActions, TodolistDomain, todolistReducer } from './todolistSlice'
+import { tasksReducer, Tasks } from './taskSlice'
 import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
-import { StatusType } from '../../app/appSlice'
+import { AppStatuses } from '../../app/appSlice'
 
-let state: { todos: TodolistDomainType[] }
-let state2: TasksType
+let state: { todos: TodolistDomain[] }
+let state2: Tasks
 const todoList1: string = v1()
 const todoList2: string = v1()
 const title: string = 'newTodo'
 const filter: Filter = 'Active'
-const entityStatus: StatusType = 'loading'
+const entityStatus: AppStatuses = 'loading'
 
 const task1: string = v1()
 const task2: string = v1()
@@ -108,8 +108,8 @@ beforeEach(() => {
 test('remove TodoList', () => {
     const action = todoListActions.removeTodoList.fulfilled({ todoListId: todoList1 }, 'requestId', todoList1, '')
 
-    const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
-    const result2: TasksType = tasksReducer(state2, action)
+    const result: { todos: TodolistDomain[] } = todolistReducer(state, action)
+    const result2: Tasks = tasksReducer(state2, action)
 
     expect(result.todos.length).toBe(1)
     expect(result.todos[0].id).toBe(todoList2)
@@ -118,7 +118,7 @@ test('remove TodoList', () => {
 })
 
 test('add TodoList', () => {
-    const newTodolist: TodolistDomainType = {
+    const newTodolist: TodolistDomain = {
         id: v1(),
         title: title,
         filter: 'All',
@@ -134,8 +134,8 @@ test('add TodoList', () => {
         '',
     )
 
-    const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
-    const result2: TasksType = tasksReducer(state2, action)
+    const result: { todos: TodolistDomain[] } = todolistReducer(state, action)
+    const result2: Tasks = tasksReducer(state2, action)
 
     expect(result.todos.length).toBe(3)
     expect(result.todos[0].title).toBe(title)
@@ -153,7 +153,7 @@ test('add TodoList', () => {
 })
 
 test('change Title TodoList', () => {
-    const result: { todos: TodolistDomainType[] } = todolistReducer(
+    const result: { todos: TodolistDomain[] } = todolistReducer(
         state,
         todoListActions.updateTodoListTitle.fulfilled(
             { todoListId: todoList2, title },
@@ -168,7 +168,7 @@ test('change Title TodoList', () => {
 })
 
 test('change EntityStatus TodoList', () => {
-    const result: { todos: TodolistDomainType[] } = todolistReducer(
+    const result: { todos: TodolistDomain[] } = todolistReducer(
         state,
         todoListActions.changeEntityStatus({ todoListId: todoList2, entityStatus }),
     )
@@ -178,7 +178,7 @@ test('change EntityStatus TodoList', () => {
 })
 
 test('change Filter TodoList', () => {
-    const result: { todos: TodolistDomainType[] } = todolistReducer(
+    const result: { todos: TodolistDomain[] } = todolistReducer(
         state,
         todoListActions.changeFilterTodoList({ todoListId: todoList1, filter }),
     )
@@ -188,7 +188,7 @@ test('change Filter TodoList', () => {
 })
 
 test('set TodoLists', () => {
-    const result: { todos: TodolistDomainType[] } = todolistReducer(
+    const result: { todos: TodolistDomain[] } = todolistReducer(
         { todos: [] },
         todoListActions.fetchTodoLists.fulfilled({ todoLists: state.todos }, 'requestId', undefined, ''),
     )

@@ -1,30 +1,30 @@
-import { instance, ResponseType } from './domain'
+import { instance, ApiResponse } from './domain'
 
-export type TodolistType = {
+export type TodolistEntity = {
     id: string
     title: string
     addedDate: string
     order: number
 }
 
-type CreateType = {
-    item: TodolistType
+type CreateTodolistResponse = {
+    item: TodolistEntity
 }
 
 export const todolistsApi = {
     getTodoLists() {
-        return instance.get<TodolistType[]>(`todo-lists`)
+        return instance.get<TodolistEntity[]>(`todo-lists`)
     },
 
     createTodolist(title: string) {
-        return instance.post<ResponseType<CreateType>>(`todo-lists`, { title })
+        return instance.post<ApiResponse<CreateTodolistResponse>>(`todo-lists`, { title })
     },
 
     deleteTodolist(id: string) {
-        return instance.delete<ResponseType>(`todo-lists/${id}`)
+        return instance.delete<ApiResponse>(`todo-lists/${id}`)
     },
 
     updateTodolistTitle(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, { title })
+        return instance.put<ApiResponse>(`todo-lists/${id}`, { title })
     },
 }

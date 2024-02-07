@@ -4,9 +4,9 @@ import { handleServerAppError, handleServerNetworkError } from '../utils/errorUt
 import { authActions } from '../features/Login/authSlice'
 import { AxiosError } from 'axios'
 
-export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type AppStatuses = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export type InitialStateType = ReturnType<typeof slice.getInitialState>
+export type AppInitialState = ReturnType<typeof slice.getInitialState>
 
 const createAppSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
@@ -15,7 +15,7 @@ const createAppSlice = buildCreateSlice({
 const slice = createAppSlice({
     name: 'app',
     initialState: {
-        status: 'idle' as StatusType,
+        status: 'idle' as AppStatuses,
         error: null as null | string,
         isInitialized: false,
     },
@@ -23,7 +23,7 @@ const slice = createAppSlice({
         const createAThunk = creators.asyncThunk.withTypes<{ rejectValue: null }>()
 
         return {
-            setStatus: creators.reducer((state, action: PayloadAction<{ status: StatusType }>) => {
+            setStatus: creators.reducer((state, action: PayloadAction<{ status: AppStatuses }>) => {
                 state.status = action.payload.status
             }),
             setError: creators.reducer((state, action: PayloadAction<{ error: string | null }>) => {

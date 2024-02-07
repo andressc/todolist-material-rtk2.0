@@ -1,4 +1,4 @@
-import { TaskPriorities, tasksApi, TaskStatuses, TaskType } from '../../api/tasks-api'
+import { tasksApi, TaskEntity, UpdateTaskRequest } from '../../api/tasks-api'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit'
 import { appActions } from '../../app/appSlice'
@@ -6,17 +6,8 @@ import { todoListActions } from './todolistSlice'
 import { AxiosError } from 'axios'
 import { AppRootState } from '../../app/store'
 
-export type TasksType = {
-    [key: string]: TaskType[]
-}
-
-type UpdateDomainTaskType = {
-    title?: string
-    description?: string
-    status?: TaskStatuses
-    priority?: TaskPriorities
-    startDate?: string
-    deadline?: string
+export type Tasks = {
+    [key: string]: TaskEntity[]
 }
 
 const createAppSlice = buildCreateSlice({
@@ -25,12 +16,12 @@ const createAppSlice = buildCreateSlice({
 
 const slice = createAppSlice({
     name: 'tasks',
-    initialState: {} as TasksType,
+    initialState: {} as Tasks,
     reducers: (creators) => {
         const createAThunk = creators.asyncThunk.withTypes<{ rejectValue: null }>()
 
         return {
-            addTask: createAThunk<{ newTask: TaskType }, { todoListId: string; title: string }>(
+            addTask: createAThunk<{ newTask: TaskEntity }, { todoListId: string; title: string }>(
                 async (param, { dispatch, rejectWithValue }) => {
                     dispatch(appActions.setStatus({ status: 'loading' }))
 
@@ -52,8 +43,8 @@ const slice = createAppSlice({
                 },
             ),
             updateTask: createAThunk<
-                { todoListId: string; taskId: string; model: UpdateDomainTaskType },
-                { todoListId: string; taskId: string; model: UpdateDomainTaskType }
+                { todoListId: string; taskId: string; model: UpdateTaskRequest },
+                { todoListId: string; taskId: string; model: UpdateTaskRequest }
             >(async (param, { dispatch, rejectWithValue, getState }) => {
                 dispatch(appActions.setStatus({ status: 'loading' }))
 
@@ -106,7 +97,7 @@ const slice = createAppSlice({
                     }
                 },
             ),
-            fetchTasks: createAThunk<{ tasks: TaskType[]; todoListId: string }, string>(
+            fetchTasks: createAThunk<{ tasks: TaskEntity[]; todoListId: string }, string>(
                 async (id, { dispatch, rejectWithValue }) => {
                     dispatch(appActions.setStatus({ status: 'loading' }))
 

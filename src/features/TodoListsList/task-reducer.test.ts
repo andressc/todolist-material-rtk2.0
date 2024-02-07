@@ -1,10 +1,10 @@
 import { v1 } from 'uuid'
-import { taskActions, tasksReducer, TasksType } from './taskSlice'
-import { TaskPriorities, TaskStatuses, TaskType } from '../../api/tasks-api'
-import { TodolistDomainType } from './todolistSlice'
+import { taskActions, tasksReducer, Tasks } from './taskSlice'
+import { TaskPriorities, TaskStatuses, TaskEntity } from '../../api/tasks-api'
+import { TodolistDomain } from './todolistSlice'
 
-let state: TasksType
-let state2: TodolistDomainType[]
+let state: Tasks
+let state2: TodolistDomain[]
 const todoList1: string = v1()
 const todoList2: string = v1()
 const task1: string = v1()
@@ -100,7 +100,7 @@ beforeEach(() => {
 })
 
 test('add Task', () => {
-    const newTask: TaskType = {
+    const newTask: TaskEntity = {
         id: v1(),
         title: title,
         status: TaskStatuses.New,
@@ -113,7 +113,7 @@ test('add Task', () => {
         addedDate: '',
     }
 
-    const result: TasksType = tasksReducer(
+    const result: Tasks = tasksReducer(
         state,
         taskActions.addTask.fulfilled(
             { newTask: newTask },
@@ -130,7 +130,7 @@ test('add Task', () => {
 })
 
 test('remove Task', () => {
-    const result: TasksType = tasksReducer(
+    const result: Tasks = tasksReducer(
         state,
         taskActions.removeTask.fulfilled(
             { todoListId: todoList2, taskId: task1 },
@@ -147,7 +147,7 @@ test('remove Task', () => {
 })
 
 test('change Status', () => {
-    const result: TasksType = tasksReducer(
+    const result: Tasks = tasksReducer(
         state,
         taskActions.updateTask.fulfilled(
             {
@@ -170,7 +170,7 @@ test('change Status', () => {
 })
 
 test('change Title Task', () => {
-    const result: TasksType = tasksReducer(
+    const result: Tasks = tasksReducer(
         state,
         taskActions.updateTask.fulfilled(
             { todoListId: todoList1, taskId: task2, model: { title } },
@@ -199,7 +199,7 @@ test('tasks should be added for todolist', () => {
         '',
     )
 
-    const result: TasksType = tasksReducer({ [todoList2]: [], [todoList1]: [] }, action)
+    const result: Tasks = tasksReducer({ [todoList2]: [], [todoList1]: [] }, action)
 
     expect(result[todoList1].length).toBe(3)
     expect(result[todoList2].length).toBe(0)

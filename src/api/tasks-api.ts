@@ -1,4 +1,4 @@
-import { instance, ResponseType } from './domain'
+import { ApiResponse, instance } from './domain'
 
 export enum TaskStatuses {
     New,
@@ -15,7 +15,7 @@ export enum TaskPriorities {
     Later,
 }
 
-export type TaskType = {
+export type TaskEntity = {
     description: string
     title: string
     status: TaskStatuses
@@ -28,39 +28,39 @@ export type TaskType = {
     addedDate: string
 }
 
-type CreateType = {
-    item: TaskType
+type CreateTaskResponse = {
+    item: TaskEntity
 }
 
-type GetType = {
-    items: TaskType[]
+type GetTasksResponse = {
+    items: TaskEntity[]
     totalCount: number
     error: string | null
 }
 
-export type UpdateTaskType = {
-    title: string
-    description: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
+export type UpdateTaskRequest = {
+    title?: string
+    description?: string
+    status?: TaskStatuses
+    priority?: TaskPriorities
+    startDate?: string
+    deadline?: string
 }
 
 export const tasksApi = {
     getTasks(todolistId: string) {
-        return instance.get<GetType>(`todo-lists/${todolistId}/tasks`)
+        return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
 
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<CreateType>>(`todo-lists/${todolistId}/tasks`, { title })
+        return instance.post<ApiResponse<CreateTaskResponse>>(`todo-lists/${todolistId}/tasks`, { title })
     },
 
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<ApiResponse>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
 
-    updateTask(todolistId: string, taskId: string, task: UpdateTaskType) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, task)
+    updateTask(todolistId: string, taskId: string, task: UpdateTaskRequest) {
+        return instance.put<ApiResponse>(`todo-lists/${todolistId}/tasks/${taskId}`, task)
     },
 }

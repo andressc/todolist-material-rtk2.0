@@ -7,12 +7,12 @@ import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
 import { taskActions, taskSelectors } from '../taskSlice'
 import Paper from '@mui/material/Paper'
-import { Filter, TodolistDomainType } from '../todolistSlice'
-import { TaskStatuses, TaskType } from '../../../api/tasks-api'
+import { Filter, TodolistDomain } from '../todolistSlice'
+import { TaskStatuses, TaskEntity } from '../../../api/tasks-api'
 import { useAppDispatch, useAppSelector } from '../../../hooks/useAppDispatchSelector'
 
 type Props = {
-    todoList: TodolistDomainType
+    todoList: TodolistDomain
     changeFilter: (filter: Filter, todoListId: string) => void
     removeTodoList: (todoListId: string) => void
     changeTitleTodoList: (title: string, id: string) => void
@@ -53,7 +53,7 @@ export const TodoList: React.FC<Props> = React.memo(
             [dispatch, todoList.id],
         )
 
-        let initialTask: TaskType[] = tasks
+        let initialTask: TaskEntity[] = tasks
 
         if (todoList.filter === 'Active') {
             initialTask = initialTask.filter(

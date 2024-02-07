@@ -1,15 +1,15 @@
-import { todolistsApi, TodolistType } from '../../api/todolists-api'
+import { todolistsApi, TodolistEntity } from '../../api/todolists-api'
 import { handleServerAppError, handleServerNetworkError } from '../../utils/errorUtils'
 import { taskActions } from './taskSlice'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
-import { StatusType, appActions } from '../../app/appSlice'
+import { AppStatuses, appActions } from '../../app/appSlice'
 import { AxiosError } from 'axios'
 
 export type Filter = 'All' | 'Active' | 'Completed'
 
-export type TodolistDomainType = TodolistType & {
+export type TodolistDomain = TodolistEntity & {
     filter: Filter
-    entityStatus: StatusType
+    entityStatus: AppStatuses
 }
 
 const createAppSlice = buildCreateSlice({
@@ -19,7 +19,7 @@ const createAppSlice = buildCreateSlice({
 const slice = createAppSlice({
     name: 'todoLists',
     initialState: {
-        todos: [] as TodolistDomainType[],
+        todos: [] as TodolistDomain[],
     },
     reducers: (creators) => {
         const createAThunk = creators.asyncThunk.withTypes<{ rejectValue: null }>()
@@ -44,7 +44,7 @@ const slice = createAppSlice({
                     state,
                     action: PayloadAction<{
                         todoListId: string
-                        entityStatus: StatusType
+                        entityStatus: AppStatuses
                     }>,
                 ) => {
                     const index = state.todos.findIndex((tl) => tl.id === action.payload.todoListId)
@@ -96,7 +96,7 @@ const slice = createAppSlice({
                     }
                 },
             ),
-            addTodoList: createAThunk<{ newTodoList: TodolistDomainType }, string>(
+            addTodoList: createAThunk<{ newTodoList: TodolistDomain }, string>(
                 async (title, { dispatch, rejectWithValue }) => {
                     dispatch(appActions.setStatus({ status: 'loading' }))
 
@@ -109,7 +109,7 @@ const slice = createAppSlice({
                                 newTodoList: {
                                     ...result.data.data.item,
                                     filter: 'All' as Filter,
-                                    entityStatus: 'idle' as StatusType,
+                                    entityStatus: 'idle' as AppStatuses,
                                 },
                             }
                         }
@@ -124,7 +124,7 @@ const slice = createAppSlice({
                     }
                 },
             ),
-            fetchTodoLists: createAThunk<{ todoLists: TodolistType[] }, undefined>(
+            fetchTodoLists: createAThunk<{ todoLists: TodolistEntity[] }, undefined>(
                 async (_, { dispatch, rejectWithValue }) => {
                     dispatch(appActions.setStatus({ status: 'loading' }))
 

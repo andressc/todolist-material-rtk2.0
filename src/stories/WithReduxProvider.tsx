@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { Provider } from 'react-redux'
 import { TaskPriorities, TaskStatuses } from '../api/tasks-api'
 import { v1 } from 'uuid'
@@ -95,7 +95,7 @@ export const storyBookStore = configureStore({
     preloadedState: initialGlobalState,
 })
 
-export const withReduxProvider = (Story: React.ComponentType) => (
+export const withReduxProvider = (Story: ComponentType) => (
     <Provider store={storyBookStore}>
         <Story />
     </Provider>
