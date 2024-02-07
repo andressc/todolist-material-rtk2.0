@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useState } from 'react'
 import TextField from '@mui/material/TextField'
 
-interface PropsType {
+type Props = {
     text: string
     onChangeCallBack: (spanText: string) => void
 }
 
-export const EditableSpan: React.FC<PropsType> = React.memo(({ text, onChangeCallBack }) => {
+export const EditableSpan: React.FC<Props> = React.memo(({ text, onChangeCallBack }) => {
     console.log('EditableSpan is called')
 
     const [editableSpan, setEditableSpan] = useState<boolean>(false)

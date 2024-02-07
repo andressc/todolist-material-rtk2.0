@@ -3,12 +3,12 @@ import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
 import AddCircle from '@mui/icons-material/AddCircle'
 
-type PropsType = {
+type Props = {
     onClickCallBack: (inputText: string) => void
     disabled?: boolean
 }
 
-export const InputSubmit: React.FC<PropsType> = React.memo(({ onClickCallBack, disabled = false }) => {
+export const InputSubmit: React.FC<Props> = React.memo(({ onClickCallBack, disabled = false }) => {
     console.log('InputSubmit is called')
 
     const [inputText, setInputText] = useState<string>('')

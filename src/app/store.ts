@@ -10,10 +10,10 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootState, 
 export type AppDispatch = ThunkDispatch<AppRootState, unknown, UnknownAction>
 
 export const reducers = {
-    todoLists: todolistReducer,
     tasks: tasksReducer,
     app: appReducer,
     auth: authReducer,
+    todoLists: todolistReducer,
 }
 export const store = configureStore({
     reducer: reducers,

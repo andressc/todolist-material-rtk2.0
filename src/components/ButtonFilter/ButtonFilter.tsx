@@ -2,13 +2,13 @@ import React, { ButtonHTMLAttributes, DetailedHTMLProps, ReactElement } from 're
 import Button from '@mui/material/Button'
 import { Filter } from '../../features/TodoListsList/todolistSlice'
 
-interface PropsType extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+type Props = {
     filter: Filter
     filterState: Filter
     changeFilter: (filter: Filter) => void
-}
+} & DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-export const ButtonFilter: React.FC<PropsType> = React.memo(({ filter, changeFilter, filterState }): ReactElement => {
+export const ButtonFilter: React.FC<Props> = React.memo(({ filter, changeFilter, filterState }): ReactElement => {
     console.log('ButtonFilter is called')
 
     const onFilterHandler = (): void => {

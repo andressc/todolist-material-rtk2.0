@@ -1,5 +1,5 @@
 import { v1 } from 'uuid'
-import { addTask, fetchTasks, removeTask, tasksReducer, TasksType, updateTask } from './taskSlice'
+import { taskActions, tasksReducer, TasksType } from './taskSlice'
 import { TaskPriorities, TaskStatuses, TaskType } from '../../api/tasks-api'
 import { TodolistDomainType } from './todolistSlice'
 
@@ -115,7 +115,12 @@ test('add Task', () => {
 
     const result: TasksType = tasksReducer(
         state,
-        addTask.fulfilled({ newTask: newTask }, '', { todoListId: newTask.todoListId, title: newTask.title }),
+        taskActions.addTask.fulfilled(
+            { newTask: newTask },
+            'requestId',
+            { todoListId: newTask.todoListId, title: newTask.title },
+            '',
+        ),
     )
 
     expect(result[todoList1].length).toBe(4)
@@ -127,7 +132,12 @@ test('add Task', () => {
 test('remove Task', () => {
     const result: TasksType = tasksReducer(
         state,
-        removeTask.fulfilled({ todoListId: todoList2, taskId: task1 }, '', { todoListId: todoList2, taskId: task1 }),
+        taskActions.removeTask.fulfilled(
+            { todoListId: todoList2, taskId: task1 },
+            'requesId',
+            { todoListId: todoList2, taskId: task1 },
+            '',
+        ),
     )
 
     expect(result[todoList2].length).toBe(1)
@@ -139,18 +149,19 @@ test('remove Task', () => {
 test('change Status', () => {
     const result: TasksType = tasksReducer(
         state,
-        updateTask.fulfilled(
+        taskActions.updateTask.fulfilled(
+            {
+                todoListId: todoList1,
+                taskId: task2,
+                model: { status: TaskStatuses.Completed },
+            },
+            'requestId',
             {
                 todoListId: todoList1,
                 taskId: task2,
                 model: { status: TaskStatuses.Completed },
             },
             '',
-            {
-                todoListId: todoList1,
-                taskId: task2,
-                model: { status: TaskStatuses.Completed },
-            },
         ),
     )
 
@@ -161,11 +172,16 @@ test('change Status', () => {
 test('change Title Task', () => {
     const result: TasksType = tasksReducer(
         state,
-        updateTask.fulfilled({ todoListId: todoList1, taskId: task2, model: { title } }, '', {
-            todoListId: todoList1,
-            taskId: task2,
-            model: { title },
-        }),
+        taskActions.updateTask.fulfilled(
+            { todoListId: todoList1, taskId: task2, model: { title } },
+            'requestId',
+            {
+                todoListId: todoList1,
+                taskId: task2,
+                model: { title },
+            },
+            '',
+        ),
     )
 
     expect(result[todoList1][2].title).toBe(title)
@@ -173,13 +189,14 @@ test('change Title Task', () => {
 })
 
 test('tasks should be added for todolist', () => {
-    const action = fetchTasks.fulfilled(
+    const action = taskActions.fetchTasks.fulfilled(
         {
             tasks: state[todoList1],
             todoListId: todoList1,
         },
-        '123',
+        'requestId',
         todoList1,
+        '',
     )
 
     const result: TasksType = tasksReducer({ [todoList2]: [], [todoList1]: [] }, action)

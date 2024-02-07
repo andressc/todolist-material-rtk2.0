@@ -1,12 +1,5 @@
 import { useCallback } from 'react'
-import {
-    addTodoList,
-    Filter,
-    removeTodoList,
-    todoListActions,
-    todoListSelectors,
-    updateTodoListTitle,
-} from '../todolistSlice'
+import { Filter, todoListActions, todoListSelectors } from '../todolistSlice'
 import { useAppDispatch } from '../../../hooks/useAppDispatchSelector'
 import { useSelector } from 'react-redux'
 
@@ -17,21 +10,21 @@ export const useTodoList = () => {
 
     const removeTodoListHandler = useCallback(
         (todoListId: string): void => {
-            dispatch(removeTodoList(todoListId))
+            dispatch(todoListActions.removeTodoList(todoListId))
         },
         [dispatch],
     )
 
     const addTodoListHandler = useCallback(
         (title: string): void => {
-            dispatch(addTodoList(title))
+            dispatch(todoListActions.addTodoList(title))
         },
         [dispatch],
     )
 
     const changeTitleTodoList = useCallback(
         (title: string, todoListId: string): void => {
-            dispatch(updateTodoListTitle({ todoListId, title }))
+            dispatch(todoListActions.updateTodoListTitle({ todoListId, title }))
         },
         [dispatch],
     )

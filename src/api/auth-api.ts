@@ -6,7 +6,7 @@ export type ResponseAuthType = {
     login: string
 }
 
-export type RequestAuthType = {
+export type AuthRequest = {
     email: string
     password: string
     rememberMe: boolean
@@ -18,7 +18,7 @@ export const authApi = {
         return instance.get<ResponseType<ResponseAuthType>>(`auth/me`)
     },
 
-    login(data: RequestAuthType) {
+    login(data: AuthRequest) {
         return instance.post<ResponseType<{ userId?: number }>>(`auth/login`, data)
     },
 

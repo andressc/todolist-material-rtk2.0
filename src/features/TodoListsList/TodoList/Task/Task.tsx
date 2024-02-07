@@ -5,14 +5,14 @@ import CheckboxMy from '../../../../components/Checkbox/CheckboxMy'
 import { TaskStatuses, TaskType } from '../../../../api/tasks-api'
 import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan'
 
-interface PropsType {
+type Props = {
     task: TaskType
     removeTasks: (taskId: string) => void
     changeStatus: (taskId: string, status: TaskStatuses) => void
     changeTitleTask: (taskId: string, title: string) => void
 }
 
-export const Task: React.FC<PropsType> = React.memo(
+export const Task: React.FC<Props> = React.memo(
     ({ task, removeTasks, changeStatus, changeTitleTask }): ReactElement => {
         console.log('Task is called')
 

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, ReactElement } from 'react'
-import { fetchTodoLists } from './todolistSlice'
+import { todoListActions } from './todolistSlice'
 import { useTodoList } from './hooks/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from './TodoList/TodoList'
@@ -9,15 +9,15 @@ import { Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { authSelectors } from '../Login/authSlice'
 
-type PropsType = {
+type Props = {
     demo?: boolean
 }
-export const TodoListsList: FC<PropsType> = ({ demo = false }) => {
+export const TodoListsList: FC<Props> = ({ demo = false }) => {
     const dispatch = useAppDispatch()
     const isAuth = useSelector(authSelectors.selectIsAuth)
 
     useEffect(() => {
-        if (!demo && isAuth) dispatch(fetchTodoLists())
+        if (!demo && isAuth) dispatch(todoListActions.fetchTodoLists())
     }, [demo, isAuth, dispatch])
 
     const { todoData, removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()

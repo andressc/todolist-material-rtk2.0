@@ -8,24 +8,6 @@ export type StatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialStateType = ReturnType<typeof slice.getInitialState>
 
-/*3export const initializeApp = createAsyncThunk('app/initializeApp', async (param, thunkAPI) => {
-    try {
-        const result = await authApi.getMe()
-
-        if (result.data.resultCode === 0) {
-            thunkAPI.dispatch(authActions.login({ isAuth: true }))
-            return
-        }
-
-        handleServerAppError(result.data, thunkAPI.dispatch)
-        //return thunkAPI.rejectWithValue(null)
-    } catch (e) {
-        const error: AxiosError = e as AxiosError
-        handleServerNetworkError(thunkAPI.dispatch, error)
-        //return thunkAPI.rejectWithValue(null)
-    }
-})*/
-
 const createAppSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },
 })
@@ -47,27 +29,27 @@ const slice = createAppSlice({
             setError: creators.reducer((state, action: PayloadAction<{ error: string | null }>) => {
                 state.error = action.payload.error
             }),
-            initializeApp: createAThunk<undefined, undefined>(async (_, thunkAPI) => {
+            initializeApp: createAThunk<undefined, undefined>(async (_, { dispatch, rejectWithValue }) => {
                 try {
                     const result = await authApi.getMe()
 
                     if (result.data.resultCode === 0) {
-                        thunkAPI.dispatch(authActions.login({ isAuth: true }))
+                        dispatch(authActions.setIsAuth({ isAuth: true }))
                         return
                     }
 
-                    handleServerAppError(result.data, thunkAPI.dispatch)
-                    return thunkAPI.rejectWithValue(null)
+                    handleServerAppError(result.data, dispatch)
+                    //return rejectWithValue(null)
                 } catch (e) {
                     const error: AxiosError = e as AxiosError
-                    handleServerNetworkError(thunkAPI.dispatch, error)
-                    return thunkAPI.rejectWithValue(null)
+                    handleServerNetworkError(dispatch, error)
+                    return rejectWithValue(null)
                 }
             }),
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(initializeApp.fulfilled, (state) => {
+        builder.addCase(appActions.initializeApp.fulfilled, (state) => {
             state.isInitialized = true
         })
     },
@@ -81,4 +63,3 @@ const slice = createAppSlice({
 export const appReducer = slice.reducer
 export const appActions = slice.actions
 export const appSelectors = slice.selectors
-export const { initializeApp } = slice.actions

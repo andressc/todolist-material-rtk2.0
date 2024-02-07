@@ -1,14 +1,5 @@
 import { v1 } from 'uuid'
-import {
-    addTodoList,
-    fetchTodoLists,
-    Filter,
-    removeTodoList,
-    todoListActions,
-    TodolistDomainType,
-    todolistReducer,
-    updateTodoListTitle,
-} from './todolistSlice'
+import { Filter, todoListActions, TodolistDomainType, todolistReducer } from './todolistSlice'
 import { tasksReducer, TasksType } from './taskSlice'
 import { TaskPriorities, TaskStatuses } from '../../api/tasks-api'
 import { StatusType } from '../../app/appSlice'
@@ -115,7 +106,7 @@ beforeEach(() => {
 })
 
 test('remove TodoList', () => {
-    const action = removeTodoList.fulfilled({ todoListId: todoList1 }, '', todoList1)
+    const action = todoListActions.removeTodoList.fulfilled({ todoListId: todoList1 }, 'requestId', todoList1, '')
 
     const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
     const result2: TasksType = tasksReducer(state2, action)
@@ -136,7 +127,12 @@ test('add TodoList', () => {
         entityStatus: 'idle',
     } as const
 
-    const action = addTodoList.fulfilled({ newTodoList: newTodolist }, '', newTodolist.title)
+    const action = todoListActions.addTodoList.fulfilled(
+        { newTodoList: newTodolist },
+        'requesId',
+        newTodolist.title,
+        '',
+    )
 
     const result: { todos: TodolistDomainType[] } = todolistReducer(state, action)
     const result2: TasksType = tasksReducer(state2, action)
@@ -159,7 +155,12 @@ test('add TodoList', () => {
 test('change Title TodoList', () => {
     const result: { todos: TodolistDomainType[] } = todolistReducer(
         state,
-        updateTodoListTitle.fulfilled({ todoListId: todoList2, title }, '', { todoListId: todoList2, title }),
+        todoListActions.updateTodoListTitle.fulfilled(
+            { todoListId: todoList2, title },
+            'requestId',
+            { todoListId: todoList2, title },
+            '',
+        ),
     )
 
     expect(result.todos.length).toBe(2)
@@ -189,7 +190,7 @@ test('change Filter TodoList', () => {
 test('set TodoLists', () => {
     const result: { todos: TodolistDomainType[] } = todolistReducer(
         { todos: [] },
-        fetchTodoLists.fulfilled({ todoLists: state.todos }, ''),
+        todoListActions.fetchTodoLists.fulfilled({ todoLists: state.todos }, 'requestId', undefined, ''),
     )
 
     expect(result.todos.length).toBe(2)
@@ -199,7 +200,10 @@ test('set TodoLists', () => {
 })
 
 test('set TodoLists and tasks', () => {
-    const endState = tasksReducer({}, fetchTodoLists.fulfilled({ todoLists: state.todos }, ''))
+    const endState = tasksReducer(
+        {},
+        todoListActions.fetchTodoLists.fulfilled({ todoLists: state.todos }, 'requestId', undefined, ''),
+    )
     const keys = Object.keys(endState)
 
     expect(keys.length).toBe(2)

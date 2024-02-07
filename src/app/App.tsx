@@ -15,15 +15,15 @@ import { Route, Routes } from 'react-router-dom'
 import { Login } from '../features/Login/Login'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
-import { appSelectors, initializeApp } from './appSlice'
-import { authSelectors, logout } from '../features/Login/authSlice'
+import { appSelectors, appActions } from './appSlice'
+import { authSelectors, authActions } from '../features/Login/authSlice'
 import { useSelector } from 'react-redux'
 
-type PropsType = {
+type Props = {
     demo?: boolean
 }
 
-const App: FC<PropsType> = ({ demo = false }) => {
+const App: FC<Props> = ({ demo = false }) => {
     const status = useSelector(appSelectors.selectStatus)
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const isAuth = useSelector(authSelectors.selectIsAuth)
@@ -31,11 +31,11 @@ const App: FC<PropsType> = ({ demo = false }) => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(initializeApp())
+        dispatch(appActions.initializeApp())
     }, [dispatch])
 
     const logoutHandler = useCallback(() => {
-        dispatch(logout())
+        dispatch(authActions.logout())
     }, [dispatch])
 
     if (!isInitialized) {
