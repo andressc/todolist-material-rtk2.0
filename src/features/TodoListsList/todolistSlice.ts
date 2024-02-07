@@ -16,6 +16,8 @@ export const fetchTodoLists = createAsyncThunk('todoLists/fetchTodoLists', async
     thunkAPI.dispatch(appActions.setStatus({ status: 'loading' }))
 
     try {
+        todolistsApi.getTodoLists().then((res) => res)
+
         const result = await todolistsApi.getTodoLists()
 
         thunkAPI.dispatch(appActions.setStatus({ status: 'succeeded' }))
