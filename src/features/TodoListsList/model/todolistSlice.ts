@@ -1,4 +1,4 @@
-import { todolistsApi, TodolistEntity } from '../api/todolists-api'
+import { todoListsApi, TodolistEntity } from '../api/todolists-api'
 import { handleServerAppError, handleServerNetworkError } from '../../../common/utils/errorUtils'
 import { taskActions } from './taskSlice'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
@@ -59,7 +59,7 @@ const slice = createAppSlice({
                 { todoListId: string; title: string }
             >(async (param, { dispatch, rejectWithValue }) => {
                 try {
-                    const result = await todolistsApi.updateTodolistTitle(param.todoListId, param.title)
+                    const result = await todoListsApi.updateTodolistTitle(param.todoListId, param.title)
 
                     if (result.data.resultCode === 0) {
                         return { todoListId: param.todoListId, title: param.title }
@@ -78,7 +78,7 @@ const slice = createAppSlice({
                     dispatch(appActions.setStatus({ status: 'loading' }))
                     dispatch(todoListActions.changeEntityStatus({ todoListId, entityStatus: 'loading' }))
                     try {
-                        const result = await todolistsApi.deleteTodolist(todoListId)
+                        const result = await todoListsApi.deleteTodolist(todoListId)
 
                         if (result.data.resultCode === 0) {
                             dispatch(appActions.setStatus({ status: 'succeeded' }))
@@ -101,7 +101,7 @@ const slice = createAppSlice({
                     dispatch(appActions.setStatus({ status: 'loading' }))
 
                     try {
-                        const result = await todolistsApi.createTodolist(title)
+                        const result = await todoListsApi.createTodolist(title)
 
                         if (result.data.resultCode === 0) {
                             dispatch(appActions.setStatus({ status: 'succeeded' }))
@@ -129,9 +129,9 @@ const slice = createAppSlice({
                     dispatch(appActions.setStatus({ status: 'loading' }))
 
                     try {
-                        todolistsApi.getTodoLists().then((res) => res)
+                        todoListsApi.getTodoLists().then((res) => res)
 
-                        const result = await todolistsApi.getTodoLists()
+                        const result = await todoListsApi.getTodoLists()
 
                         dispatch(appActions.setStatus({ status: 'succeeded' }))
 

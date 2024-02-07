@@ -11,7 +11,7 @@ type CreateTodolistResponse = {
     item: TodolistEntity
 }
 
-export const todolistsApi = {
+export const todoListsApi = {
     getTodoLists() {
         return instance.get<TodolistEntity[]>(`todo-lists`)
     },
