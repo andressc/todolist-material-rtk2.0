@@ -1,7 +1,7 @@
-import { authApi } from '../api/auth-api'
+import { authApi } from '../features/auth/api/auth-api'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
-import { handleServerAppError, handleServerNetworkError } from '../utils/errorUtils'
-import { authActions } from '../features/Login/authSlice'
+import { handleServerAppError, handleServerNetworkError } from '../common/utils/errorUtils'
+import { authActions } from '../features/auth/model/authSlice'
 import { AxiosError } from 'axios'
 
 export type AppStatuses = 'idle' | 'loading' | 'succeeded' | 'failed'

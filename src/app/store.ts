@@ -1,8 +1,8 @@
-import { todolistReducer } from '../features/TodoListsList/todolistSlice'
-import { tasksReducer } from '../features/TodoListsList/taskSlice'
+import { todolistReducer } from '../features/TodoListsList/model/todolistSlice'
+import { tasksReducer } from '../features/TodoListsList/model/taskSlice'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { appReducer } from './appSlice'
-import { authReducer } from '../features/Login/authSlice'
+import { authReducer } from '../features/auth/model/authSlice'
 import { configureStore, UnknownAction } from '@reduxjs/toolkit'
 
 export type AppRootState = ReturnType<typeof store.getState>
