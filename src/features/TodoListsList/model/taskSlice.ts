@@ -1,10 +1,11 @@
-import { tasksApi, TaskEntity, UpdateTaskRequest } from '../api/tasks-api'
+import { tasksApi } from '../api/tasksApi'
 import { handleServerAppError, handleServerNetworkError } from '../../../common/utils/errorUtils'
 import { asyncThunkCreator, buildCreateSlice } from '@reduxjs/toolkit'
 import { appActions } from '../../../app/appSlice'
 import { todoListActions } from './todolistSlice'
 import { AxiosError } from 'axios'
 import { AppRootState } from '../../../app/store'
+import { TaskEntity, UpdateTaskModel } from './task.types'
 
 export type Tasks = {
     [key: string]: TaskEntity[]
@@ -43,8 +44,8 @@ const slice = createAppSlice({
                 },
             ),
             updateTask: createAThunk<
-                { todoListId: string; taskId: string; model: UpdateTaskRequest },
-                { todoListId: string; taskId: string; model: UpdateTaskRequest }
+                { todoListId: string; taskId: string; model: UpdateTaskModel },
+                { todoListId: string; taskId: string; model: UpdateTaskModel }
             >(async (param, { dispatch, rejectWithValue, getState }) => {
                 dispatch(appActions.setStatus({ status: 'loading' }))
 

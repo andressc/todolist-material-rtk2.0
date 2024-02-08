@@ -7,9 +7,11 @@ import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
 import { taskActions, taskSelectors } from '../../model/taskSlice'
 import Paper from '@mui/material/Paper'
-import { Filter, TodolistDomain } from '../../model/todolistSlice'
-import { TaskStatuses, TaskEntity } from '../../api/tasks-api'
+import { Filter } from '../../model/todolistSlice'
+import { TaskStatuses } from '../../api/tasksApi'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/useAppDispatchSelector'
+import { TaskEntity } from '../../model/task.types'
+import { TodolistDomain } from '../../model/todolist.types'
 
 type Props = {
     todoList: TodolistDomain

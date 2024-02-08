@@ -1,4 +1,4 @@
-import { authApi, LoginRequest } from '../api/auth-api'
+import { authApi, LoginRequest } from '../api/authApi'
 import { handleServerAppError, handleServerNetworkError } from '../../../common/utils/errorUtils'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'

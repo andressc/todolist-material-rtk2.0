@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from 'react'
 import CheckBox from '@mui/material/Checkbox'
-import { TaskStatuses } from '../../../features/TodoListsList/api/tasks-api'
+import { TaskStatuses } from '../../../features/TodoListsList/api/tasksApi'
 
 type Props = {
     status: TaskStatuses

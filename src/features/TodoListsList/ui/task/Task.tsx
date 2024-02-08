@@ -2,8 +2,9 @@ import React, { useCallback, ReactElement } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import CheckboxMy from '../../../../common/components/Checkbox/CheckboxMy'
-import { TaskStatuses, TaskEntity } from '../../api/tasks-api'
+import { TaskStatuses } from '../../api/tasksApi'
 import { EditableSpan } from '../../../../common/components/EditableSpan/EditableSpan'
+import { TaskEntity } from '../../model/task.types'
 
 type Props = {
     task: TaskEntity

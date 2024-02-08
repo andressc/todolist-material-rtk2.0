@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 import { taskActions, tasksReducer, Tasks } from '../model/taskSlice'
-import { TaskPriorities, TaskStatuses, TaskEntity } from '../api/tasks-api'
+import { TaskPriorities, TaskStatuses, TaskEntity } from '../api/tasksApi'
 import { TodolistDomain } from '../model/todolistSlice'
 
 let state: Tasks

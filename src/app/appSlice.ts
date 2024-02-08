@@ -1,4 +1,4 @@
-import { authApi } from '../features/auth/api/auth-api'
+import { authApi } from '../features/auth/api/authApi'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
 import { handleServerAppError, handleServerNetworkError } from '../common/utils/errorUtils'
 import { authActions } from '../features/auth/model/authSlice'

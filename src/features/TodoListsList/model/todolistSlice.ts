@@ -1,16 +1,12 @@
-import { todoListsApi, TodolistEntity } from '../api/todolists-api'
+import { todoListsApi } from '../api/todolistsApi'
 import { handleServerAppError, handleServerNetworkError } from '../../../common/utils/errorUtils'
 import { taskActions } from './taskSlice'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AppStatuses, appActions } from '../../../app/appSlice'
 import { AxiosError } from 'axios'
+import { TodolistDomain, TodolistEntity } from './todolist.types'
 
 export type Filter = 'All' | 'Active' | 'Completed'
-
-export type TodolistDomain = TodolistEntity & {
-    filter: Filter
-    entityStatus: AppStatuses
-}
 
 const createAppSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },

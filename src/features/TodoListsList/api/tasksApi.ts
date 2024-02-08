@@ -1,4 +1,5 @@
 import { ApiResponse, instance } from '../../../common/api/common.api'
+import { CreateTaskResponse, GetTasksResponse, UpdateTaskRequest } from './tasksApi.types'
 
 export enum TaskStatuses {
     New,
@@ -13,38 +14,6 @@ export enum TaskPriorities {
     Hi,
     Urgently,
     Later,
-}
-
-export type TaskEntity = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
-
-type CreateTaskResponse = {
-    item: TaskEntity
-}
-
-type GetTasksResponse = {
-    items: TaskEntity[]
-    totalCount: number
-    error: string | null
-}
-
-export type UpdateTaskRequest = {
-    title?: string
-    description?: string
-    status?: TaskStatuses
-    priority?: TaskPriorities
-    startDate?: string
-    deadline?: string
 }
 
 export const tasksApi = {

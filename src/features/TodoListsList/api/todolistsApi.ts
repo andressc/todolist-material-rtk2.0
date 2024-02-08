@@ -1,19 +1,9 @@
 import { instance, ApiResponse } from '../../../common/api/common.api'
-
-export type TodolistEntity = {
-    id: string
-    title: string
-    addedDate: string
-    order: number
-}
-
-type CreateTodolistResponse = {
-    item: TodolistEntity
-}
+import { CreateTodolistResponse, GetTodolistResponse } from './todolistsApi.types'
 
 export const todoListsApi = {
     getTodoLists() {
-        return instance.get<TodolistEntity[]>(`todo-lists`)
+        return instance.get<GetTodolistResponse>(`todo-lists`)
     },
 
     createTodolist(title: string) {
