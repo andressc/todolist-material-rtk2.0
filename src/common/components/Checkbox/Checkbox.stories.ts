@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react'
 import '../../../index.css'
 import CheckboxMy from './CheckboxMy'
-import { TaskStatuses } from '../../../features/TodoListsList/api/tasksApi'
+import { TaskStatuses } from '../../../features/TodoLists/api/tasksApi'
 
 const meta: Meta<typeof CheckboxMy> = {
     title: 'Components/Checkbox',

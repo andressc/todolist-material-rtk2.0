@@ -1,7 +1,8 @@
 import { v1 } from 'uuid'
-import { taskActions, tasksReducer, Tasks } from '../model/taskSlice'
-import { TaskPriorities, TaskStatuses, TaskEntity } from '../api/tasksApi'
-import { TodolistDomain } from '../model/todolistSlice'
+import { taskActions, tasksReducer, Tasks, ter } from '../model/taskSlice'
+import { TaskPriorities, TaskStatuses } from '../api/tasksApi'
+import { TaskEntity } from 'features/TodoLists/model/task.types'
+import { TodolistDomain } from 'features/TodoLists/model/todolist.types'
 
 let state: Tasks
 let state2: TodolistDomain[]
@@ -130,6 +131,8 @@ test('add Task', () => {
 })
 
 test('remove Task', () => {
+    jest.spyOn(ter, 'add').mockImplementation(jest.fn())
+
     const result: Tasks = tasksReducer(
         state,
         taskActions.removeTask.fulfilled(
@@ -139,6 +142,8 @@ test('remove Task', () => {
             '',
         ),
     )
+
+    //console.log(ter.add.mock)
 
     expect(result[todoList2].length).toBe(1)
     expect(result[todoList2][0].title).toBe('milk')

@@ -4,7 +4,7 @@ import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/too
 import { AxiosError } from 'axios'
 import { FieldError } from '../../../common/api/common.api'
 import { appActions } from '../../../app/appSlice'
-import { todoListActions } from '../../TodoListsList/model/todolistSlice'
+import { todoListActions } from '../../TodoLists/model/todolistSlice'
 
 const createAppSlice = buildCreateSlice({
     creators: { asyncThunk: asyncThunkCreator },

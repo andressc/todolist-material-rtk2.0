@@ -1,5 +1,5 @@
-import { todolistReducer } from '../features/TodoListsList/model/todolistSlice'
-import { tasksReducer } from '../features/TodoListsList/model/taskSlice'
+import { todolistReducer } from '../features/TodoLists/model/todolistSlice'
+import { tasksReducer } from '../features/TodoLists/model/taskSlice'
 import { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { appReducer } from './appSlice'
 import { authReducer } from '../features/auth/model/authSlice'

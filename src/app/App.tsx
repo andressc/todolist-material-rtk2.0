@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import '../App.css'
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
@@ -7,17 +7,17 @@ import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { Menu } from '@mui/icons-material'
-import { TodoListsList } from '../features/TodoListsList/ui/todoListsList/TodoListsList'
+import { TodoListsList } from 'features/TodoLists/ui/todoListsList/TodoListsList'
 import LinearProgress from '@mui/material/LinearProgress'
-import { CustomizedSnackbars } from '../common/components/ErrorSnackBar/ErrorSnackBar'
-import { useAppDispatch } from '../common/hooks/useAppDispatchSelector'
+import { CustomizedSnackbars } from 'common/components/ErrorSnackBar/ErrorSnackBar'
 import { Route, Routes } from 'react-router-dom'
-import { Login } from '../features/auth/ui/Login'
+import { Login } from 'features/auth/ui/Login'
 import CircularProgress from '@mui/material/CircularProgress'
 import Box from '@mui/material/Box'
 import { appSelectors, appActions } from './appSlice'
-import { authSelectors, authActions } from '../features/auth/model/authSlice'
+import { authSelectors, authActions } from 'features/auth/model/authSlice'
 import { useSelector } from 'react-redux'
+import { useActions } from 'common/hooks/useActions'
 
 type Props = {
     demo?: boolean
@@ -28,15 +28,12 @@ const App: FC<Props> = ({ demo = false }) => {
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const isAuth = useSelector(authSelectors.selectIsAuth)
 
-    const dispatch = useAppDispatch()
+    const { initializeApp } = useActions(appActions)
+    const { logout } = useActions(authActions)
 
     useEffect(() => {
-        dispatch(appActions.initializeApp())
-    }, [dispatch])
-
-    const logoutHandler = useCallback(() => {
-        dispatch(authActions.logout())
-    }, [dispatch])
+        initializeApp()
+    }, [])
 
     if (!isInitialized) {
         return (
@@ -65,7 +62,7 @@ const App: FC<Props> = ({ demo = false }) => {
                         News
                     </Typography>
                     {isAuth && (
-                        <Button color="inherit" onClick={logoutHandler}>
+                        <Button color="inherit" onClick={logout}>
                             Log out
                         </Button>
                     )}

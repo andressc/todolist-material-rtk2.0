@@ -1,17 +1,17 @@
 import React, { DetailedHTMLProps, HTMLAttributes, useCallback, ReactElement } from 'react'
-import { ButtonFilter } from '../../../../common/components/ButtonFilter/ButtonFilter'
 import { Task } from '../task/Task'
-import { InputSubmit } from '../../../../common/components/InputSubmit/InputSubmit'
-import { EditableSpan } from '../../../../common/components/EditableSpan/EditableSpan'
+import { InputSubmit } from 'common/components/InputSubmit/InputSubmit'
+import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
 import { taskActions, taskSelectors } from '../../model/taskSlice'
 import Paper from '@mui/material/Paper'
 import { Filter } from '../../model/todolistSlice'
 import { TaskStatuses } from '../../api/tasksApi'
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/useAppDispatchSelector'
+import { useAppDispatch, useAppSelector } from 'common/hooks/useAppDispatchSelector'
 import { TaskEntity } from '../../model/task.types'
 import { TodolistDomain } from '../../model/todolist.types'
+import { ButtonFilter } from 'common/components/ButtonFilter'
 
 type Props = {
     todoList: TodolistDomain
