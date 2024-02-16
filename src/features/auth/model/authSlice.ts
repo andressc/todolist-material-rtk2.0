@@ -41,7 +41,7 @@ const slice = createAppSlice({
                         })
                     } catch (e) {
                         const error: AxiosError = e as AxiosError
-                        handleServerNetworkError(dispatch, error)
+                        handleServerNetworkError(dispatch, e)
                         return rejectWithValue({ errors: [error.message], fieldsErrors: undefined })
                     }
                 },
@@ -61,8 +61,7 @@ const slice = createAppSlice({
                     handleServerAppError(result.data, dispatch)
                     return rejectWithValue(null)
                 } catch (e) {
-                    const error: AxiosError = e as AxiosError
-                    handleServerNetworkError(dispatch, error)
+                    handleServerNetworkError(dispatch, e)
                     return rejectWithValue(null)
                 }
             }),

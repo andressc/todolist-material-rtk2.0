@@ -3,22 +3,22 @@ import { todoListActions } from '../../model/todolistSlice'
 import { useTodoList } from '../../lib/useTodoList'
 import Grid from '@mui/material/Grid'
 import { TodoList } from '../todoList/TodoList'
-import { InputSubmit } from '../../../../common/components/InputSubmit/InputSubmit'
-import { useAppDispatch } from '../../../../common/hooks/useAppDispatchSelector'
+import { InputSubmit } from 'common/components/InputSubmit/InputSubmit'
 import { Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { authSelectors } from '../../../auth/model/authSlice'
+import { useActions } from 'common/hooks/useActions'
 
 type Props = {
     demo?: boolean
 }
 export const TodoListsList: FC<Props> = ({ demo = false }) => {
-    const dispatch = useAppDispatch()
     const isAuth = useSelector(authSelectors.selectIsAuth)
+    const { fetchTodoLists } = useActions(todoListActions)
 
     useEffect(() => {
-        if (!demo && isAuth) dispatch(todoListActions.fetchTodoLists())
-    }, [demo, isAuth, dispatch])
+        if (!demo && isAuth) fetchTodoLists()
+    }, [demo, isAuth, fetchTodoLists])
 
     const { todoData, removeTodoList, addTodoList, changeTitleTodoList, changeFilterTodoList } = useTodoList()
 

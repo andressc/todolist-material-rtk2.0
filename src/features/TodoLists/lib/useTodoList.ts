@@ -1,39 +1,39 @@
 import { useCallback } from 'react'
 import { Filter, todoListActions, todoListSelectors } from '../model/todolistSlice'
-import { useAppDispatch } from '../../../common/hooks/useAppDispatchSelector'
 import { useSelector } from 'react-redux'
+import { useActions } from 'common/hooks/useActions'
 
 export const useTodoList = () => {
-    const dispatch = useAppDispatch()
+    const { removeTodoList, addTodoList, updateTodoListTitle, changeFilterTodoList } = useActions(todoListActions)
 
     const todoData = useSelector(todoListSelectors.selectTodoLists)
 
     const removeTodoListHandler = useCallback(
         (todoListId: string): void => {
-            dispatch(todoListActions.removeTodoList(todoListId))
+            removeTodoList(todoListId)
         },
-        [dispatch],
+        [removeTodoList],
     )
 
     const addTodoListHandler = useCallback(
         (title: string): void => {
-            dispatch(todoListActions.addTodoList(title))
+            addTodoList(title)
         },
-        [dispatch],
+        [addTodoList],
     )
 
     const changeTitleTodoList = useCallback(
         (title: string, todoListId: string): void => {
-            dispatch(todoListActions.updateTodoListTitle({ todoListId, title }))
+            updateTodoListTitle({ todoListId, title })
         },
-        [dispatch],
+        [updateTodoListTitle],
     )
 
-    const changeFilterTodoList = useCallback(
+    const changeFilterTodoListHandler = useCallback(
         (filter: Filter, todoListId: string): void => {
-            dispatch(todoListActions.changeFilterTodoList({ todoListId: todoListId, filter }))
+            changeFilterTodoList({ todoListId: todoListId, filter })
         },
-        [dispatch],
+        [changeFilterTodoList],
     )
 
     return {
@@ -41,6 +41,6 @@ export const useTodoList = () => {
         removeTodoList: removeTodoListHandler,
         addTodoList: addTodoListHandler,
         changeTitleTodoList,
-        changeFilterTodoList,
+        changeFilterTodoList: changeFilterTodoListHandler,
     }
 }

@@ -1,8 +1,16 @@
 import { useMemo } from 'react'
 import { ActionCreatorsMapObject, bindActionCreators } from 'redux'
-import { useAppDispatch } from 'common/hooks/useAppDispatchSelector'
+import { useDispatch } from 'react-redux'
 
-export const useActions = <T extends ActionCreatorsMapObject<any>>(actions: T) => {
+export function useActions<T extends ActionCreatorsMapObject<any>>(actions: T): T {
+    const dispatch = useDispatch()
+
+    return useMemo(() => {
+        return bindActionCreators(actions, dispatch) as T
+    }, [dispatch, actions])
+}
+
+/*export const useActions = <T extends ActionCreatorsMapObject<any>>(actions: T) => {
     const dispatch = useAppDispatch()
 
     const boundActions = useMemo(() => {
@@ -10,4 +18,4 @@ export const useActions = <T extends ActionCreatorsMapObject<any>>(actions: T) =
     }, [dispatch])
 
     return boundActions
-}
+}*/

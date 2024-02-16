@@ -1,10 +1,9 @@
 import { todoListsApi } from '../api/todolistsApi'
-import { handleServerAppError, handleServerNetworkError } from '../../../common/utils/errorUtils'
 import { taskActions } from './taskSlice'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AppStatuses, appActions } from '../../../app/appSlice'
-import { AxiosError } from 'axios'
+import { AppStatuses, appActions } from 'app/appSlice'
 import { TodolistDomain, TodolistEntity } from './todolist.types'
+import { handleServerAppError, handleServerNetworkError } from 'common/utils/errorUtils'
 
 export type Filter = 'All' | 'Active' | 'Completed'
 
@@ -64,8 +63,7 @@ const slice = createAppSlice({
                     handleServerAppError(result.data, dispatch)
                     return rejectWithValue(null)
                 } catch (e) {
-                    const error: AxiosError = e as AxiosError
-                    handleServerNetworkError(dispatch, error)
+                    handleServerNetworkError(dispatch, e)
                     return rejectWithValue(null)
                 }
             }),
@@ -86,8 +84,7 @@ const slice = createAppSlice({
                         handleServerAppError(result.data, dispatch)
                         return rejectWithValue(null)
                     } catch (e) {
-                        const error: AxiosError = e as AxiosError
-                        handleServerNetworkError(dispatch, error)
+                        handleServerNetworkError(dispatch, e)
                         return rejectWithValue(null)
                     }
                 },
@@ -114,8 +111,7 @@ const slice = createAppSlice({
                         handleServerAppError(result.data, dispatch)
                         return rejectWithValue(null)
                     } catch (e) {
-                        const error: AxiosError = e as AxiosError
-                        handleServerNetworkError(dispatch, error)
+                        handleServerNetworkError(dispatch, e)
                         return rejectWithValue(null)
                     }
                 },
@@ -138,8 +134,7 @@ const slice = createAppSlice({
                         //handleServerAppError(result.data.error, dispatch)
                         //return rejectWithValue(null)
                     } catch (e) {
-                        const error: AxiosError = e as AxiosError
-                        handleServerNetworkError(dispatch, error)
+                        handleServerNetworkError(dispatch, e)
                         return rejectWithValue(null)
                     }
                 },

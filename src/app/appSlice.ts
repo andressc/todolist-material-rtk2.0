@@ -1,8 +1,7 @@
-import { authApi } from '../features/auth/api/authApi'
+import { authApi } from 'features/auth/api/authApi'
 import { asyncThunkCreator, buildCreateSlice, PayloadAction } from '@reduxjs/toolkit'
-import { handleServerAppError, handleServerNetworkError } from '../common/utils/errorUtils'
-import { authActions } from '../features/auth/model/authSlice'
-import { AxiosError } from 'axios'
+import { authActions } from 'features/auth/model/authSlice'
+import { handleServerAppError, handleServerNetworkError } from 'common/utils/errorUtils'
 
 export type AppStatuses = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -41,8 +40,7 @@ const slice = createAppSlice({
                     handleServerAppError(result.data, dispatch)
                     //return rejectWithValue(null)
                 } catch (e) {
-                    const error: AxiosError = e as AxiosError
-                    handleServerNetworkError(dispatch, error)
+                    handleServerNetworkError(dispatch, e)
                     return rejectWithValue(null)
                 }
             }),

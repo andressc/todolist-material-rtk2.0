@@ -1,8 +1,8 @@
 import React, { ComponentType } from 'react'
 import { Provider } from 'react-redux'
-import { TaskPriorities, TaskStatuses } from '../../features/TodoLists/api/tasksApi'
+import { TaskPriorities, TaskStatuses } from 'features/TodoLists/api/tasksApi'
 import { v1 } from 'uuid'
-import { AppRootState, reducers } from '../../app/store'
+import { AppRootState, reducers } from 'app/store'
 import { configureStore } from '@reduxjs/toolkit'
 
 const initialGlobalState: AppRootState = {

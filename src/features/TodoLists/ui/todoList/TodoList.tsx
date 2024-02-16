@@ -1,17 +1,15 @@
 import React, { DetailedHTMLProps, HTMLAttributes, useCallback, ReactElement } from 'react'
 import { Task } from '../task/Task'
-import { InputSubmit } from 'common/components/InputSubmit/InputSubmit'
-import { EditableSpan } from 'common/components/EditableSpan/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import Delete from '@mui/icons-material/Delete'
 import { taskActions, taskSelectors } from '../../model/taskSlice'
 import Paper from '@mui/material/Paper'
 import { Filter } from '../../model/todolistSlice'
 import { TaskStatuses } from '../../api/tasksApi'
-import { useAppDispatch, useAppSelector } from 'common/hooks/useAppDispatchSelector'
 import { TaskEntity } from '../../model/task.types'
 import { TodolistDomain } from '../../model/todolist.types'
-import { ButtonFilter } from 'common/components/ButtonFilter'
+import { ButtonFilter, InputSubmit, EditableSpan } from 'common/components'
+import { useActions, useAppSelector } from 'common/hooks'
 
 type Props = {
     todoList: TodolistDomain
@@ -23,36 +21,36 @@ type Props = {
 
 export const TodoList: React.FC<Props> = React.memo(
     ({ todoList, changeFilter, changeTitleTodoList, removeTodoList, demo = false, ...restProps }): ReactElement => {
-        const dispatch = useAppDispatch()
         //const tasks = useAppSelector((state) => state.tasks[todoList.id])
         const tasks = useAppSelector((state) => taskSelectors.selectTasksById(state, todoList.id))
+        const { removeTask, updateTask, addTask } = useActions(taskActions)
 
         const removeTaskHandler = useCallback(
             (taskId: string): void => {
-                dispatch(taskActions.removeTask({ todoListId: todoList.id, taskId }))
+                removeTask({ todoListId: todoList.id, taskId })
             },
-            [dispatch, todoList.id],
+            [removeTask, todoList.id],
         )
 
         const changeStatusHandler = useCallback(
             (taskId: string, status: TaskStatuses): void => {
-                dispatch(taskActions.updateTask({ todoListId: todoList.id, taskId, model: { status } }))
+                updateTask({ todoListId: todoList.id, taskId, model: { status } })
             },
-            [dispatch, todoList.id],
+            [updateTask, todoList.id],
         )
 
         const onClickCallBack = useCallback(
-            (inputText: string): void => {
-                dispatch(taskActions.addTask({ todoListId: todoList.id, title: inputText.trim() }))
+            async (inputText: string) => {
+                addTask({ todoListId: todoList.id, title: inputText.trim() })
             },
-            [dispatch, todoList.id],
+            [addTask, todoList.id],
         )
 
         const changeTitleTask = useCallback(
             (taskId: string, title: string) => {
-                dispatch(taskActions.updateTask({ todoListId: todoList.id, taskId, model: { title } }))
+                updateTask({ todoListId: todoList.id, taskId, model: { title } })
             },
-            [dispatch, todoList.id],
+            [updateTask, todoList.id],
         )
 
         let initialTask: TaskEntity[] = tasks
@@ -100,7 +98,7 @@ export const TodoList: React.FC<Props> = React.memo(
         )
 
         return (
-            <Paper elevation={3} style={{ padding: '20px' }}>
+            <Paper style={{ padding: '20px', maxWidth: '300px', width: '100%' }}>
                 <div {...restProps}>
                     <div>
                         <h3>

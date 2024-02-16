@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { Menu } from '@mui/icons-material'
 import { TodoListsList } from 'features/TodoLists/ui/todoListsList/TodoListsList'
 import LinearProgress from '@mui/material/LinearProgress'
-import { CustomizedSnackbars } from 'common/components/ErrorSnackBar/ErrorSnackBar'
+import { CustomizedSnackbars } from 'common/components'
 import { Route, Routes } from 'react-router-dom'
 import { Login } from 'features/auth/ui/Login'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -17,7 +17,7 @@ import Box from '@mui/material/Box'
 import { appSelectors, appActions } from './appSlice'
 import { authSelectors, authActions } from 'features/auth/model/authSlice'
 import { useSelector } from 'react-redux'
-import { useActions } from 'common/hooks/useActions'
+import { useActions } from 'common/hooks'
 
 type Props = {
     demo?: boolean
@@ -27,13 +27,12 @@ const App: FC<Props> = ({ demo = false }) => {
     const status = useSelector(appSelectors.selectStatus)
     const isInitialized = useSelector(appSelectors.selectIsInitialized)
     const isAuth = useSelector(authSelectors.selectIsAuth)
-
     const { initializeApp } = useActions(appActions)
     const { logout } = useActions(authActions)
 
     useEffect(() => {
         initializeApp()
-    }, [])
+    }, [initializeApp])
 
     if (!isInitialized) {
         return (
